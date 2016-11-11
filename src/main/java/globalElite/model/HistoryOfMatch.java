@@ -10,7 +10,7 @@ public class HistoryOfMatch {
     private Team team1Name;
     private Team team2Name;
     private Date timeOfMatch;
-    private Map map;
+    private Maps map;
     private int scoreOfTeam1;
     private int scoreOfTeam2;
     private ScoreOfPlayer scoreOfPlayer;
@@ -42,11 +42,11 @@ public class HistoryOfMatch {
         this.timeOfMatch = timeOfMatch;
     }
 
-    public Map getMap() {
+    public Maps getMap() {
         return map;
     }
 
-    public void setMap(Map map) {
+    public void setMap(Maps map) {
         this.map = map;
     }
 

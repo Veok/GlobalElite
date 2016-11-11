@@ -38,10 +38,10 @@ public class BalanceOfTeam {
     }
 
     public double getPoints() {
+
+        points = (double) wins + (draws * 0.5);
         return points;
     }
 
-    public void setPoints(double points) {
-        this.points = points;
-    }
+
 }

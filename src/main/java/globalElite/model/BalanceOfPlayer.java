@@ -29,7 +29,9 @@ public class BalanceOfPlayer {
     }
 
     public double getRatio() {
-        return ratio;
+
+        ratio = (double) kills/ (double) deaths;
+        return ratio ;
     }
 
     public void setRatio(double ratio) {

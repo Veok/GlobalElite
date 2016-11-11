@@ -1,6 +1,11 @@
 package globalElite.model;
 
+import com.neovisionaries.i18n.CountryCode;
+
 import java.util.Date;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by L on 10.11.2016.
@@ -10,11 +15,12 @@ public class Player {
     private String nick;
     private Date dateOfBirth;
     private Team team;
-    private Country country;
+    private String country;
     private String steamId;
     private BalanceOfPlayer balanceOfPlayer;
 
     public Player() {
+
     }
 
     public String getNick() {
@@ -41,11 +47,12 @@ public class Player {
         this.team = team;
     }
 
-    public Country getCountry() {
+
+    public String getCountry() {
         return country;
     }
 
-    public void setCountry(Country country) {
+    public void setCountry(String country) {
         this.country = country;
     }
 
@@ -64,4 +71,17 @@ public class Player {
     public void setBalanceOfPlayer(BalanceOfPlayer balanceOfPlayer) {
         this.balanceOfPlayer = balanceOfPlayer;
     }
+
+    public boolean validateSteamId() {
+        if (steamId == null) {
+            return false;
+        }
+
+        String regx = "STEAM_[0-1]:[0-1]:\\d{1,8}";
+        Pattern pattern = Pattern.compile(regx, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(steamId);
+        return matcher.find();
+    }
+
+
 }
