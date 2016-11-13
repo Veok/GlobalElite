@@ -11,7 +11,6 @@ public class Player {
 
     private String nick;
     private Date dateOfBirth;
-    private Team team;
     private String country;
     private String steamId;
     private PlayerStats playerStats;
@@ -55,14 +54,6 @@ public class Player {
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-    }
-
-    public Team getTeam() {
-        return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
     }
 
 

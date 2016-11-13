@@ -11,7 +11,6 @@ public class Team {
     private Locale country;
     private Player players;
     private TeamStats teamStats;
-    private HistoryOfMatch history;
 
     public Team() {
     }
@@ -49,11 +48,5 @@ public class Team {
         this.teamStats = teamStats;
     }
 
-    public HistoryOfMatch getHistory() {
-        return history;
-    }
 
-    public void setHistory(HistoryOfMatch history) {
-        this.history = history;
-    }
 }
