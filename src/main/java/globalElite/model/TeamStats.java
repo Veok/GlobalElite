@@ -3,14 +3,14 @@ package globalElite.model;
 /**
  * Created by L on 10.11.2016.
  */
-public class BalanceOfTeam {
+public class TeamStats {
 
     private int wins;
     private int looses;
     private int draws;
     private double points;
 
-    public BalanceOfTeam() {
+    public TeamStats() {
     }
 
     public int getWins() {

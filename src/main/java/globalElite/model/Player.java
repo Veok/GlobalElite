@@ -1,9 +1,6 @@
 package globalElite.model;
 
-import com.neovisionaries.i18n.CountryCode;
-
 import java.util.Date;
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,10 +14,31 @@ public class Player {
     private Team team;
     private String country;
     private String steamId;
-    private BalanceOfPlayer balanceOfPlayer;
+    private PlayerStats playerStats;
+
 
     public Player() {
 
+    }
+
+    public boolean validateSteamId() {
+        if (steamId == null) {
+            return false;
+        }
+
+        String regx = "STEAM_[0-1]:[0-1]:\\d{1,8}";
+        Pattern pattern = Pattern.compile(regx, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(steamId);
+        return matcher.find();
+    }
+
+
+    public PlayerStats getPlayerStats() {
+        return playerStats;
+    }
+
+    public void setPlayerStats(PlayerStats playerStats) {
+        this.playerStats = playerStats;
     }
 
     public String getNick() {
@@ -64,24 +82,10 @@ public class Player {
         this.steamId = steamId;
     }
 
-    public BalanceOfPlayer getBalanceOfPlayer() {
-        return balanceOfPlayer;
-    }
 
-    public void setBalanceOfPlayer(BalanceOfPlayer balanceOfPlayer) {
-        this.balanceOfPlayer = balanceOfPlayer;
-    }
 
-    public boolean validateSteamId() {
-        if (steamId == null) {
-            return false;
-        }
 
-        String regx = "STEAM_[0-1]:[0-1]:\\d{1,8}";
-        Pattern pattern = Pattern.compile(regx, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(steamId);
-        return matcher.find();
-    }
+
 
 
 }

@@ -10,7 +10,7 @@ public class Team {
     private String name;
     private Locale country;
     private Player players;
-    private BalanceOfTeam balanceOfTeam;
+    private TeamStats teamStats;
     private HistoryOfMatch history;
 
     public Team() {
@@ -41,12 +41,12 @@ public class Team {
         this.players = players;
     }
 
-    public BalanceOfTeam getBalanceOfTeam() {
-        return balanceOfTeam;
+    public TeamStats getTeamStats() {
+        return teamStats;
     }
 
-    public void setBalanceOfTeam(BalanceOfTeam balanceOfTeam) {
-        this.balanceOfTeam = balanceOfTeam;
+    public void setTeamStats(TeamStats teamStats) {
+        this.teamStats = teamStats;
     }
 
     public HistoryOfMatch getHistory() {

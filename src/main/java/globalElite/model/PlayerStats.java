@@ -1,15 +1,15 @@
 package globalElite.model;
 
 /**
- * Created by L on 10.11.2016.
+ * Created by L on 13.11.2016.
  */
-public class BalanceOfPlayer {
+public class PlayerStats {
 
     private int kills;
     private int deaths;
     private double ratio;
 
-    public BalanceOfPlayer() {
+    public PlayerStats() {
     }
 
     public int getKills() {
@@ -29,9 +29,8 @@ public class BalanceOfPlayer {
     }
 
     public double getRatio() {
-
-        ratio = (double) kills/ (double) deaths;
-        return ratio ;
+        ratio = (double) kills / (double) deaths;
+        return ratio;
     }
 
     public void setRatio(double ratio) {

@@ -13,10 +13,33 @@ public class HistoryOfMatch {
     private Maps map;
     private int scoreOfTeam1;
     private int scoreOfTeam2;
-    private ScoreOfPlayer scoreOfPlayer;
+    private ScoreBoard scoreBoard;
 
     public HistoryOfMatch() {
     }
+
+    public void score() {
+
+        if (scoreOfTeam1 > scoreOfTeam2) {
+            team1Name.getTeamStats().setWins(team1Name.getTeamStats().getWins() + 1);
+            team2Name.getTeamStats().setLooses(team2Name.getTeamStats().getLooses() + 1);
+        } else if (scoreOfTeam1 < scoreOfTeam2) {
+            team2Name.getTeamStats().setWins(team2Name.getTeamStats().getWins() + 1);
+            team1Name.getTeamStats().setLooses(team1Name.getTeamStats().getLooses() + 1);
+        } else {
+            team1Name.getTeamStats().setDraws(team1Name.getTeamStats().getDraws() + 1);
+            team2Name.getTeamStats().setDraws(team2Name.getTeamStats().getDraws() + 1);
+        }
+    }
+
+    public ScoreBoard getScoreBoard() {
+        return scoreBoard;
+    }
+
+    public void setScoreBoard(ScoreBoard scoreBoard) {
+        this.scoreBoard = scoreBoard;
+    }
+
 
     public Team getTeam1Name() {
         return team1Name;
@@ -67,11 +90,5 @@ public class HistoryOfMatch {
         this.scoreOfTeam2 = scoreOfTeam2;
     }
 
-    public ScoreOfPlayer getScoreOfPlayer() {
-        return scoreOfPlayer;
-    }
 
-    public void setScoreOfPlayer(ScoreOfPlayer scoreOfPlayer) {
-        this.scoreOfPlayer = scoreOfPlayer;
-    }
 }
