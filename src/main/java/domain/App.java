@@ -1,4 +1,4 @@
-package globalElite;
+package domain;
 
 import dao.*;
 
@@ -8,13 +8,10 @@ import java.sql.SQLException;
 
 /**
  * Hello world!
- *
  */
-public class App 
-{
-    public static void main( String[] args )
-    {
-        try{
+public class App {
+    public static void main(String[] args) {
+        try {
             Connection connection =
                     DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/workdb");
             TeamStatsRepository teamStatsRepository = new TeamStatsRepository(connection);
@@ -25,7 +22,8 @@ public class App
             ScoreBoardRepository scoreBoardRepository = new ScoreBoardRepository(connection);
             HistoryOfMatchRepository historyOfMatchRepository = new HistoryOfMatchRepository(connection);
 
-        }catch (SQLException e){
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

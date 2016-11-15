@@ -1,6 +1,4 @@
-package globalElite.model;
-
-import java.util.Locale;
+package domain.model;
 
 /**
  * Created by L on 10.11.2016.
@@ -8,7 +6,7 @@ import java.util.Locale;
 public class Team {
 
     private String name;
-    private Locale country;
+    private String country;
     private Player players;
     private TeamStats teamStats;
 
@@ -24,11 +22,11 @@ public class Team {
     }
 
 
-    public Locale getCountry() {
+    public String getCountry() {
         return country;
     }
 
-    public void setCountry(Locale country) {
+    public void setCountry(String country) {
         this.country = country;
     }
 

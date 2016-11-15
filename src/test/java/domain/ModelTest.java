@@ -1,7 +1,7 @@
-package globalElite;
+package domain;
 
 import com.neovisionaries.i18n.CountryCode;
-import globalElite.model.*;
+import domain.model.*;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -18,38 +18,36 @@ public class ModelTest {
         player.setPlayerStats(playerStats);
         player.getPlayerStats().setKills(10);
         player.getPlayerStats().setDeaths(20);
-        double ratio = player.getPlayerStats().getRatio();
-        assertEquals(0.5, ratio, 0.001);
+        assertEquals(0.5, player.getPlayerStats().getRatio(), 0.001);
     }
 
     @Test
     public void testTeamPoints() {
-
         TeamStats teamStats = new TeamStats();
         teamStats.setWins(3);
         teamStats.setDraws(2);
-
-        double points = teamStats.getPoints();
-
-        assertEquals(4, points, 0.001);
+        assertEquals(4, teamStats.getPoints(), 0.001);
     }
 
     @Test
     public void testSteamId() {
-
         Player player = new Player();
         player.setSteamId("STEAM_0:1:38401525");
-
         assertEquals(true, player.validateSteamId());
     }
 
     @Test
     public void testPlayerCountry() {
-
         Player player = new Player();
         player.setCountry(CountryCode.PL.getName());
-
         assertEquals(CountryCode.PL.getName(), player.getCountry());
+    }
+
+    @Test
+    public void testTeamCountry(){
+        Team team = new Team();
+        team.setCountry(CountryCode.US.getName());
+        assertEquals(CountryCode.US.getName(), team.getCountry());
     }
 
     @Test
@@ -123,8 +121,8 @@ public class ModelTest {
         team1.setTeamStats(team1Stats);
         team2.setTeamStats(team2Stats);
 
-        historyOfMatch.setTeam1Name(team1);
-        historyOfMatch.setTeam2Name(team2);
+        historyOfMatch.setTeam1(team1);
+        historyOfMatch.setTeam2(team2);
 
         historyOfMatch.setScoreOfTeam1(43);
         historyOfMatch.setScoreOfTeam2(20);
@@ -148,8 +146,8 @@ public class ModelTest {
         team1.setTeamStats(team1Stats);
         team2.setTeamStats(team2Stats);
 
-        historyOfMatch.setTeam1Name(team1);
-        historyOfMatch.setTeam2Name(team2);
+        historyOfMatch.setTeam1(team1);
+        historyOfMatch.setTeam2(team2);
 
         historyOfMatch.setScoreOfTeam1(23);
         historyOfMatch.setScoreOfTeam2(30);
@@ -171,8 +169,8 @@ public class ModelTest {
         team1.setTeamStats(team1Stats);
         team2.setTeamStats(team2Stats);
 
-        historyOfMatch.setTeam1Name(team1);
-        historyOfMatch.setTeam2Name(team2);
+        historyOfMatch.setTeam1(team1);
+        historyOfMatch.setTeam2(team2);
 
         historyOfMatch.setScoreOfTeam1(50);
         historyOfMatch.setScoreOfTeam2(50);
@@ -195,8 +193,8 @@ public class ModelTest {
         team1.setTeamStats(team1Stats);
         team2.setTeamStats(team2Stats);
 
-        historyOfMatch.setTeam1Name(team1);
-        historyOfMatch.setTeam2Name(team2);
+        historyOfMatch.setTeam1(team1);
+        historyOfMatch.setTeam2(team2);
 
         team1.getTeamStats().setWins(10);
         team1.getTeamStats().setLooses(20);

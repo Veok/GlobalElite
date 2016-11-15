@@ -1,4 +1,4 @@
-package globalElite.model;
+package domain.model;
 
 /**
  * Created by L on 10.11.2016.

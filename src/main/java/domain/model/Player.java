@@ -1,6 +1,5 @@
-package globalElite.model;
+package domain.model;
 
-import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,7 +9,7 @@ import java.util.regex.Pattern;
 public class Player {
 
     private String nick;
-    private Date dateOfBirth;
+    private String dateOfBirth;
     private String country;
     private String steamId;
     private PlayerStats playerStats;
@@ -48,11 +47,11 @@ public class Player {
         this.nick = nick;
     }
 
-    public Date getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -72,11 +71,6 @@ public class Player {
     public void setSteamId(String steamId) {
         this.steamId = steamId;
     }
-
-
-
-
-
 
 
 }

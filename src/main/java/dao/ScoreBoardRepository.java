@@ -1,16 +1,113 @@
 package dao;
 
+import domain.model.Player;
+import domain.model.ScoreBoard;
+
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Created by L on 13.11.2016.
  */
 public class ScoreBoardRepository extends RepositoryBase {
 
+    private String insertSql = "INSERT INTO SCOREBOARD(killsInMatch, deathsInMatch, PLAYER_ID) values (?, ?, ?)";
+    private String selectByIdSql = "SELECT * FROM SCOREBOARD WHERE id=?";
+    private String deleteSql = "DELETE FROM SCOREBOARD WHERE id=?";
+    private String getAllSql = "SELECT * FROM SCOREBOARD";
+    private String updateSql = "UPDATE SCOREBOARD SET killsInMatch = ? where id=?";
+
+
+    private PreparedStatement insert;
+    private PreparedStatement selectById;
+    private PreparedStatement delete;
+    private PreparedStatement getAll;
+    private PreparedStatement update;
+
+
     public ScoreBoardRepository(Connection connection) {
         super(connection);
+
+        try {
+            insert = connection.prepareStatement(insertSql);
+            selectById = connection.prepareStatement(selectByIdSql);
+            delete = connection.prepareStatement(deleteSql);
+            getAll = connection.prepareStatement(getAllSql);
+            update = connection.prepareStatement(updateSql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
+    public void add(ScoreBoard scoreBoard) {
+
+        try {
+            insert.setInt(1, scoreBoard.getKillsInMatch());
+            insert.setInt(2, scoreBoard.getDeathsInMatch());
+            insert.setObject(3, scoreBoard.getPlayer());
+            insert.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ScoreBoard get(int scoreboardId) {
+
+        try {
+            selectById.setInt(1, scoreboardId);
+            ResultSet resultSet = selectById.executeQuery();
+            while (resultSet.next()) {
+                ScoreBoard result = new ScoreBoard();
+                result.setKillsInMatch(resultSet.getInt("killsInMatch"));
+                result.setDeathsInMatch(resultSet.getInt("deathsInMatch"));
+                result.setPlayer((Player) resultSet.getObject("PLAYER_ID"));
+                return result;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void delete(int scoreboardId) {
+        try {
+            delete.setInt(1, scoreboardId);
+            delete.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getAll() {
+
+        try {
+            ResultSet resultSet = getAll.executeQuery();
+            while (resultSet.next()) {
+                int s_id = resultSet.getInt("id");
+                int s_k = resultSet.getInt("killsInMatch");
+                int s_d = resultSet.getInt("deathsInMatch");
+                Object s_p = resultSet.getObject("PLAYER_ID");
+                System.out.println(s_id + " " + s_k + " " + s_d + " " + s_p);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setUpdate(ScoreBoard killsInMatch, int id) {
+
+        try {
+
+            update.setInt(1, killsInMatch.getKillsInMatch());
+            update.setInt(2, id);
+            update.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     protected String createTableSql() {

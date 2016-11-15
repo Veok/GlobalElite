@@ -1,15 +1,13 @@
-package globalElite.model;
-
-import java.util.Date;
+package domain.model;
 
 /**
  * Created by L on 10.11.2016.
  */
 public class HistoryOfMatch {
 
-    private Team team1Name;
-    private Team team2Name;
-    private Date timeOfMatch;
+    private Team team1;
+    private Team team2;
+    private String timeOfMatch;
     private Maps map;
     private int scoreOfTeam1;
     private int scoreOfTeam2;
@@ -21,14 +19,14 @@ public class HistoryOfMatch {
     public void score() {
 
         if (scoreOfTeam1 > scoreOfTeam2) {
-            team1Name.getTeamStats().setWins(team1Name.getTeamStats().getWins() + 1);
-            team2Name.getTeamStats().setLooses(team2Name.getTeamStats().getLooses() + 1);
+            team1.getTeamStats().setWins(team1.getTeamStats().getWins() + 1);
+            team2.getTeamStats().setLooses(team2.getTeamStats().getLooses() + 1);
         } else if (scoreOfTeam1 < scoreOfTeam2) {
-            team2Name.getTeamStats().setWins(team2Name.getTeamStats().getWins() + 1);
-            team1Name.getTeamStats().setLooses(team1Name.getTeamStats().getLooses() + 1);
+            team2.getTeamStats().setWins(team2.getTeamStats().getWins() + 1);
+            team1.getTeamStats().setLooses(team1.getTeamStats().getLooses() + 1);
         } else {
-            team1Name.getTeamStats().setDraws(team1Name.getTeamStats().getDraws() + 1);
-            team2Name.getTeamStats().setDraws(team2Name.getTeamStats().getDraws() + 1);
+            team1.getTeamStats().setDraws(team1.getTeamStats().getDraws() + 1);
+            team2.getTeamStats().setDraws(team2.getTeamStats().getDraws() + 1);
         }
     }
 
@@ -41,27 +39,27 @@ public class HistoryOfMatch {
     }
 
 
-    public Team getTeam1Name() {
-        return team1Name;
+    public Team getTeam1() {
+        return team1;
     }
 
-    public void setTeam1Name(Team team1Name) {
-        this.team1Name = team1Name;
+    public void setTeam1(Team team1) {
+        this.team1 = team1;
     }
 
-    public Team getTeam2Name() {
-        return team2Name;
+    public Team getTeam2() {
+        return team2;
     }
 
-    public void setTeam2Name(Team team2Name) {
-        this.team2Name = team2Name;
+    public void setTeam2(Team team2) {
+        this.team2 = team2;
     }
 
-    public Date getTimeOfMatch() {
-        return timeOfMatch;
+    public String getTimeOfMatch() {
+        return this.timeOfMatch;
     }
 
-    public void setTimeOfMatch(Date timeOfMatch) {
+    public void setTimeOfMatch(String timeOfMatch) {
         this.timeOfMatch = timeOfMatch;
     }
 
