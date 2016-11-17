@@ -1,111 +1,44 @@
 package dao;
 
+import dao.mappers.IMapResultSetIntoEntity;
 import domain.model.PlayerStats;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Created by L on 13.11.2016.
+ * @author L on 13.11.2016.
  */
-public class PlayerStatsRepository extends RepositoryBase {
 
-    private String insertSql = "INSERT INTO PLAYER_STATS(kills, deaths, ratio) values (?, ?, ?)";
-    private String selectByIdSql = "SELECT * FROM PLAYER_STATS WHERE id=?";
-    private String deleteSql = "DELETE FROM PLAYER_STATS WHERE id=?";
-    private String getAllSql = "SELECT * FROM PLAYER_STATS";
-    private String updateSql = "UPDATE PLAYER_STATS SET kills = ? where id=?";
+public class PlayerStatsRepository extends RepositoryBase<PlayerStats> {
 
+    public PlayerStatsRepository(Connection connection, IMapResultSetIntoEntity<PlayerStats> mapper) {
+        super(connection, mapper);
 
-    private PreparedStatement insert;
-    private PreparedStatement selectById;
-    private PreparedStatement delete;
-    private PreparedStatement getAll;
-    private PreparedStatement update;
-
-    public PlayerStatsRepository(Connection connection) {
-        super(connection);
-
-        try {
-            insert = connection.prepareStatement(insertSql);
-            selectById = connection.prepareStatement(selectByIdSql);
-            delete = connection.prepareStatement(deleteSql);
-            getAll = connection.prepareStatement(getAllSql);
-            update = connection.prepareStatement(updateSql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
-    public void add(PlayerStats playerStats) {
-
-        try {
-            insert.setInt(1, playerStats.getKills());
-            insert.setInt(2, playerStats.getDeaths());
-            insert.setDouble(3, playerStats.getRatio());
-            insert.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    @Override
+    protected String insertSql() {
+        return "INSERT INTO PLAYER_STATS(kills, deaths, ratio) values (?, ?, ?)";
     }
 
-
-    public PlayerStats get(int playerStatsId) {
-
-        try {
-            selectById.setInt(1, playerStatsId);
-            ResultSet resultSet = selectById.executeQuery();
-            while (resultSet.next()) {
-                PlayerStats result = new PlayerStats();
-                result.setKills(resultSet.getInt("kills"));
-                result.setDeaths(resultSet.getInt("deaths"));
-                result.setRatio(resultSet.getDouble("ratio"));
-                return result;
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+    @Override
+    public String updateSql() {
+        return "UPDATE PLAYER_STATS SET (kills, deaths, ratio)=(?,?,?) where id=?";
     }
 
-    public void delete(int playerStatsId) {
-        try {
-            delete.setInt(1, playerStatsId);
-            delete.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    @Override
+    protected void setUpdate(PlayerStats playerStats) throws SQLException {
+        update.setInt(1, playerStats.getKills());
+        update.setInt(2, playerStats.getDeaths());
+        update.setDouble(3, playerStats.getRatio());
     }
 
-    public void getAll() {
-
-        try {
-            ResultSet resultSet = getAll.executeQuery();
-            while (resultSet.next()) {
-                int ps_id = resultSet.getInt("id");
-                int ps_k = resultSet.getInt("kills");
-                int ps_d = resultSet.getInt("deaths");
-                double ps_r = resultSet.getDouble("ratio");
-                System.out.println(ps_id + " " + ps_k + " " + ps_d + " " + ps_r);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    public void setUpdate(PlayerStats kills, int id) {
-
-        try {
-            update.setInt(1, kills.getKills());
-            update.setInt(2, id);
-            update.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    @Override
+    protected void setInsert(PlayerStats playerStats) throws SQLException {
+        insert.setInt(1, playerStats.getKills());
+        insert.setInt(2, playerStats.getDeaths());
+        insert.setDouble(3, playerStats.getRatio());
     }
 
 

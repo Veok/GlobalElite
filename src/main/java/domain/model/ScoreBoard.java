@@ -1,16 +1,26 @@
 package domain.model;
 
 /**
- * Created by L on 13.11.2016.
+ * @author L on 13.11.2016.
  */
-public class ScoreBoard {
+public class ScoreBoard implements IHaveId {
 
+    private int id;
     private Player player;
     private int killsInMatch;
     private int deathsInMatch;
 
+
     public Player getPlayer() {
         return player;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setPlayer(Player player) {

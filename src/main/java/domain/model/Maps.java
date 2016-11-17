@@ -1,7 +1,7 @@
 package domain.model;
 
 /**
- * Created by L on 10.11.2016.
+ * @author L on 10.11.2016.
  */
 public enum Maps {
 
@@ -9,12 +9,4 @@ public enum Maps {
     Vertigo, Assault, Italy, Militia, Office;
 
 
-    public static Maps getByName(String enumName) {
-        for (Maps maps : Maps.values()) {
-            if (maps.toString().equalsIgnoreCase(enumName)) {
-                return maps;
-            }
-        }
-        return null;
-    }
 }

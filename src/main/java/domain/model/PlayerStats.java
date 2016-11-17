@@ -1,15 +1,24 @@
 package domain.model;
 
 /**
- * Created by L on 13.11.2016.
+ * @author L on 13.11.2016.
  */
-public class PlayerStats {
+public class PlayerStats implements IHaveId {
 
+    private int id;
     private int kills;
     private int deaths;
     private double ratio;
 
     public PlayerStats() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getKills() {

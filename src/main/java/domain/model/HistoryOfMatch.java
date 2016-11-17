@@ -1,14 +1,18 @@
 package domain.model;
 
-/**
- * Created by L on 10.11.2016.
- */
-public class HistoryOfMatch {
+import java.util.Date;
 
+/**
+ * @author L on 10.11.2016.
+ */
+public class HistoryOfMatch implements IHaveId {
+
+    private int id;
     private Team team1;
+
     private Team team2;
-    private String timeOfMatch;
-    private Maps map;
+    private Date timeOfMatch;
+    private int mapId;
     private int scoreOfTeam1;
     private int scoreOfTeam2;
     private ScoreBoard scoreBoard;
@@ -30,6 +34,7 @@ public class HistoryOfMatch {
         }
     }
 
+
     public ScoreBoard getScoreBoard() {
         return scoreBoard;
     }
@@ -38,6 +43,13 @@ public class HistoryOfMatch {
         this.scoreBoard = scoreBoard;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Team getTeam1() {
         return team1;
@@ -55,22 +67,21 @@ public class HistoryOfMatch {
         this.team2 = team2;
     }
 
-    public String getTimeOfMatch() {
-        return this.timeOfMatch;
+    public Date getTimeOfMatch() {
+        return timeOfMatch;
     }
 
-    public void setTimeOfMatch(String timeOfMatch) {
+    public void setTimeOfMatch(Date timeOfMatch) {
         this.timeOfMatch = timeOfMatch;
     }
 
-    public Maps getMap() {
-        return map;
+    public int getMapId() {
+        return mapId;
     }
 
-    public void setMap(Maps map) {
-        this.map = map;
+    public void setMapId(int mapId) {
+        this.mapId = mapId;
     }
-
 
     public int getScoreOfTeam1() {
         return scoreOfTeam1;

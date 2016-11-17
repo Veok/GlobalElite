@@ -1,10 +1,11 @@
 package domain.model;
 
 /**
- * Created by L on 10.11.2016.
+ * @author L on 10.11.2016.
  */
-public class Team {
+public class Team implements IHaveId {
 
+    private int id;
     private String name;
     private String country;
     private Player players;
@@ -15,6 +16,14 @@ public class Team {
 
     public String getName() {
         return name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setName(String name) {

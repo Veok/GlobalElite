@@ -1,117 +1,47 @@
 package dao;
 
+import dao.mappers.IMapResultSetIntoEntity;
 import domain.model.Player;
-import domain.model.PlayerStats;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.Date;
 import java.sql.SQLException;
 
 /**
- * Created by L on 13.11.2016.
+ * @author L on 13.11.2016.
  */
-public class PlayerRepository extends RepositoryBase {
+public class PlayerRepository extends RepositoryBase<Player> {
 
-    private String insertSql = "INSERT INTO PLAYER(nick, DoB, country, steamId, PLAYER_STATS_ID) values (?, ?, ?, ?, ?)";
-    private String selectByIdSql = "SELECT * FROM PLAYER WHERE id=?";
-    private String deleteSql = "DELETE FROM PLAYER WHERE id=?";
-    private String getAllSql = "SELECT * FROM PLAYER";
-    private String updateSql = "UPDATE PLAYER SET nick = ? where id=?";
-
-
-    private PreparedStatement insert;
-    private PreparedStatement selectById;
-    private PreparedStatement delete;
-    private PreparedStatement getAll;
-    private PreparedStatement update;
-
-    public PlayerRepository(Connection connection) {
-        super(connection);
-        try {
-            insert = connection.prepareStatement(insertSql);
-            selectById = connection.prepareStatement(selectByIdSql);
-            delete = connection.prepareStatement(deleteSql);
-            getAll = connection.prepareStatement(getAllSql);
-            update = connection.prepareStatement(updateSql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public PlayerRepository(Connection connection, IMapResultSetIntoEntity<Player> mapper) {
+        super(connection, mapper);
     }
 
-    public void add(Player player) {
-        try {
-            insert.setString(1, player.getNick());
-            insert.setString(2, player.getDateOfBirth());
-            insert.setString(3, player.getCountry());
-            insert.setString(4, player.getSteamId());
-            insert.setObject(5, player.getPlayerStats());
-            insert.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    @Override
+    protected String insertSql() {
+        return "INSERT INTO PLAYER(nick, DoB, country, steamId, PLAYER_STATS_ID) values (?, ?, ?, ?, ?)";
     }
 
-    public Player get(int playerId) {
-        try {
-            selectById.setInt(1, playerId);
-            ResultSet resultSet = selectById.executeQuery();
-            while (resultSet.next()) {
-                Player result = new Player();
-                result.setNick(resultSet.getString("nick"));
-                result.setCountry(resultSet.getString("country"));
-                result.setDateOfBirth(resultSet.getString("DoB"));
-                result.setSteamId(resultSet.getString("steamId"));
-                result.setPlayerStats((PlayerStats) resultSet.getObject("PLAYER_STATS_ID"));
-                return result;
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+    @Override
+    protected String updateSql() {
+        return "UPDATE PLAYER SET (nick,DoB, country, steamId, PLAYER_STATS_ID) = (?,?,?,?,?) where id=?";
     }
 
-    public void delete(int playerId) {
-        try {
-            delete.setInt(1, playerId);
-            delete.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    @Override
+    protected void setUpdate(Player player) throws SQLException {
+        update.setString(1, player.getNick());
+        update.setString(2, player.getCountry());
+        update.setDate(3, (Date) player.getDateOfBirth());
+        update.setString(4, player.getSteamId());
+        update.setInt(5, player.getPlayerStats().getId());
     }
 
-
-    public void getAll() {
-
-        try {
-            ResultSet resultSet = getAll.executeQuery();
-            while (resultSet.next()) {
-                int p_id = resultSet.getInt("id");
-                String p_nick = resultSet.getString("nick");
-                String p_country = resultSet.getString("country");
-                String p_DoB = resultSet.getString("DoB");
-                String p_steamId = resultSet.getString("steamId");
-                Object p_stats = resultSet.getObject("PLAYER_STATS_ID");
-                System.out.println(p_id + " " + p_nick + "" + p_country + "" + p_DoB + "" + p_steamId + "" + p_stats);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-
-    }
-
-    public void setUpdate(Player nick, int id) {
-
-        try {
-
-            update.setString(1, nick.getNick());
-            update.setInt(2, id);
-            update.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    @Override
+    protected void setInsert(Player player) throws SQLException {
+        insert.setString(1, player.getNick());
+        insert.setDate(2, (Date) player.getDateOfBirth());
+        insert.setString(3, player.getCountry());
+        insert.setString(4, player.getSteamId());
+        insert.setObject(5, player.getPlayerStats());
     }
 
 
@@ -120,11 +50,12 @@ public class PlayerRepository extends RepositoryBase {
         return "" + "CREATE TABLE PLAYER("
                 + "id bigint GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,"
                 + "nick varchar(25),"
-                + "DoB varchar(25),"
+                + "DoB date,"
                 + "country varchar(25),"
                 + "steamId varchar(25),"
                 + "PLAYER_STATS_ID int,"
-                + "FOREIGN KEY (PLAYER_STATS_ID) REFERENCES PLAYER_STATS(id)" + ")";
+                + "FOREIGN KEY (PLAYER_STATS_ID) REFERENCES PLAYER_STATS(id)"
+                + ")";
     }
 
     @Override

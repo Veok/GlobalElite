@@ -1,113 +1,41 @@
 package dao;
 
+import dao.mappers.IMapResultSetIntoEntity;
 import domain.model.TeamStats;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Created by L on 13.11.2016.
+ * @author L on 13.11.2016.
  */
-public class TeamStatsRepository extends RepositoryBase {
+public class TeamStatsRepository extends RepositoryBase<TeamStats> {
 
-    private String insertSql = "INSERT INTO TEAM_STATS(wins, looses, draws, points) values (?, ?, ?, ?)";
-    private String selectByIdSql = "SELECT * FROM TEAM_STATS WHERE id=?";
-    private String deleteSql = "DELETE FROM TEAM_STATS WHERE id=?";
-    private String getAllSql = "SELECT * FROM TEAM_STATS";
-    private String updateSql = "UPDATE TEAM_STATS SET wins = ? where id=?";
-
-
-    private PreparedStatement insert;
-    private PreparedStatement selectById;
-    private PreparedStatement delete;
-    private PreparedStatement getAll;
-    private PreparedStatement update;
-
-    public TeamStatsRepository(Connection connection) {
-        super(connection);
-        try {
-            insert = connection.prepareStatement(insertSql);
-            selectById = connection.prepareStatement(selectByIdSql);
-            delete = connection.prepareStatement(deleteSql);
-            getAll = connection.prepareStatement(getAllSql);
-            update = connection.prepareStatement(updateSql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public TeamStatsRepository(Connection connection, IMapResultSetIntoEntity<TeamStats> mapper) {
+        super(connection, mapper);
     }
 
 
-    public void add(TeamStats teamStats) {
-
-        try {
-            insert.setInt(1, teamStats.getWins());
-            insert.setInt(2, teamStats.getLooses());
-            insert.setInt(3, teamStats.getDraws());
-            insert.setDouble(4, teamStats.getPoints());
-            insert.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    protected String insertSql() {
+        return "INSERT INTO TEAM_STATS(wins, looses, draws, points) values (?, ?, ?, ?)";
     }
 
-
-    public TeamStats get(int teamStatsId) {
-
-        try {
-            selectById.setInt(teamStatsId, 1);
-            ResultSet resultSet = selectById.executeQuery();
-            while (resultSet.next()) {
-                TeamStats result = new TeamStats();
-                result.setWins(resultSet.getInt("wins"));
-                result.setLooses(resultSet.getInt("looses"));
-                result.setDraws(resultSet.getInt("draws"));
-                return result;
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+    protected String updateSql() {
+        return "UPDATE TEAM_STATS SET (wins,looses,draws,points) = (?,?,?,?) where id=?";
     }
 
-    public void delete(int playerStatsId) {
-        try {
-            delete.setInt(1, playerStatsId);
-            delete.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    protected void setUpdate(TeamStats teamStats) throws SQLException {
+        update.setInt(1, teamStats.getWins());
+        update.setInt(2, teamStats.getLooses());
+        update.setInt(3, teamStats.getDraws());
+        update.setDouble(4, teamStats.getPoints());
     }
 
-    public void getAll() {
-
-        try {
-            ResultSet resultSet = getAll.executeQuery();
-            while (resultSet.next()) {
-                int ts_id = resultSet.getInt("id");
-                int ts_w = resultSet.getInt("wins");
-                int ts_l = resultSet.getInt("looses");
-                int ts_d = resultSet.getInt("draws");
-                double ts_p = resultSet.getDouble("points");
-                System.out.println(ts_id + " " + ts_w + " " + ts_l + " " + ts_d + " " + ts_p);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    public void setUpdate(TeamStats wins, int id) {
-
-        try {
-            update.setInt(1, wins.getWins());
-            update.setInt(2, id);
-            update.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    protected void setInsert(TeamStats teamStats) throws SQLException {
+        insert.setInt(1, teamStats.getWins());
+        insert.setInt(2, teamStats.getLooses());
+        insert.setInt(3, teamStats.getDraws());
+        insert.setDouble(4, teamStats.getPoints());
     }
 
     @Override

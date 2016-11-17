@@ -1,128 +1,56 @@
 package dao;
 
+import dao.mappers.IMapResultSetIntoEntity;
 import domain.model.HistoryOfMatch;
-import domain.model.Maps;
-import domain.model.ScoreBoard;
-import domain.model.Team;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.Date;
 import java.sql.SQLException;
 
 /**
- * Created by L on 13.11.2016.
+ * @author L on 13.11.2016.
  */
-public class HistoryOfMatchRepository extends RepositoryBase {
-
-    private String insertSql = "INSERT INTO HISTORY_OF_MATCH(scoreOfTeam1, scoreOfTeam2, timeOfMatch, TEAM_1_ID," +
-            " TEAM_2_ID, MAP_ID, SCOREBOARD_ID) values (?, ?, ?, ?, ?, ?, ?)";
-    private String selectByIdSql = "SELECT * FROM HISTORY_OF_MATCH WHERE id=?";
-    private String deleteSql = "DELETE FROM HISTORY_OF_MATCH WHERE id=?";
-    private String getAllSql = "SELECT * FROM HISTORY_OF_MATCH";
-    private String updateSql = "UPDATE HISTORY_OF_MATCH SET scoreOfTeam1 = ? where id=?";
-
-    private PreparedStatement insert;
-    private PreparedStatement selectById;
-    private PreparedStatement delete;
-    private PreparedStatement getAll;
-    private PreparedStatement update;
+public class HistoryOfMatchRepository extends RepositoryBase<HistoryOfMatch> {
 
 
-    public HistoryOfMatchRepository(Connection connection) {
-        super(connection);
-        try {
-            insert = connection.prepareStatement(insertSql);
-            selectById = connection.prepareStatement(selectByIdSql);
-            delete = connection.prepareStatement(deleteSql);
-            getAll = connection.prepareStatement(getAllSql);
-            update = connection.prepareStatement(updateSql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public HistoryOfMatchRepository(Connection connection, IMapResultSetIntoEntity<HistoryOfMatch> mapper) {
+        super(connection, mapper);
     }
 
 
-    public void add(HistoryOfMatch historyOfMatch) {
-
-        try {
-            insert.setInt(1, historyOfMatch.getScoreOfTeam1());
-            insert.setInt(2, historyOfMatch.getScoreOfTeam2());
-            insert.setString(3, historyOfMatch.getTimeOfMatch());
-            insert.setObject(4, historyOfMatch.getTeam1());
-            insert.setObject(5, historyOfMatch.getTeam2());
-            insert.setObject(6, historyOfMatch.getMap());
-            insert.setObject(7, historyOfMatch.getScoreBoard());
-            insert.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    @Override
+    protected String insertSql() {
+        return "INSERT INTO HISTORY_OF_MATCH(scoreOfTeam1, scoreOfTeam2, timeOfMatch, TEAM_1_ID," +
+                " TEAM_2_ID, MAP_ID, SCOREBOARD_ID) values (?, ?, ?, ?, ?, ?, ?)";
     }
 
-    public HistoryOfMatch get(int historyOfMatchId) {
-
-        try {
-            selectById.setInt(1, historyOfMatchId);
-            ResultSet resultSet = selectById.executeQuery();
-            while (resultSet.next()) {
-                HistoryOfMatch result = new HistoryOfMatch();
-                result.setScoreOfTeam1(resultSet.getInt("scoreOfTeam1"));
-                result.setScoreOfTeam2(resultSet.getInt("scoreOfTeam2"));
-                result.setTimeOfMatch(resultSet.getString("timeOfMatch"));
-                result.setTeam1((Team) resultSet.getObject("TEAM_1_ID"));
-                result.setTeam2((Team) resultSet.getObject("TEAM_2_ID"));
-                result.setMap((Maps) resultSet.getObject("MAP_ID"));
-                result.setScoreBoard((ScoreBoard) resultSet.getObject("SCOREBOARD_ID"));
-                return result;
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+    @Override
+    protected String updateSql() {
+        return "UPDATE HISTORY_OF_MATCH SET (scoreOfTeam1, scoreOfTeam2, timeOfMatch, TEAM_1_ID, TEAM_2_ID" +
+                ", MAP_ID, SCOREBOARD_ID)=(?,?,?,?,?,?,?) where id=?";
     }
 
-    public void delete(int historyOfMatchId) {
-        try {
-            delete.setInt(1, historyOfMatchId);
-            delete.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    @Override
+    protected void setUpdate(HistoryOfMatch historyOfMatch) throws SQLException {
+        update.setInt(1, historyOfMatch.getScoreOfTeam1());
+        update.setInt(2, historyOfMatch.getScoreOfTeam2());
+        update.setDate(3, (Date) historyOfMatch.getTimeOfMatch());
+        update.setInt(4, historyOfMatch.getTeam1().getId());
+        update.setInt(5, historyOfMatch.getTeam1().getId());
+        update.setInt(6, historyOfMatch.getMapId());
+        update.setInt(7, historyOfMatch.getScoreBoard().getId());
     }
 
-    public void getAll() {
-
-        try {
-            ResultSet resultSet = getAll.executeQuery();
-            while (resultSet.next()) {
-                int h_id = resultSet.getInt("id");
-                String h_scoreOfTeam1 = resultSet.getString("scoreOfTeam1");
-                String h_scoreOfTeam2 = resultSet.getString("scoreOfTeam2");
-                String h_tom = resultSet.getString("timeOfMatch");
-                Object h_team_1 = resultSet.getObject("TEAM_1_ID");
-                Object h_team_2 = resultSet.getObject("TEAM_2_ID");
-                Object h_map = resultSet.getObject("MAP_ID");
-                Object h_sb = resultSet.getObject("SCOREBOARD_ID");
-                System.out.println(h_id + " " + h_scoreOfTeam1 + "" + h_scoreOfTeam2 + "" + h_tom + ""
-                        + h_team_1 + "" + h_team_2 + "" + h_map + "" + h_sb);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+    @Override
+    protected void setInsert(HistoryOfMatch historyOfMatch) throws SQLException {
+        insert.setInt(1, historyOfMatch.getScoreOfTeam1());
+        insert.setInt(2, historyOfMatch.getScoreOfTeam2());
+        insert.setDate(3, (Date) historyOfMatch.getTimeOfMatch());
+        insert.setInt(4, historyOfMatch.getTeam1().getId());
+        insert.setInt(5, historyOfMatch.getTeam2().getId());
+        insert.setInt(6, historyOfMatch.getMapId());
+        insert.setInt(7, historyOfMatch.getScoreBoard().getId());
     }
-
-    public void setUpdateScore(int id, HistoryOfMatch scoreOfTeam1) {
-        try {
-            update.setInt(1, scoreOfTeam1.getScoreOfTeam2());
-            update.setInt(2, id);
-            update.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     @Override
     protected String createTableSql() {
@@ -130,7 +58,7 @@ public class HistoryOfMatchRepository extends RepositoryBase {
                 + "id bigint GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,"
                 + "scoreOfTeam1 int,"
                 + "scoreOfTeam2 int,"
-                + "timeOfMatch varchar(25),"
+                + "timeOfMatch date,"
                 + "TEAM_1_ID int,"
                 + "TEAM_2_ID int,"
                 + "MAP_ID int,"
@@ -138,7 +66,8 @@ public class HistoryOfMatchRepository extends RepositoryBase {
                 + "FOREIGN KEY (TEAM_1_ID) REFERENCES TEAM(id),"
                 + "FOREIGN KEY (TEAM_2_ID) REFERENCES TEAM(id),"
                 + "FOREIGN KEY (MAP_ID) REFERENCES MAPS(id),"
-                + "FOREIGN KEY (SCOREBOARD_ID) REFERENCES SCOREBOARD(id)" + ")";
+                + "FOREIGN KEY (SCOREBOARD_ID) REFERENCES SCOREBOARD(id)"
+                + ")";
     }
 
     @Override

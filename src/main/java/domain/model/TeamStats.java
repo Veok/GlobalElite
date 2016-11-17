@@ -1,16 +1,25 @@
 package domain.model;
 
 /**
- * Created by L on 10.11.2016.
+ * @author by L on 10.11.2016.
  */
-public class TeamStats {
+public class TeamStats implements IHaveId {
 
+    private int id;
     private int wins;
     private int looses;
     private int draws;
     private double points;
 
     public TeamStats() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getWins() {

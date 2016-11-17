@@ -1,15 +1,17 @@
 package domain.model;
 
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by L on 10.11.2016.
+ * @author L on 10.11.2016.
  */
-public class Player {
+public class Player implements IHaveId {
 
+    private int id;
     private String nick;
-    private String dateOfBirth;
+    private Date dateOfBirth;
     private String country;
     private String steamId;
     private PlayerStats playerStats;
@@ -30,6 +32,13 @@ public class Player {
         return matcher.find();
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public PlayerStats getPlayerStats() {
         return playerStats;
@@ -47,14 +56,13 @@ public class Player {
         this.nick = nick;
     }
 
-    public String getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
-
 
     public String getCountry() {
         return country;

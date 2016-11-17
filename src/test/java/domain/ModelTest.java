@@ -7,9 +7,10 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by L on 11.11.2016.
+ * @author L on 11.11.2016.
  */
 public class ModelTest {
+
 
     @Test
     public void testPlayerRatio() {
@@ -44,7 +45,7 @@ public class ModelTest {
     }
 
     @Test
-    public void testTeamCountry(){
+    public void testTeamCountry() {
         Team team = new Team();
         team.setCountry(CountryCode.US.getName());
         assertEquals(CountryCode.US.getName(), team.getCountry());
@@ -66,6 +67,24 @@ public class ModelTest {
         scoreBoard.setPlayerStats();
 
         assertEquals(10, historyOfMatch.getScoreBoard().getKillsInMatch());
+
+    }
+
+    @Test
+    public void testPlayerKillsInScoreBoard() {
+
+        HistoryOfMatch historyOfMatch = new HistoryOfMatch();
+        Player player = new Player();
+        PlayerStats playerStats = new PlayerStats();
+        ScoreBoard scoreBoard = new ScoreBoard();
+
+        player.setPlayerStats(playerStats);
+        scoreBoard.setPlayer(player);
+        historyOfMatch.setScoreBoard(scoreBoard);
+
+        scoreBoard.setKillsInMatch(10);
+        scoreBoard.setPlayerStats();
+
         assertEquals(10, historyOfMatch.getScoreBoard().getPlayer().getPlayerStats().getKills());
 
     }
@@ -85,6 +104,23 @@ public class ModelTest {
         scoreBoard.setPlayerStats();
 
         assertEquals(20, historyOfMatch.getScoreBoard().getDeathsInMatch());
+
+    }
+
+    @Test
+    public void testPlayerDeathsInScoreBoard() {
+        HistoryOfMatch historyOfMatch = new HistoryOfMatch();
+        Player player = new Player();
+        PlayerStats playerStats = new PlayerStats();
+        ScoreBoard scoreBoard = new ScoreBoard();
+
+        player.setPlayerStats(playerStats);
+        scoreBoard.setPlayer(player);
+        historyOfMatch.setScoreBoard(scoreBoard);
+
+        scoreBoard.setDeathsInMatch(20);
+        scoreBoard.setPlayerStats();
+
         assertEquals(20, historyOfMatch.getScoreBoard().getPlayer().getPlayerStats().getDeaths());
 
     }
@@ -130,6 +166,27 @@ public class ModelTest {
         historyOfMatch.score();
 
         assertEquals(1, team1.getTeamStats().getWins());
+
+    }
+
+    @Test
+    public void testTeam2Looses() {
+        HistoryOfMatch historyOfMatch = new HistoryOfMatch();
+        Team team1 = new Team();
+        Team team2 = new Team();
+        TeamStats team1Stats = new TeamStats();
+        TeamStats team2Stats = new TeamStats();
+
+        team1.setTeamStats(team1Stats);
+        team2.setTeamStats(team2Stats);
+
+        historyOfMatch.setTeam1(team1);
+        historyOfMatch.setTeam2(team2);
+
+        historyOfMatch.setScoreOfTeam1(43);
+        historyOfMatch.setScoreOfTeam2(20);
+
+        historyOfMatch.score();
         assertEquals(1, team2.getTeamStats().getLooses());
 
     }
@@ -155,7 +212,28 @@ public class ModelTest {
         historyOfMatch.score();
 
         assertEquals(1, team2.getTeamStats().getWins());
+    }
+
+    @Test
+    public void testTeam1Looses() {
+        HistoryOfMatch historyOfMatch = new HistoryOfMatch();
+        Team team1 = new Team();
+        Team team2 = new Team();
+        TeamStats team1Stats = new TeamStats();
+        TeamStats team2Stats = new TeamStats();
+
+        team1.setTeamStats(team1Stats);
+        team2.setTeamStats(team2Stats);
+
+        historyOfMatch.setTeam1(team1);
+        historyOfMatch.setTeam2(team2);
+
+        historyOfMatch.setScoreOfTeam1(23);
+        historyOfMatch.setScoreOfTeam2(30);
+
+        historyOfMatch.score();
         assertEquals(1, team1.getTeamStats().getLooses());
+
     }
 
     @Test
@@ -178,7 +256,7 @@ public class ModelTest {
         historyOfMatch.score();
 
         assertEquals(1, team1.getTeamStats().getDraws());
-        assertEquals(1, team1.getTeamStats().getDraws());
+        assertEquals(1, team2.getTeamStats().getDraws());
     }
 
     @Test
