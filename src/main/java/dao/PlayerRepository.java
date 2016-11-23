@@ -1,19 +1,38 @@
 package dao;
 
 import dao.mappers.IMapResultSetIntoEntity;
+import dao.repositories.IPlayerRepository;
+import dao.uow.IUnitOfWork;
 import domain.model.Player;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * @author L on 13.11.2016.
  */
-public class PlayerRepository extends RepositoryBase<Player> {
+public class PlayerRepository extends RepositoryBase<Player> implements IPlayerRepository {
 
-    public PlayerRepository(Connection connection, IMapResultSetIntoEntity<Player> mapper) {
-        super(connection, mapper);
+    public PlayerRepository(Connection connection, IMapResultSetIntoEntity<Player> mapper, IUnitOfWork uow) {
+        super(connection, mapper, uow);
+    }
+
+
+    @Override
+    public List<Player> withNick(String nick) {
+        return null;
+    }
+
+    @Override
+    public List<Player> withCountry(String country) {
+        return null;
+    }
+
+    @Override
+    public List<Player> withDateOfBirth(java.util.Date dob) {
+        return null;
     }
 
     @Override
@@ -32,7 +51,7 @@ public class PlayerRepository extends RepositoryBase<Player> {
         update.setString(2, player.getCountry());
         update.setDate(3, (Date) player.getDateOfBirth());
         update.setString(4, player.getSteamId());
-        update.setInt(5, player.getPlayerStats().getId());
+        update.setInt(5, player.getGeneralPlayerStats().getId());
     }
 
     @Override
@@ -41,7 +60,7 @@ public class PlayerRepository extends RepositoryBase<Player> {
         insert.setDate(2, (Date) player.getDateOfBirth());
         insert.setString(3, player.getCountry());
         insert.setString(4, player.getSteamId());
-        insert.setObject(5, player.getPlayerStats());
+        insert.setObject(5, player.getGeneralPlayerStats());
     }
 
 

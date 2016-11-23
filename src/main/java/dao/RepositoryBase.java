@@ -1,6 +1,10 @@
 package dao;
 
 import dao.mappers.IMapResultSetIntoEntity;
+import dao.repositories.IRepository;
+import dao.uow.Entity;
+import dao.uow.IUnitOfWork;
+import dao.uow.IUnitOfWorkRepository;
 import domain.model.IHaveId;
 
 import java.sql.*;
@@ -10,29 +14,30 @@ import java.util.List;
 /**
  * @author L on 13.11.2016.
  */
-public abstract class RepositoryBase<TEntity extends IHaveId> {
+public abstract class RepositoryBase<TEntity extends IHaveId> implements IRepository<TEntity>, IUnitOfWorkRepository {
 
-    private Connection connection;
+
+    protected Connection connection;
 
     protected PreparedStatement insert;
     protected PreparedStatement selectById;
     protected PreparedStatement update;
     protected PreparedStatement delete;
     protected PreparedStatement selectAll;
-
+    protected IUnitOfWork uow;
     protected IMapResultSetIntoEntity<TEntity> mapper;
 
     public Connection getConnection() {
         return connection;
     }
 
-
     protected RepositoryBase(Connection connection,
-                             IMapResultSetIntoEntity<TEntity> mapper) {
+                             IMapResultSetIntoEntity<TEntity> mapper, IUnitOfWork uow) {
         this.connection = connection;
+        this.uow = uow;
         try {
             this.mapper = mapper;
-            createTableIfNotExists();
+            createTableIfnotExists();
             insert = connection.prepareStatement(insertSql());
             selectById = connection.prepareStatement(selectByIdSql());
             update = connection.prepareStatement(updateSql());
@@ -57,12 +62,9 @@ public abstract class RepositoryBase<TEntity extends IHaveId> {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see dao.IRepository#get(int)
-     */
-    public TEntity get(int personId) {
+    public TEntity get(int id) {
         try {
-            selectById.setInt(1, personId);
+            selectById.setInt(1, id);
             ResultSet rs = selectById.executeQuery();
             while (rs.next()) {
                 return mapper.map(rs);
@@ -74,38 +76,48 @@ public abstract class RepositoryBase<TEntity extends IHaveId> {
 
     }
 
+    public void add(TEntity entity) {
+        Entity ent = new Entity(this);
+        ent.setEntity(entity);
+        uow.markAsNew(ent);
 
-    /* (non-Javadoc)
-     * @see dao.IRepository#update(TEntity)
-     */
+    }
+
+    public void delete(TEntity entity) {
+        Entity ent = new Entity(this);
+        ent.setEntity(entity);
+        uow.markAsDeleted(ent);
+    }
+
     public void update(TEntity entity) {
+        Entity ent = new Entity(this);
+        ent.setEntity(entity);
+        uow.markAsChanged(ent);
+    }
+
+    public void persistUpdate(Entity entity) {
         try {
-            setUpdate(entity);
-            update.setInt(3, entity.getId());
+            TEntity ent = (TEntity) entity.getEntity();
+            setUpdate(ent);
+            update.setInt(3, ent.getId());
             update.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    /* (non-Javadoc)
-     * @see dao.IRepository#add(TEntity)
-     */
-    public void add(TEntity entity) {
+    public void persistAdd(Entity entity) {
         try {
-            setInsert(entity);
+            setInsert((TEntity) entity.getEntity());
             insert.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
 
-    /* (non-Javadoc)
-     * @see dao.IRepository#delete(TEntity)
-     */
-    public void delete(TEntity entity) {
+    public void persistDelete(Entity entity) {
         try {
-            delete.setInt(1, entity.getId());
+            delete.setInt(1, ((TEntity) entity.getEntity()).getId());
             delete.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -113,28 +125,24 @@ public abstract class RepositoryBase<TEntity extends IHaveId> {
     }
 
     protected String selectByIdSql() {
-        return "SELECT * FROM "
-                + tableName()
-                + " WHERE id=?";
+        return "SELECT * FROM " + tableName() + " WHERE id=?";
     }
 
-
     protected String deleteSql() {
-        return "DELETE FROM "
-                + tableName()
-                + " WHERE id=?";
+        return "DELETE FROM " + tableName() + " WHERE id=?";
     }
 
     protected String selectAllSql() {
         return "SELECT * FROM " + tableName();
     }
 
-    private void createTableIfNotExists() throws SQLException {
+    private void createTableIfnotExists() throws SQLException {
         Statement createTable = this.connection.createStatement();
 
         boolean tableExists = false;
 
-        ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
+        ResultSet rs = connection.getMetaData().getTables(null, null, null,
+                null);
 
         while (rs.next()) {
             if (rs.getString("Table_Name").equalsIgnoreCase(tableName())) {

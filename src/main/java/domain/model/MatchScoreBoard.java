@@ -3,7 +3,7 @@ package domain.model;
 /**
  * @author L on 13.11.2016.
  */
-public class ScoreBoard implements IHaveId {
+public class MatchScoreBoard implements IHaveId {
 
     private int id;
     private Player player;
@@ -46,8 +46,8 @@ public class ScoreBoard implements IHaveId {
 
     public void setPlayerStats() {
 
-        player.getPlayerStats().setKills(player.getPlayerStats().getKills() + killsInMatch);
-        player.getPlayerStats().setDeaths(player.getPlayerStats().getDeaths() + deathsInMatch);
+        player.getGeneralPlayerStats().setKills(player.getGeneralPlayerStats().getKills() + killsInMatch);
+        player.getGeneralPlayerStats().setDeaths(player.getGeneralPlayerStats().getDeaths() + deathsInMatch);
 
     }
 

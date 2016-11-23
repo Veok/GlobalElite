@@ -2,6 +2,7 @@ package dao.repositories;
 
 import domain.model.Player;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -9,8 +10,9 @@ import java.util.List;
  */
 public interface IPlayerRepository extends IRepository<Player> {
 
-    public List<Player> nick(String nick);
-    public  List<Player> country(String player);
-    public  List<Player> steamId(String player);
+    List<Player> withNick(String nick);
 
+    List<Player> withCountry(String country);
+
+    List<Player> withDateOfBirth(Date dob);
 }

@@ -3,14 +3,14 @@ package domain.model;
 /**
  * @author L on 13.11.2016.
  */
-public class PlayerStats implements IHaveId {
+public class GeneralPlayerStats implements IHaveId {
 
     private int id;
     private int kills;
     private int deaths;
     private double ratio;
 
-    public PlayerStats() {
+    public GeneralPlayerStats() {
     }
 
     public int getId() {

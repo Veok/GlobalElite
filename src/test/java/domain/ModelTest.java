@@ -15,19 +15,19 @@ public class ModelTest {
     @Test
     public void testPlayerRatio() {
         Player player = new Player();
-        PlayerStats playerStats = new PlayerStats();
-        player.setPlayerStats(playerStats);
-        player.getPlayerStats().setKills(10);
-        player.getPlayerStats().setDeaths(20);
-        assertEquals(0.5, player.getPlayerStats().getRatio(), 0.001);
+        GeneralPlayerStats generalPlayerStats = new GeneralPlayerStats();
+        player.setGeneralPlayerStats(generalPlayerStats);
+        player.getGeneralPlayerStats().setKills(10);
+        player.getGeneralPlayerStats().setDeaths(20);
+        assertEquals(0.5, player.getGeneralPlayerStats().getRatio(), 0.001);
     }
 
     @Test
     public void testTeamPoints() {
-        TeamStats teamStats = new TeamStats();
-        teamStats.setWins(3);
-        teamStats.setDraws(2);
-        assertEquals(4, teamStats.getPoints(), 0.001);
+        GeneralTeamStats generalTeamStats = new GeneralTeamStats();
+        generalTeamStats.setWins(3);
+        generalTeamStats.setDraws(2);
+        assertEquals(4, generalTeamStats.getPoints(), 0.001);
     }
 
     @Test
@@ -54,242 +54,242 @@ public class ModelTest {
     @Test
     public void testScoreBoardKillsInMatch() {
 
-        HistoryOfMatch historyOfMatch = new HistoryOfMatch();
+        MatchHistory matchHistory = new MatchHistory();
         Player player = new Player();
-        PlayerStats playerStats = new PlayerStats();
-        ScoreBoard scoreBoard = new ScoreBoard();
+        GeneralPlayerStats generalPlayerStats = new GeneralPlayerStats();
+        MatchScoreBoard matchScoreBoard = new MatchScoreBoard();
 
-        player.setPlayerStats(playerStats);
-        scoreBoard.setPlayer(player);
-        historyOfMatch.setScoreBoard(scoreBoard);
+        player.setGeneralPlayerStats(generalPlayerStats);
+        matchScoreBoard.setPlayer(player);
+        matchHistory.setMatchScoreBoard(matchScoreBoard);
 
-        scoreBoard.setKillsInMatch(10);
-        scoreBoard.setPlayerStats();
+        matchScoreBoard.setKillsInMatch(10);
+        matchScoreBoard.setPlayerStats();
 
-        assertEquals(10, historyOfMatch.getScoreBoard().getKillsInMatch());
+        assertEquals(10, matchHistory.getMatchScoreBoard().getKillsInMatch());
 
     }
 
     @Test
     public void testPlayerKillsInScoreBoard() {
 
-        HistoryOfMatch historyOfMatch = new HistoryOfMatch();
+        MatchHistory matchHistory = new MatchHistory();
         Player player = new Player();
-        PlayerStats playerStats = new PlayerStats();
-        ScoreBoard scoreBoard = new ScoreBoard();
+        GeneralPlayerStats generalPlayerStats = new GeneralPlayerStats();
+        MatchScoreBoard matchScoreBoard = new MatchScoreBoard();
 
-        player.setPlayerStats(playerStats);
-        scoreBoard.setPlayer(player);
-        historyOfMatch.setScoreBoard(scoreBoard);
+        player.setGeneralPlayerStats(generalPlayerStats);
+        matchScoreBoard.setPlayer(player);
+        matchHistory.setMatchScoreBoard(matchScoreBoard);
 
-        scoreBoard.setKillsInMatch(10);
-        scoreBoard.setPlayerStats();
+        matchScoreBoard.setKillsInMatch(10);
+        matchScoreBoard.setPlayerStats();
 
-        assertEquals(10, historyOfMatch.getScoreBoard().getPlayer().getPlayerStats().getKills());
+        assertEquals(10, matchHistory.getMatchScoreBoard().getPlayer().getGeneralPlayerStats().getKills());
 
     }
 
     @Test
     public void testScoreBoardDeathsInMatch() {
-        HistoryOfMatch historyOfMatch = new HistoryOfMatch();
+        MatchHistory matchHistory = new MatchHistory();
         Player player = new Player();
-        PlayerStats playerStats = new PlayerStats();
-        ScoreBoard scoreBoard = new ScoreBoard();
+        GeneralPlayerStats generalPlayerStats = new GeneralPlayerStats();
+        MatchScoreBoard matchScoreBoard = new MatchScoreBoard();
 
-        player.setPlayerStats(playerStats);
-        scoreBoard.setPlayer(player);
-        historyOfMatch.setScoreBoard(scoreBoard);
+        player.setGeneralPlayerStats(generalPlayerStats);
+        matchScoreBoard.setPlayer(player);
+        matchHistory.setMatchScoreBoard(matchScoreBoard);
 
-        scoreBoard.setDeathsInMatch(20);
-        scoreBoard.setPlayerStats();
+        matchScoreBoard.setDeathsInMatch(20);
+        matchScoreBoard.setPlayerStats();
 
-        assertEquals(20, historyOfMatch.getScoreBoard().getDeathsInMatch());
+        assertEquals(20, matchHistory.getMatchScoreBoard().getDeathsInMatch());
 
     }
 
     @Test
     public void testPlayerDeathsInScoreBoard() {
-        HistoryOfMatch historyOfMatch = new HistoryOfMatch();
+        MatchHistory matchHistory = new MatchHistory();
         Player player = new Player();
-        PlayerStats playerStats = new PlayerStats();
-        ScoreBoard scoreBoard = new ScoreBoard();
+        GeneralPlayerStats generalPlayerStats = new GeneralPlayerStats();
+        MatchScoreBoard matchScoreBoard = new MatchScoreBoard();
 
-        player.setPlayerStats(playerStats);
-        scoreBoard.setPlayer(player);
-        historyOfMatch.setScoreBoard(scoreBoard);
+        player.setGeneralPlayerStats(generalPlayerStats);
+        matchScoreBoard.setPlayer(player);
+        matchHistory.setMatchScoreBoard(matchScoreBoard);
 
-        scoreBoard.setDeathsInMatch(20);
-        scoreBoard.setPlayerStats();
+        matchScoreBoard.setDeathsInMatch(20);
+        matchScoreBoard.setPlayerStats();
 
-        assertEquals(20, historyOfMatch.getScoreBoard().getPlayer().getPlayerStats().getDeaths());
+        assertEquals(20, matchHistory.getMatchScoreBoard().getPlayer().getGeneralPlayerStats().getDeaths());
 
     }
 
     @Test
     public void testPlayerRatioAfterMatch() {
-        HistoryOfMatch historyOfMatch = new HistoryOfMatch();
+        MatchHistory matchHistory = new MatchHistory();
         Player player = new Player();
-        PlayerStats playerStats = new PlayerStats();
-        ScoreBoard scoreBoard = new ScoreBoard();
+        GeneralPlayerStats generalPlayerStats = new GeneralPlayerStats();
+        MatchScoreBoard matchScoreBoard = new MatchScoreBoard();
 
-        player.setPlayerStats(playerStats);
-        scoreBoard.setPlayer(player);
-        historyOfMatch.setScoreBoard(scoreBoard);
+        player.setGeneralPlayerStats(generalPlayerStats);
+        matchScoreBoard.setPlayer(player);
+        matchHistory.setMatchScoreBoard(matchScoreBoard);
 
-        playerStats.setKills(5);
-        playerStats.setDeaths(15);
-        scoreBoard.setKillsInMatch(10);
-        scoreBoard.setDeathsInMatch(15);
-        scoreBoard.setPlayerStats();
+        generalPlayerStats.setKills(5);
+        generalPlayerStats.setDeaths(15);
+        matchScoreBoard.setKillsInMatch(10);
+        matchScoreBoard.setDeathsInMatch(15);
+        matchScoreBoard.setPlayerStats();
 
-        assertEquals(0.5, player.getPlayerStats().getRatio(), 0.001);
+        assertEquals(0.5, player.getGeneralPlayerStats().getRatio(), 0.001);
     }
 
     @Test
     public void testTeam1Win() {
 
-        HistoryOfMatch historyOfMatch = new HistoryOfMatch();
+        MatchHistory matchHistory = new MatchHistory();
         Team team1 = new Team();
         Team team2 = new Team();
-        TeamStats team1Stats = new TeamStats();
-        TeamStats team2Stats = new TeamStats();
+        GeneralTeamStats team1Stats = new GeneralTeamStats();
+        GeneralTeamStats team2Stats = new GeneralTeamStats();
 
-        team1.setTeamStats(team1Stats);
-        team2.setTeamStats(team2Stats);
+        team1.setGeneralTeamStats(team1Stats);
+        team2.setGeneralTeamStats(team2Stats);
 
-        historyOfMatch.setTeam1(team1);
-        historyOfMatch.setTeam2(team2);
+        matchHistory.setTeam1(team1);
+        matchHistory.setTeam2(team2);
 
-        historyOfMatch.setScoreOfTeam1(43);
-        historyOfMatch.setScoreOfTeam2(20);
+        matchHistory.setScoreOfTeam1(43);
+        matchHistory.setScoreOfTeam2(20);
 
-        historyOfMatch.score();
+        matchHistory.score();
 
-        assertEquals(1, team1.getTeamStats().getWins());
+        assertEquals(1, team1.getGeneralTeamStats().getWins());
 
     }
 
     @Test
     public void testTeam2Looses() {
-        HistoryOfMatch historyOfMatch = new HistoryOfMatch();
+        MatchHistory matchHistory = new MatchHistory();
         Team team1 = new Team();
         Team team2 = new Team();
-        TeamStats team1Stats = new TeamStats();
-        TeamStats team2Stats = new TeamStats();
+        GeneralTeamStats team1Stats = new GeneralTeamStats();
+        GeneralTeamStats team2Stats = new GeneralTeamStats();
 
-        team1.setTeamStats(team1Stats);
-        team2.setTeamStats(team2Stats);
+        team1.setGeneralTeamStats(team1Stats);
+        team2.setGeneralTeamStats(team2Stats);
 
-        historyOfMatch.setTeam1(team1);
-        historyOfMatch.setTeam2(team2);
+        matchHistory.setTeam1(team1);
+        matchHistory.setTeam2(team2);
 
-        historyOfMatch.setScoreOfTeam1(43);
-        historyOfMatch.setScoreOfTeam2(20);
+        matchHistory.setScoreOfTeam1(43);
+        matchHistory.setScoreOfTeam2(20);
 
-        historyOfMatch.score();
-        assertEquals(1, team2.getTeamStats().getLooses());
+        matchHistory.score();
+        assertEquals(1, team2.getGeneralTeamStats().getLooses());
 
     }
 
     @Test
     public void testTeam2Win() {
 
-        HistoryOfMatch historyOfMatch = new HistoryOfMatch();
+        MatchHistory matchHistory = new MatchHistory();
         Team team1 = new Team();
         Team team2 = new Team();
-        TeamStats team1Stats = new TeamStats();
-        TeamStats team2Stats = new TeamStats();
+        GeneralTeamStats team1Stats = new GeneralTeamStats();
+        GeneralTeamStats team2Stats = new GeneralTeamStats();
 
-        team1.setTeamStats(team1Stats);
-        team2.setTeamStats(team2Stats);
+        team1.setGeneralTeamStats(team1Stats);
+        team2.setGeneralTeamStats(team2Stats);
 
-        historyOfMatch.setTeam1(team1);
-        historyOfMatch.setTeam2(team2);
+        matchHistory.setTeam1(team1);
+        matchHistory.setTeam2(team2);
 
-        historyOfMatch.setScoreOfTeam1(23);
-        historyOfMatch.setScoreOfTeam2(30);
+        matchHistory.setScoreOfTeam1(23);
+        matchHistory.setScoreOfTeam2(30);
 
-        historyOfMatch.score();
+        matchHistory.score();
 
-        assertEquals(1, team2.getTeamStats().getWins());
+        assertEquals(1, team2.getGeneralTeamStats().getWins());
     }
 
     @Test
     public void testTeam1Looses() {
-        HistoryOfMatch historyOfMatch = new HistoryOfMatch();
+        MatchHistory matchHistory = new MatchHistory();
         Team team1 = new Team();
         Team team2 = new Team();
-        TeamStats team1Stats = new TeamStats();
-        TeamStats team2Stats = new TeamStats();
+        GeneralTeamStats team1Stats = new GeneralTeamStats();
+        GeneralTeamStats team2Stats = new GeneralTeamStats();
 
-        team1.setTeamStats(team1Stats);
-        team2.setTeamStats(team2Stats);
+        team1.setGeneralTeamStats(team1Stats);
+        team2.setGeneralTeamStats(team2Stats);
 
-        historyOfMatch.setTeam1(team1);
-        historyOfMatch.setTeam2(team2);
+        matchHistory.setTeam1(team1);
+        matchHistory.setTeam2(team2);
 
-        historyOfMatch.setScoreOfTeam1(23);
-        historyOfMatch.setScoreOfTeam2(30);
+        matchHistory.setScoreOfTeam1(23);
+        matchHistory.setScoreOfTeam2(30);
 
-        historyOfMatch.score();
-        assertEquals(1, team1.getTeamStats().getLooses());
+        matchHistory.score();
+        assertEquals(1, team1.getGeneralTeamStats().getLooses());
 
     }
 
     @Test
     public void testDraw() {
-        HistoryOfMatch historyOfMatch = new HistoryOfMatch();
+        MatchHistory matchHistory = new MatchHistory();
         Team team1 = new Team();
         Team team2 = new Team();
-        TeamStats team1Stats = new TeamStats();
-        TeamStats team2Stats = new TeamStats();
+        GeneralTeamStats team1Stats = new GeneralTeamStats();
+        GeneralTeamStats team2Stats = new GeneralTeamStats();
 
-        team1.setTeamStats(team1Stats);
-        team2.setTeamStats(team2Stats);
+        team1.setGeneralTeamStats(team1Stats);
+        team2.setGeneralTeamStats(team2Stats);
 
-        historyOfMatch.setTeam1(team1);
-        historyOfMatch.setTeam2(team2);
+        matchHistory.setTeam1(team1);
+        matchHistory.setTeam2(team2);
 
-        historyOfMatch.setScoreOfTeam1(50);
-        historyOfMatch.setScoreOfTeam2(50);
+        matchHistory.setScoreOfTeam1(50);
+        matchHistory.setScoreOfTeam2(50);
 
-        historyOfMatch.score();
+        matchHistory.score();
 
-        assertEquals(1, team1.getTeamStats().getDraws());
-        assertEquals(1, team2.getTeamStats().getDraws());
+        assertEquals(1, team1.getGeneralTeamStats().getDraws());
+        assertEquals(1, team2.getGeneralTeamStats().getDraws());
     }
 
     @Test
     public void testSummaryOfTeamStatistics() {
 
-        HistoryOfMatch historyOfMatch = new HistoryOfMatch();
+        MatchHistory matchHistory = new MatchHistory();
         Team team1 = new Team();
         Team team2 = new Team();
-        TeamStats team1Stats = new TeamStats();
-        TeamStats team2Stats = new TeamStats();
+        GeneralTeamStats team1Stats = new GeneralTeamStats();
+        GeneralTeamStats team2Stats = new GeneralTeamStats();
 
-        team1.setTeamStats(team1Stats);
-        team2.setTeamStats(team2Stats);
+        team1.setGeneralTeamStats(team1Stats);
+        team2.setGeneralTeamStats(team2Stats);
 
-        historyOfMatch.setTeam1(team1);
-        historyOfMatch.setTeam2(team2);
+        matchHistory.setTeam1(team1);
+        matchHistory.setTeam2(team2);
 
-        team1.getTeamStats().setWins(10);
-        team1.getTeamStats().setLooses(20);
-        team1.getTeamStats().setDraws(5);
+        team1.getGeneralTeamStats().setWins(10);
+        team1.getGeneralTeamStats().setLooses(20);
+        team1.getGeneralTeamStats().setDraws(5);
 
-        team2.getTeamStats().setWins(7);
-        team2.getTeamStats().setLooses(9);
-        team2.getTeamStats().setDraws(1);
+        team2.getGeneralTeamStats().setWins(7);
+        team2.getGeneralTeamStats().setLooses(9);
+        team2.getGeneralTeamStats().setDraws(1);
 
-        historyOfMatch.setScoreOfTeam1(90);
-        historyOfMatch.setScoreOfTeam2(10);
+        matchHistory.setScoreOfTeam1(90);
+        matchHistory.setScoreOfTeam2(10);
 
-        historyOfMatch.score();
+        matchHistory.score();
 
-        assertEquals(11, team1.getTeamStats().getWins());
-        assertEquals(10, team2.getTeamStats().getLooses());
-        assertEquals(13.5, team1.getTeamStats().getPoints(), 0.0001);
-        assertEquals(7.5, team2.getTeamStats().getPoints(), 0.0001);
+        assertEquals(11, team1.getGeneralTeamStats().getWins());
+        assertEquals(10, team2.getGeneralTeamStats().getLooses());
+        assertEquals(13.5, team1.getGeneralTeamStats().getPoints(), 0.0001);
+        assertEquals(7.5, team2.getGeneralTeamStats().getPoints(), 0.0001);
     }
 }

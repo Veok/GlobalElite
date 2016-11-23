@@ -1,19 +1,23 @@
 package dao;
 
 import dao.mappers.IMapResultSetIntoEntity;
+import dao.repositories.ITeamRepository;
+import dao.uow.IUnitOfWork;
+import domain.model.Player;
 import domain.model.Team;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * @author L on 13.11.2016.
  */
-public class TeamRepository extends RepositoryBase<Team> {
+public class TeamRepository extends RepositoryBase<Team> implements ITeamRepository{
 
 
-    public TeamRepository(Connection connection, IMapResultSetIntoEntity<Team> mapper) {
-        super(connection, mapper);
+    public TeamRepository(Connection connection, IMapResultSetIntoEntity<Team> mapper, IUnitOfWork uow) {
+        super(connection, mapper, uow);
     }
 
     protected String insertSql() {
@@ -27,15 +31,31 @@ public class TeamRepository extends RepositoryBase<Team> {
     protected void setUpdate(Team team) throws SQLException {
         update.setString(1, team.getName());
         update.setString(2, team.getCountry());
-        update.setInt(3, team.getTeamStats().getId());
+        update.setInt(3, team.getGeneralTeamStats().getId());
         update.setInt(4, team.getPlayers().getId());
     }
 
     protected void setInsert(Team team) throws SQLException {
         insert.setString(1, team.getName());
         insert.setString(2, team.getCountry());
-        insert.setInt(3, team.getTeamStats().getId());
+        insert.setInt(3, team.getGeneralTeamStats().getId());
         insert.setInt(4, team.getPlayers().getId());
+    }
+
+
+    @Override
+    public List<Team> withName(String name) {
+        return null;
+    }
+
+    @Override
+    public List<Team> withCountry(String country) {
+        return null;
+    }
+
+    @Override
+    public List<Team> withPlayer(Player player) {
+        return null;
     }
 
     @Override
