@@ -6,6 +6,7 @@ import dao.uow.IUnitOfWork;
 import domain.model.MatchScoreBoard;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -15,18 +16,36 @@ import java.util.List;
 public class MatchScoreBoardRepository extends RepositoryBase<MatchScoreBoard> implements IMatchScoreBoardRepository {
 
 
+    private PreparedStatement getKillsInMatch;
+    private PreparedStatement getDeathsInMatch;
+
     public MatchScoreBoardRepository(Connection connection, IMapResultSetIntoEntity<MatchScoreBoard> mapper, IUnitOfWork uow) {
         super(connection, mapper, uow);
+
+        try {
+            getKillsInMatch = connection.prepareStatement(getKillsInMatchSql());
+            getDeathsInMatch = connection.prepareStatement(getDeathsInMatchSql());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected String getKillsInMatchSql() {
+        return "SELECT * FROM SCOREBOARD where killsInMatch=?";
+    }
+
+    protected String getDeathsInMatchSql() {
+        return "SELECT * FROM SCOREBOARD where deathsInMatch=?";
     }
 
     @Override
     public List<MatchScoreBoard> withKillsInMatch(int killsInMatch) {
-        return null;
+        return searchByInt(killsInMatch, getKillsInMatch);
     }
 
     @Override
     public List<MatchScoreBoard> withDeathsInMatch(int deathInMatch) {
-        return null;
+        return searchByInt(deathInMatch, getDeathsInMatch);
     }
 
     @Override

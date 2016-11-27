@@ -5,9 +5,8 @@ import dao.repositories.IPlayerRepository;
 import dao.uow.IUnitOfWork;
 import domain.model.Player;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,24 +14,60 @@ import java.util.List;
  */
 public class PlayerRepository extends RepositoryBase<Player> implements IPlayerRepository {
 
+    private PreparedStatement getNick;
+    private PreparedStatement getCountry;
+    private PreparedStatement getDob;
+
+
     public PlayerRepository(Connection connection, IMapResultSetIntoEntity<Player> mapper, IUnitOfWork uow) {
         super(connection, mapper, uow);
+
+        try{
+            getNick = connection.prepareStatement(getNickSql());
+            getCountry = connection.prepareStatement(getCountrySql());
+            getDob = connection.prepareStatement(getDobSql());
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
 
+    protected String getNickSql(){
+        return "SELECT * FROM PLAYER where nick =?";
+    }
+
+    protected String getCountrySql(){
+        return "SELECT * FROM PLAYER where country = ?";
+    }
+
+    protected String getDobSql(){
+        return "SELECT * FROM PLAYER where DoB = ?";
+    }
+
     @Override
     public List<Player> withNick(String nick) {
-        return null;
+        return searchByString(nick, getNick);
     }
 
     @Override
     public List<Player> withCountry(String country) {
-        return null;
+        return searchByString(country,getCountry);
     }
 
     @Override
     public List<Player> withDateOfBirth(java.util.Date dob) {
-        return null;
+
+        List<Player> dateOfBirth = new ArrayList<>();
+        try {
+            getDob.setDate(1, (Date) dob);
+            ResultSet resultSet = getDob.executeQuery();
+            while (resultSet.next()){
+                dateOfBirth.add(mapper.map(resultSet));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return dateOfBirth;
     }
 
     @Override

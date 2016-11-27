@@ -124,13 +124,27 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements IReposi
         }
     }
 
-    public List<TEntity> searchBy(int value, PreparedStatement statement) {
+    public List<TEntity> searchByInt(int value, PreparedStatement statement) {
         List<TEntity> tEntities = new ArrayList<>();
         try {
             statement.setInt(1, value);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 tEntities.add(mapper.map(resultSet));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tEntities;
+    }
+
+    public List<TEntity> searchByString(String name, PreparedStatement statement) {
+        List<TEntity> tEntities = new ArrayList<>();
+        try {
+            statement.setString(1, name);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                tEntities.add(mapper.map(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();

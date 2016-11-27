@@ -7,17 +7,45 @@ import domain.model.Player;
 import domain.model.Team;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author L on 13.11.2016.
  */
-public class TeamRepository extends RepositoryBase<Team> implements ITeamRepository{
+public class TeamRepository extends RepositoryBase<Team> implements ITeamRepository {
 
+
+    private PreparedStatement getName;
+    private PreparedStatement getCountry;
+    private PreparedStatement getPlayer;
 
     public TeamRepository(Connection connection, IMapResultSetIntoEntity<Team> mapper, IUnitOfWork uow) {
         super(connection, mapper, uow);
+
+        try {
+            getName = connection.prepareStatement(getNameSql());
+            getCountry = connection.prepareStatement(getCountrySql());
+            getPlayer = connection.prepareStatement(getPlayerSql());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    protected String getNameSql() {
+        return "SELECT * FROM TEAM where name = ?";
+    }
+
+    protected String getCountrySql() {
+        return "SELECT * FROM TEAM where country = ?";
+    }
+
+    protected String getPlayerSql() {
+        return "SELECT * FROM TEAM where PLAYERS_ID  = ?";
     }
 
     protected String insertSql() {
@@ -45,17 +73,27 @@ public class TeamRepository extends RepositoryBase<Team> implements ITeamReposit
 
     @Override
     public List<Team> withName(String name) {
-        return null;
+        return searchByString(name, getName);
     }
 
     @Override
     public List<Team> withCountry(String country) {
-        return null;
+        return searchByString(country, getCountry);
     }
 
     @Override
     public List<Team> withPlayer(Player player) {
-        return null;
+        List<Team> playerInTeam = new ArrayList<>();
+        try {
+            getPlayer.setObject(1, player);
+            ResultSet resultSet = getPlayer.executeQuery();
+            while (resultSet.next()) {
+                playerInTeam.add(mapper.map(resultSet));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return playerInTeam;
     }
 
     @Override

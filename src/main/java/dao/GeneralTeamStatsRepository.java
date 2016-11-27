@@ -7,9 +7,7 @@ import domain.model.GeneralTeamStats;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,17 +46,17 @@ public class GeneralTeamStatsRepository extends RepositoryBase<GeneralTeamStats>
 
     @Override
     public List<GeneralTeamStats> withWins(int wins) {
-        return searchBy(wins, getWins);
+        return searchByInt(wins, getWins);
     }
 
     @Override
     public List<GeneralTeamStats> withLooses(int looses) {
-        return searchBy(looses, getLooses);
+        return searchByInt(looses, getLooses);
     }
 
     @Override
     public List<GeneralTeamStats> withDraws(int draws) {
-        return searchBy(draws, getDraws);
+        return searchByInt(draws, getDraws);
     }
 
     @Override

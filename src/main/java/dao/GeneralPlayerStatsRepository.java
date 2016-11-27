@@ -54,12 +54,12 @@ public class GeneralPlayerStatsRepository extends RepositoryBase<GeneralPlayerSt
 
     @Override
     public List<GeneralPlayerStats> kills(int kills) {
-        return searchBy(kills, getKills);
+        return searchByInt(kills, getKills);
     }
 
     @Override
     public List<GeneralPlayerStats> deaths(int deaths) {
-        return searchBy(deaths, getDeaths);
+        return searchByInt(deaths, getDeaths);
     }
 
     @Override
