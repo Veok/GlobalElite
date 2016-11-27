@@ -15,7 +15,7 @@ import java.util.List;
 
 public class App {
     public static void main(String[] args) {
-        String url="jdbc:hsqldb:hsql://localhost/workdb";
+        String url = "jdbc:hsqldb:hsql://localhost/workdb";
         GeneralPlayerStats generalPlayerStats = new GeneralPlayerStats();
         Player player = new Player();
         generalPlayerStats.setKills(10);
@@ -26,14 +26,14 @@ public class App {
             Connection connection = DriverManager.getConnection(url);
             IUnitOfWork uow = new UnitOfWork(connection);
 
-            IRepositoryCatalog catalog = new RepositoryCatalog(connection,uow);
+            IRepositoryCatalog catalog = new RepositoryCatalog(connection, uow);
             catalog.players().add(player);
             uow.saveChanges();
             List<Player> playerList = catalog.players().withNick("Veok");
-            for(Player playerFromDb: playerList){
+            for (Player playerFromDb : playerList) {
                 System.out.println(playerFromDb.getNick());
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

@@ -19,10 +19,12 @@ public class RepositoryCatalog implements IRepositoryCatalog {
         this.connection = connection;
         this.uow = uow;
     }
+
     @Override
     public IGeneralPlayerStatsRepository playersStats() {
         return new GeneralPlayerStatsRepository(connection, new GeneralPlayerStatsMapper(), uow);
     }
+
     @Override
     public IPlayerRepository players() {
         return new PlayerRepository(connection, new PlayerRepositoryMapper(), uow);
@@ -49,9 +51,13 @@ public class RepositoryCatalog implements IRepositoryCatalog {
     }
 
 
-
     @Override
     public IGeneralTeamStatsRepository teamsStats() {
         return new GeneralTeamStatsRepository(connection, new GeneralPlayerStatsMapper(), uow);
+    }
+
+    @Override
+    public void save() {
+        uow.saveChanges();
     }
 }

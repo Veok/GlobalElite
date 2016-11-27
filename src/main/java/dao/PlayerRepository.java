@@ -22,25 +22,25 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
     public PlayerRepository(Connection connection, IMapResultSetIntoEntity<Player> mapper, IUnitOfWork uow) {
         super(connection, mapper, uow);
 
-        try{
+        try {
             getNick = connection.prepareStatement(getNickSql());
             getCountry = connection.prepareStatement(getCountrySql());
             getDob = connection.prepareStatement(getDobSql());
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
 
-    protected String getNickSql(){
+    protected String getNickSql() {
         return "SELECT * FROM PLAYER where nick =?";
     }
 
-    protected String getCountrySql(){
+    protected String getCountrySql() {
         return "SELECT * FROM PLAYER where country = ?";
     }
 
-    protected String getDobSql(){
+    protected String getDobSql() {
         return "SELECT * FROM PLAYER where DoB = ?";
     }
 
@@ -51,7 +51,7 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
 
     @Override
     public List<Player> withCountry(String country) {
-        return searchByString(country,getCountry);
+        return searchByString(country, getCountry);
     }
 
     @Override
@@ -61,10 +61,10 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
         try {
             getDob.setDate(1, (Date) dob);
             ResultSet resultSet = getDob.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 dateOfBirth.add(mapper.map(resultSet));
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return dateOfBirth;

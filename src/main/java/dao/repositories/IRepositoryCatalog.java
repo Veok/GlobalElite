@@ -19,4 +19,6 @@ public interface IRepositoryCatalog {
 
     IGeneralTeamStatsRepository teamsStats();
 
+    void save();
+
 }
