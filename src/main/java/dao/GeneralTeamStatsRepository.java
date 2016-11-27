@@ -6,7 +6,10 @@ import dao.uow.IUnitOfWork;
 import domain.model.GeneralTeamStats;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,23 +17,48 @@ import java.util.List;
  */
 public class GeneralTeamStatsRepository extends RepositoryBase<GeneralTeamStats> implements IGeneralTeamStatsRepository {
 
+
+    private PreparedStatement getWins;
+    private PreparedStatement getLooses;
+    private PreparedStatement getDraws;
+
     public GeneralTeamStatsRepository(Connection connection, IMapResultSetIntoEntity<GeneralTeamStats> mapper, IUnitOfWork uow) {
         super(connection, mapper, uow);
+
+        try{
+            getWins = connection.prepareStatement(getWinsSql());
+            getLooses = connection.prepareStatement(getLoosesSql());
+            getDraws = connection.prepareStatement(getDrawsSql());
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    protected String getWinsSql(){
+        return "SELECT * FROM TEAM_STATS where wins=?";
+    }
+
+    protected String getLoosesSql(){
+        return "SELECT * FROM TEAM_STATS where looses=?";
+    }
+
+    protected String getDrawsSql(){
+        return "SELECT * FROM TEAM_STATS where draws=?";
     }
 
     @Override
     public List<GeneralTeamStats> withWins(int wins) {
-        return null;
+        return searchBy(wins, getWins);
     }
 
     @Override
     public List<GeneralTeamStats> withLooses(int looses) {
-        return null;
+        return searchBy(looses, getLooses);
     }
 
     @Override
     public List<GeneralTeamStats> withDraws(int draws) {
-        return null;
+        return searchBy(draws, getDraws);
     }
 
     @Override

@@ -7,30 +7,49 @@ import domain.model.Maps;
 import domain.model.MatchHistory;
 import domain.model.MatchScoreBoard;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author L on 13.11.2016.
  */
-public class MatchHistoryHistoryRepository extends RepositoryBase<MatchHistory> implements IMatchHistoryRepository {
+public class MatchHistoryRepository extends RepositoryBase<MatchHistory> implements IMatchHistoryRepository {
 
 
-    public MatchHistoryHistoryRepository(Connection connection, IMapResultSetIntoEntity<MatchHistory> mapper, IUnitOfWork uow) {
+    private PreparedStatement getScores;
+
+    public MatchHistoryRepository(Connection connection, IMapResultSetIntoEntity<MatchHistory> mapper, IUnitOfWork uow) {
         super(connection, mapper, uow);
+
+        try{
+            getScores = connection.prepareStatement(getScoresSql());
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
+
+    protected String getScoresSql(){
+        return "SELECT * FROM HISTORY_OF_MATCH where SCOREBOARD_ID=?";
+    }
+
 
     @Override
     public List<MatchHistory> withScores(MatchScoreBoard matchScoreBoard) {
-        return null;
+        List<MatchHistory> scores = new ArrayList<>();
+        try {
+            getScores.setObject(1, matchScoreBoard);
+            ResultSet resultSet = getScores.executeQuery();
+            while (resultSet.next()){
+                scores.add(mapper.map(resultSet));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return scores;
     }
 
-    @Override
-    public List<MatchHistory> withMaps(Maps map) {
-        return null;
-    }
+
 
 
     @Override

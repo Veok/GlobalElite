@@ -6,7 +6,10 @@ import dao.uow.IUnitOfWork;
 import domain.model.GeneralPlayerStats;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,24 +18,63 @@ import java.util.List;
 
 public class GeneralPlayerStatsRepository extends RepositoryBase<GeneralPlayerStats> implements IGeneralPlayerStatsRepository {
 
+
+    private PreparedStatement getKills;
+    private PreparedStatement getDeaths;
+    private PreparedStatement getRatio;
+
+
     public GeneralPlayerStatsRepository(Connection connection, IMapResultSetIntoEntity<GeneralPlayerStats> mapper, IUnitOfWork uow) {
         super(connection, mapper, uow);
 
+        try {
+            getKills = connection.prepareStatement(getKillsSql());
+            getDeaths = connection.prepareStatement(getDeathsSql());
+            getRatio = connection.prepareCall(getRatioSql());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
+
+
+    protected String getKillsSql() {
+        return "SELECT * FROM PLAYER_STATS where kills=?";
+    }
+
+    protected String getDeathsSql() {
+        return "SELECT * FROM PLAYER_STATS where deaths=?";
+    }
+
+    protected String getRatioSql() {
+        return "SELECT * FROM PLAYER_STATS where ratio=?";
+    }
+
+
 
     @Override
     public List<GeneralPlayerStats> kills(int kills) {
-        return null;
+        return searchBy(kills, getKills);
     }
 
     @Override
     public List<GeneralPlayerStats> deaths(int deaths) {
-        return null;
+        return searchBy(deaths, getDeaths);
     }
 
     @Override
     public List<GeneralPlayerStats> ratio(double ratio) {
-        return null;
+        List<GeneralPlayerStats> playerRatio = new ArrayList<>();
+        try {
+            getRatio.setDouble(1, ratio);
+            ResultSet resultSet = getKills.executeQuery();
+            while (resultSet.next()) {
+                playerRatio.add(mapper.map(resultSet));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return playerRatio;
     }
 
     @Override

@@ -124,6 +124,20 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements IReposi
         }
     }
 
+    public List<TEntity> searchBy(int value, PreparedStatement statement) {
+        List<TEntity> tEntities = new ArrayList<>();
+        try {
+            statement.setInt(1, value);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                tEntities.add(mapper.map(resultSet));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tEntities;
+    }
+
     protected String selectByIdSql() {
         return "SELECT * FROM " + tableName() + " WHERE id=?";
     }
