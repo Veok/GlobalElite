@@ -55,7 +55,7 @@ public class MatchScoreBoardRepository extends RepositoryBase<MatchScoreBoard> i
 
     @Override
     protected String updateSql() {
-        return "UPDATE SCOREBOARD SET (killsInMatch, deathInMatch, PLAYER_ID) = (?, ? , ?) where id=?";
+        return "UPDATE SCOREBOARD SET (killsInMatch, deathsInMatch, PLAYER_ID) = (?, ? , ?) where id=?";
     }
 
     @Override

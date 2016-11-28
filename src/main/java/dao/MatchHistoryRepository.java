@@ -36,17 +36,7 @@ public class MatchHistoryRepository extends RepositoryBase<MatchHistory> impleme
 
     @Override
     public List<MatchHistory> withScores(MatchScoreBoard matchScoreBoard) {
-        List<MatchHistory> scores = new ArrayList<>();
-        try {
-            getScores.setObject(1, matchScoreBoard);
-            ResultSet resultSet = getScores.executeQuery();
-            while (resultSet.next()){
-                scores.add(mapper.map(resultSet));
-            }
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return scores;
+        return searchByInt(matchScoreBoard.getId(), getScores);
     }
 
 
@@ -99,7 +89,7 @@ public class MatchHistoryRepository extends RepositoryBase<MatchHistory> impleme
                 + "SCOREBOARD_ID int,"
                 + "FOREIGN KEY (TEAM_1_ID) REFERENCES TEAM(id),"
                 + "FOREIGN KEY (TEAM_2_ID) REFERENCES TEAM(id),"
-                + "FOREIGN KEY (MAP_ID) REFERENCES MAPS(id),"
+                + "FOREIGN KEY (MAP_ID) REFERENCES ENUM_DICTIONARY(id),"
                 + "FOREIGN KEY (SCOREBOARD_ID) REFERENCES SCOREBOARD(id)"
                 + ")";
     }

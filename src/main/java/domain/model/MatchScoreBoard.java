@@ -46,6 +46,8 @@ public class MatchScoreBoard implements IHaveId {
 
     public void setPlayerStats() {
 
+
+
         player.getGeneralPlayerStats().setKills(player.getGeneralPlayerStats().getKills() + killsInMatch);
         player.getGeneralPlayerStats().setDeaths(player.getGeneralPlayerStats().getDeaths() + deathsInMatch);
 

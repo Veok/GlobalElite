@@ -2,6 +2,7 @@ package domain;
 
 import com.neovisionaries.i18n.CountryCode;
 import domain.model.*;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -9,6 +10,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author L on 11.11.2016.
  */
+
 public class ModelTest {
 
 

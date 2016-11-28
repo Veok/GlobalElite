@@ -5,6 +5,7 @@ import dao.repositories.*;
 import dao.uow.IUnitOfWork;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  * @author L on 27.11.2016.
@@ -57,7 +58,9 @@ public class RepositoryCatalog implements IRepositoryCatalog {
     }
 
     @Override
-    public void save() {
+    public void save() throws SQLException {
         uow.saveChanges();
+        connection.close();
+        connection = null;
     }
 }

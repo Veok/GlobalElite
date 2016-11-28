@@ -33,7 +33,7 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
 
 
     protected String getNickSql() {
-        return "SELECT * FROM PLAYER where nick =?";
+        return "SELECT * FROM PLAYER where nick = ?";
     }
 
     protected String getCountrySql() {
@@ -95,7 +95,7 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
         insert.setDate(2, (Date) player.getDateOfBirth());
         insert.setString(3, player.getCountry());
         insert.setString(4, player.getSteamId());
-        insert.setObject(5, player.getGeneralPlayerStats());
+        insert.setInt(5, player.getGeneralPlayerStats().getId());
     }
 
 

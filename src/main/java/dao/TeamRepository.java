@@ -83,17 +83,8 @@ public class TeamRepository extends RepositoryBase<Team> implements ITeamReposit
 
     @Override
     public List<Team> withPlayer(Player player) {
-        List<Team> playerInTeam = new ArrayList<>();
-        try {
-            getPlayer.setObject(1, player);
-            ResultSet resultSet = getPlayer.executeQuery();
-            while (resultSet.next()) {
-                playerInTeam.add(mapper.map(resultSet));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return playerInTeam;
+
+        return searchByInt(player.getId(), getPlayer);
     }
 
     @Override

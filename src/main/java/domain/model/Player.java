@@ -40,6 +40,7 @@ public class Player implements IHaveId {
         this.id = id;
     }
 
+
     public GeneralPlayerStats getGeneralPlayerStats() {
         return generalPlayerStats;
     }

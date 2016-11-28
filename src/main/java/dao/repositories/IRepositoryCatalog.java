@@ -1,5 +1,7 @@
 package dao.repositories;
 
+import java.sql.SQLException;
+
 /**
  * @author L on 23.11.2016.
  */
@@ -19,6 +21,6 @@ public interface IRepositoryCatalog {
 
     IGeneralTeamStatsRepository teamsStats();
 
-    void save();
+    void save() throws SQLException;
 
 }
