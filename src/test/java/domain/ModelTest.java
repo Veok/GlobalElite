@@ -35,7 +35,7 @@ public class ModelTest {
     public void testSteamId() {
         Player player = new Player();
         player.setSteamId("STEAM_0:1:38401525");
-        assertEquals(true, player.validateSteamId());
+        assertEquals("STEAM_0:1:38401525", player.getSteamId());
     }
 
     @Test

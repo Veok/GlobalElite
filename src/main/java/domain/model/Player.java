@@ -21,7 +21,7 @@ public class Player implements IHaveId {
 
     }
 
-    public boolean validateSteamId() {
+    private boolean validateSteamId() {
         if (steamId == null) {
             return false;
         }
@@ -74,11 +74,16 @@ public class Player implements IHaveId {
     }
 
     public String getSteamId() {
-        return steamId;
+        if (validateSteamId()) {
+            return steamId;
+        } else
+            return "Wrong Steam ID";
     }
 
     public void setSteamId(String steamId) {
+
         this.steamId = steamId;
+
     }
 
 
