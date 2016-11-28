@@ -17,9 +17,9 @@ public interface IRepositoryCatalog {
 
     IMatchHistoryRepository history();
 
-    IGeneralPlayerStatsRepository playersStats();
+    IPlayerStatisticsRepository playersStats();
 
-    IGeneralTeamStatsRepository teamsStats();
+    ITeamStatisticsRepository teamsStats();
 
     void save() throws SQLException;
 

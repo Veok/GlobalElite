@@ -9,7 +9,7 @@ public class Team implements IHaveId {
     private String name;
     private String country;
     private Player players;
-    private GeneralTeamStats generalTeamStats;
+    private TeamStatistics teamStatistics;
 
     public Team() {
     }
@@ -47,12 +47,12 @@ public class Team implements IHaveId {
         this.players = players;
     }
 
-    public GeneralTeamStats getGeneralTeamStats() {
-        return generalTeamStats;
+    public TeamStatistics getTeamStatistics() {
+        return teamStatistics;
     }
 
-    public void setGeneralTeamStats(GeneralTeamStats generalTeamStats) {
-        this.generalTeamStats = generalTeamStats;
+    public void setTeamStatistics(TeamStatistics teamStatistics) {
+        this.teamStatistics = teamStatistics;
     }
 
 

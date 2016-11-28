@@ -16,26 +16,25 @@ public class App {
     public static void main(String[] args) {
 
 
-        GeneralPlayerStats generalPlayerStats = new GeneralPlayerStats();
+        PlayerStatistics playerStatistics = new PlayerStatistics();
         Player player = new Player();
         Team team = new Team();
         MatchScoreBoard matchScoreBoard = new MatchScoreBoard();
         MatchHistory matchHistory = new MatchHistory();
-        GeneralTeamStats generalTeamStats = new GeneralTeamStats();
+        TeamStatistics teamStatistics = new TeamStatistics();
 
 
         player.setNick("Veok");
         player.setCountry(CountryCode.PL.getName());
-        player.setGeneralPlayerStats(generalPlayerStats);
+        player.setPlayerStatistics(playerStatistics);
 
-
-        generalPlayerStats.setDeaths(20);
-        generalPlayerStats.getRatio();
-
+        playerStatistics.setKills(44);
+        playerStatistics.setDeaths(20);
+        playerStatistics.getRatio();
         team.setName("Lelele");
         team.setCountry(CountryCode.PL.getName());
         team.setPlayers(player);
-        team.setGeneralTeamStats(generalTeamStats);
+        team.setTeamStatistics(teamStatistics);
 
         matchScoreBoard.setPlayer(player);
         matchScoreBoard.setKillsInMatch(4);
@@ -47,18 +46,18 @@ public class App {
         matchHistory.setScoreOfTeam2(44);
         matchHistory.setTeam1(team);
 
-        generalTeamStats.setWins(10);
-        generalTeamStats.setDraws(2);
-        generalTeamStats.setLooses(2);
+        teamStatistics.setWins(10);
+        teamStatistics.setDraws(2);
+        teamStatistics.setLooses(2);
 
-        GeneralTeamStats generalTeamStats2 = new GeneralTeamStats();
+        TeamStatistics teamStatistics2 = new TeamStatistics();
         Team team2 = new Team();
-        team2.setGeneralTeamStats(generalTeamStats2);
+        team2.setTeamStatistics(teamStatistics2);
         team2.setPlayers(player);
         matchHistory.setTeam2(team2);
-
         EnumDictionary enumDictionary = new EnumDictionary();
-
+        matchHistory.setMapId(enumDictionary.getId());
+        matchHistory.score();
 
         String url = "jdbc:hsqldb:hsql://localhost/workdb";
 
@@ -66,10 +65,10 @@ public class App {
             Connection connection = DriverManager.getConnection(url);
             IUnitOfWork uow = new UnitOfWork(connection);
             IRepositoryCatalog catalog2 = new RepositoryCatalog(connection, uow);
-            catalog2.playersStats().add(generalPlayerStats);
+            catalog2.playersStats().add(playerStatistics);
             catalog2.players().add(player);
             catalog2.dictionaries().add(enumDictionary);
-            catalog2.teamsStats().add(generalTeamStats);
+            catalog2.teamsStats().add(teamStatistics);
             catalog2.teams().add(team);
             catalog2.teams().add(team2);
             catalog2.scoreboards().add(matchScoreBoard);

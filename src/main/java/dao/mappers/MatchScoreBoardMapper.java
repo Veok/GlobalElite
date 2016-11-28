@@ -1,7 +1,7 @@
 package dao.mappers;
 
-import domain.model.Player;
 import domain.model.MatchScoreBoard;
+import domain.model.Player;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

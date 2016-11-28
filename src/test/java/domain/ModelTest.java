@@ -2,7 +2,6 @@ package domain;
 
 import com.neovisionaries.i18n.CountryCode;
 import domain.model.*;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -17,19 +16,19 @@ public class ModelTest {
     @Test
     public void testPlayerRatio() {
         Player player = new Player();
-        GeneralPlayerStats generalPlayerStats = new GeneralPlayerStats();
-        player.setGeneralPlayerStats(generalPlayerStats);
-        player.getGeneralPlayerStats().setKills(10);
-        player.getGeneralPlayerStats().setDeaths(20);
-        assertEquals(0.5, player.getGeneralPlayerStats().getRatio(), 0.001);
+        PlayerStatistics playerStatistics = new PlayerStatistics();
+        player.setPlayerStatistics(playerStatistics);
+        player.getPlayerStatistics().setKills(10);
+        player.getPlayerStatistics().setDeaths(20);
+        assertEquals(0.5, player.getPlayerStatistics().getRatio(), 0.001);
     }
 
     @Test
     public void testTeamPoints() {
-        GeneralTeamStats generalTeamStats = new GeneralTeamStats();
-        generalTeamStats.setWins(3);
-        generalTeamStats.setDraws(2);
-        assertEquals(4, generalTeamStats.getPoints(), 0.001);
+        TeamStatistics teamStatistics = new TeamStatistics();
+        teamStatistics.setWins(3);
+        teamStatistics.setDraws(2);
+        assertEquals(4, teamStatistics.getPoints(), 0.001);
     }
 
     @Test
@@ -58,10 +57,10 @@ public class ModelTest {
 
         MatchHistory matchHistory = new MatchHistory();
         Player player = new Player();
-        GeneralPlayerStats generalPlayerStats = new GeneralPlayerStats();
+        PlayerStatistics playerStatistics = new PlayerStatistics();
         MatchScoreBoard matchScoreBoard = new MatchScoreBoard();
 
-        player.setGeneralPlayerStats(generalPlayerStats);
+        player.setPlayerStatistics(playerStatistics);
         matchScoreBoard.setPlayer(player);
         matchHistory.setMatchScoreBoard(matchScoreBoard);
 
@@ -77,17 +76,17 @@ public class ModelTest {
 
         MatchHistory matchHistory = new MatchHistory();
         Player player = new Player();
-        GeneralPlayerStats generalPlayerStats = new GeneralPlayerStats();
+        PlayerStatistics playerStatistics = new PlayerStatistics();
         MatchScoreBoard matchScoreBoard = new MatchScoreBoard();
 
-        player.setGeneralPlayerStats(generalPlayerStats);
+        player.setPlayerStatistics(playerStatistics);
         matchScoreBoard.setPlayer(player);
         matchHistory.setMatchScoreBoard(matchScoreBoard);
 
         matchScoreBoard.setKillsInMatch(10);
         matchScoreBoard.setPlayerStats();
 
-        assertEquals(10, matchHistory.getMatchScoreBoard().getPlayer().getGeneralPlayerStats().getKills());
+        assertEquals(10, matchHistory.getMatchScoreBoard().getPlayer().getPlayerStatistics().getKills());
 
     }
 
@@ -95,10 +94,10 @@ public class ModelTest {
     public void testScoreBoardDeathsInMatch() {
         MatchHistory matchHistory = new MatchHistory();
         Player player = new Player();
-        GeneralPlayerStats generalPlayerStats = new GeneralPlayerStats();
+        PlayerStatistics playerStatistics = new PlayerStatistics();
         MatchScoreBoard matchScoreBoard = new MatchScoreBoard();
 
-        player.setGeneralPlayerStats(generalPlayerStats);
+        player.setPlayerStatistics(playerStatistics);
         matchScoreBoard.setPlayer(player);
         matchHistory.setMatchScoreBoard(matchScoreBoard);
 
@@ -113,17 +112,17 @@ public class ModelTest {
     public void testPlayerDeathsInScoreBoard() {
         MatchHistory matchHistory = new MatchHistory();
         Player player = new Player();
-        GeneralPlayerStats generalPlayerStats = new GeneralPlayerStats();
+        PlayerStatistics playerStatistics = new PlayerStatistics();
         MatchScoreBoard matchScoreBoard = new MatchScoreBoard();
 
-        player.setGeneralPlayerStats(generalPlayerStats);
+        player.setPlayerStatistics(playerStatistics);
         matchScoreBoard.setPlayer(player);
         matchHistory.setMatchScoreBoard(matchScoreBoard);
 
         matchScoreBoard.setDeathsInMatch(20);
         matchScoreBoard.setPlayerStats();
 
-        assertEquals(20, matchHistory.getMatchScoreBoard().getPlayer().getGeneralPlayerStats().getDeaths());
+        assertEquals(20, matchHistory.getMatchScoreBoard().getPlayer().getPlayerStatistics().getDeaths());
 
     }
 
@@ -131,20 +130,20 @@ public class ModelTest {
     public void testPlayerRatioAfterMatch() {
         MatchHistory matchHistory = new MatchHistory();
         Player player = new Player();
-        GeneralPlayerStats generalPlayerStats = new GeneralPlayerStats();
+        PlayerStatistics playerStatistics = new PlayerStatistics();
         MatchScoreBoard matchScoreBoard = new MatchScoreBoard();
 
-        player.setGeneralPlayerStats(generalPlayerStats);
+        player.setPlayerStatistics(playerStatistics);
         matchScoreBoard.setPlayer(player);
         matchHistory.setMatchScoreBoard(matchScoreBoard);
 
-        generalPlayerStats.setKills(5);
-        generalPlayerStats.setDeaths(15);
+        playerStatistics.setKills(5);
+        playerStatistics.setDeaths(15);
         matchScoreBoard.setKillsInMatch(10);
         matchScoreBoard.setDeathsInMatch(15);
         matchScoreBoard.setPlayerStats();
 
-        assertEquals(0.5, player.getGeneralPlayerStats().getRatio(), 0.001);
+        assertEquals(0.5, player.getPlayerStatistics().getRatio(), 0.001);
     }
 
     @Test
@@ -153,11 +152,11 @@ public class ModelTest {
         MatchHistory matchHistory = new MatchHistory();
         Team team1 = new Team();
         Team team2 = new Team();
-        GeneralTeamStats team1Stats = new GeneralTeamStats();
-        GeneralTeamStats team2Stats = new GeneralTeamStats();
+        TeamStatistics team1Stats = new TeamStatistics();
+        TeamStatistics team2Stats = new TeamStatistics();
 
-        team1.setGeneralTeamStats(team1Stats);
-        team2.setGeneralTeamStats(team2Stats);
+        team1.setTeamStatistics(team1Stats);
+        team2.setTeamStatistics(team2Stats);
 
         matchHistory.setTeam1(team1);
         matchHistory.setTeam2(team2);
@@ -167,7 +166,7 @@ public class ModelTest {
 
         matchHistory.score();
 
-        assertEquals(1, team1.getGeneralTeamStats().getWins());
+        assertEquals(1, team1.getTeamStatistics().getWins());
 
     }
 
@@ -176,11 +175,11 @@ public class ModelTest {
         MatchHistory matchHistory = new MatchHistory();
         Team team1 = new Team();
         Team team2 = new Team();
-        GeneralTeamStats team1Stats = new GeneralTeamStats();
-        GeneralTeamStats team2Stats = new GeneralTeamStats();
+        TeamStatistics team1Stats = new TeamStatistics();
+        TeamStatistics team2Stats = new TeamStatistics();
 
-        team1.setGeneralTeamStats(team1Stats);
-        team2.setGeneralTeamStats(team2Stats);
+        team1.setTeamStatistics(team1Stats);
+        team2.setTeamStatistics(team2Stats);
 
         matchHistory.setTeam1(team1);
         matchHistory.setTeam2(team2);
@@ -189,7 +188,7 @@ public class ModelTest {
         matchHistory.setScoreOfTeam2(20);
 
         matchHistory.score();
-        assertEquals(1, team2.getGeneralTeamStats().getLooses());
+        assertEquals(1, team2.getTeamStatistics().getLooses());
 
     }
 
@@ -199,11 +198,11 @@ public class ModelTest {
         MatchHistory matchHistory = new MatchHistory();
         Team team1 = new Team();
         Team team2 = new Team();
-        GeneralTeamStats team1Stats = new GeneralTeamStats();
-        GeneralTeamStats team2Stats = new GeneralTeamStats();
+        TeamStatistics team1Stats = new TeamStatistics();
+        TeamStatistics team2Stats = new TeamStatistics();
 
-        team1.setGeneralTeamStats(team1Stats);
-        team2.setGeneralTeamStats(team2Stats);
+        team1.setTeamStatistics(team1Stats);
+        team2.setTeamStatistics(team2Stats);
 
         matchHistory.setTeam1(team1);
         matchHistory.setTeam2(team2);
@@ -213,7 +212,7 @@ public class ModelTest {
 
         matchHistory.score();
 
-        assertEquals(1, team2.getGeneralTeamStats().getWins());
+        assertEquals(1, team2.getTeamStatistics().getWins());
     }
 
     @Test
@@ -221,11 +220,11 @@ public class ModelTest {
         MatchHistory matchHistory = new MatchHistory();
         Team team1 = new Team();
         Team team2 = new Team();
-        GeneralTeamStats team1Stats = new GeneralTeamStats();
-        GeneralTeamStats team2Stats = new GeneralTeamStats();
+        TeamStatistics team1Stats = new TeamStatistics();
+        TeamStatistics team2Stats = new TeamStatistics();
 
-        team1.setGeneralTeamStats(team1Stats);
-        team2.setGeneralTeamStats(team2Stats);
+        team1.setTeamStatistics(team1Stats);
+        team2.setTeamStatistics(team2Stats);
 
         matchHistory.setTeam1(team1);
         matchHistory.setTeam2(team2);
@@ -234,7 +233,7 @@ public class ModelTest {
         matchHistory.setScoreOfTeam2(30);
 
         matchHistory.score();
-        assertEquals(1, team1.getGeneralTeamStats().getLooses());
+        assertEquals(1, team1.getTeamStatistics().getLooses());
 
     }
 
@@ -243,11 +242,11 @@ public class ModelTest {
         MatchHistory matchHistory = new MatchHistory();
         Team team1 = new Team();
         Team team2 = new Team();
-        GeneralTeamStats team1Stats = new GeneralTeamStats();
-        GeneralTeamStats team2Stats = new GeneralTeamStats();
+        TeamStatistics team1Stats = new TeamStatistics();
+        TeamStatistics team2Stats = new TeamStatistics();
 
-        team1.setGeneralTeamStats(team1Stats);
-        team2.setGeneralTeamStats(team2Stats);
+        team1.setTeamStatistics(team1Stats);
+        team2.setTeamStatistics(team2Stats);
 
         matchHistory.setTeam1(team1);
         matchHistory.setTeam2(team2);
@@ -257,8 +256,8 @@ public class ModelTest {
 
         matchHistory.score();
 
-        assertEquals(1, team1.getGeneralTeamStats().getDraws());
-        assertEquals(1, team2.getGeneralTeamStats().getDraws());
+        assertEquals(1, team1.getTeamStatistics().getDraws());
+        assertEquals(1, team2.getTeamStatistics().getDraws());
     }
 
     @Test
@@ -267,31 +266,31 @@ public class ModelTest {
         MatchHistory matchHistory = new MatchHistory();
         Team team1 = new Team();
         Team team2 = new Team();
-        GeneralTeamStats team1Stats = new GeneralTeamStats();
-        GeneralTeamStats team2Stats = new GeneralTeamStats();
+        TeamStatistics team1Stats = new TeamStatistics();
+        TeamStatistics team2Stats = new TeamStatistics();
 
-        team1.setGeneralTeamStats(team1Stats);
-        team2.setGeneralTeamStats(team2Stats);
+        team1.setTeamStatistics(team1Stats);
+        team2.setTeamStatistics(team2Stats);
 
         matchHistory.setTeam1(team1);
         matchHistory.setTeam2(team2);
 
-        team1.getGeneralTeamStats().setWins(10);
-        team1.getGeneralTeamStats().setLooses(20);
-        team1.getGeneralTeamStats().setDraws(5);
+        team1.getTeamStatistics().setWins(10);
+        team1.getTeamStatistics().setLooses(20);
+        team1.getTeamStatistics().setDraws(5);
 
-        team2.getGeneralTeamStats().setWins(7);
-        team2.getGeneralTeamStats().setLooses(9);
-        team2.getGeneralTeamStats().setDraws(1);
+        team2.getTeamStatistics().setWins(7);
+        team2.getTeamStatistics().setLooses(9);
+        team2.getTeamStatistics().setDraws(1);
 
         matchHistory.setScoreOfTeam1(90);
         matchHistory.setScoreOfTeam2(10);
 
         matchHistory.score();
 
-        assertEquals(11, team1.getGeneralTeamStats().getWins());
-        assertEquals(10, team2.getGeneralTeamStats().getLooses());
-        assertEquals(13.5, team1.getGeneralTeamStats().getPoints(), 0.0001);
-        assertEquals(7.5, team2.getGeneralTeamStats().getPoints(), 0.0001);
+        assertEquals(11, team1.getTeamStatistics().getWins());
+        assertEquals(10, team2.getTeamStatistics().getLooses());
+        assertEquals(13.5, team1.getTeamStatistics().getPoints(), 0.0001);
+        assertEquals(7.5, team2.getTeamStatistics().getPoints(), 0.0001);
     }
 }

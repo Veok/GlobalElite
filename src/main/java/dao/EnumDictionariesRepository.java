@@ -61,17 +61,7 @@ public class EnumDictionariesRepository extends RepositoryBase<EnumDictionary> i
     }
 
     public List<EnumDictionary> withDictionaryName(String enumName) {
-        List<EnumDictionary> result = new ArrayList<EnumDictionary>();
-        try {
-            selectWithDictionaryName.setString(1, enumName);
-            ResultSet rs = selectWithDictionaryName.executeQuery();
-            while (rs.next()) {
-                result.add(mapper.map(rs));
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return result;
+        return searchByString(enumName, getEnumValuesByString);
     }
 
     public List<EnumDictionary> getEnumValues(String enumName, int intKey) {

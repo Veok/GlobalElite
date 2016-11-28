@@ -1,9 +1,9 @@
 package dao;
 
 import dao.mappers.IMapResultSetIntoEntity;
-import dao.repositories.IGeneralPlayerStatsRepository;
+import dao.repositories.IPlayerStatisticsRepository;
 import dao.uow.IUnitOfWork;
-import domain.model.GeneralPlayerStats;
+import domain.model.PlayerStatistics;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +16,7 @@ import java.util.List;
  * @author L on 13.11.2016.
  */
 
-public class GeneralPlayerStatsRepository extends RepositoryBase<GeneralPlayerStats> implements IGeneralPlayerStatsRepository {
+public class PlayerStatisticsRepository extends RepositoryBase<PlayerStatistics> implements IPlayerStatisticsRepository {
 
 
     private PreparedStatement getKills;
@@ -24,7 +24,7 @@ public class GeneralPlayerStatsRepository extends RepositoryBase<GeneralPlayerSt
     private PreparedStatement getRatio;
 
 
-    public GeneralPlayerStatsRepository(Connection connection, IMapResultSetIntoEntity<GeneralPlayerStats> mapper, IUnitOfWork uow) {
+    public PlayerStatisticsRepository(Connection connection, IMapResultSetIntoEntity<PlayerStatistics> mapper, IUnitOfWork uow) {
         super(connection, mapper, uow);
 
         try {
@@ -51,20 +51,19 @@ public class GeneralPlayerStatsRepository extends RepositoryBase<GeneralPlayerSt
     }
 
 
-
     @Override
-    public List<GeneralPlayerStats> kills(int kills) {
+    public List<PlayerStatistics> kills(int kills) {
         return searchByInt(kills, getKills);
     }
 
     @Override
-    public List<GeneralPlayerStats> deaths(int deaths) {
+    public List<PlayerStatistics> deaths(int deaths) {
         return searchByInt(deaths, getDeaths);
     }
 
     @Override
-    public List<GeneralPlayerStats> ratio(double ratio) {
-        List<GeneralPlayerStats> playerRatio = new ArrayList<>();
+    public List<PlayerStatistics> ratio(double ratio) {
+        List<PlayerStatistics> playerRatio = new ArrayList<>();
         try {
             getRatio.setDouble(1, ratio);
             ResultSet resultSet = getKills.executeQuery();
@@ -88,17 +87,17 @@ public class GeneralPlayerStatsRepository extends RepositoryBase<GeneralPlayerSt
     }
 
     @Override
-    protected void setUpdate(GeneralPlayerStats generalPlayerStats) throws SQLException {
-        update.setInt(1, generalPlayerStats.getKills());
-        update.setInt(2, generalPlayerStats.getDeaths());
-        update.setDouble(3, generalPlayerStats.getRatio());
+    protected void setUpdate(PlayerStatistics playerStatistics) throws SQLException {
+        update.setInt(1, playerStatistics.getKills());
+        update.setInt(2, playerStatistics.getDeaths());
+        update.setDouble(3, playerStatistics.getRatio());
     }
 
     @Override
-    protected void setInsert(GeneralPlayerStats generalPlayerStats) throws SQLException {
-        insert.setInt(1, generalPlayerStats.getKills());
-        insert.setInt(2, generalPlayerStats.getDeaths());
-        insert.setDouble(3, generalPlayerStats.getRatio());
+    protected void setInsert(PlayerStatistics playerStatistics) throws SQLException {
+        insert.setInt(1, playerStatistics.getKills());
+        insert.setInt(2, playerStatistics.getDeaths());
+        insert.setDouble(3, playerStatistics.getRatio());
     }
 
 

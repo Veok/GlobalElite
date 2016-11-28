@@ -3,7 +3,7 @@ package domain.model;
 /**
  * @author by L on 10.11.2016.
  */
-public class GeneralTeamStats implements IHaveId {
+public class TeamStatistics implements IHaveId {
 
     private int id;
     private int wins;
@@ -11,7 +11,7 @@ public class GeneralTeamStats implements IHaveId {
     private int draws;
     private double points;
 
-    public GeneralTeamStats() {
+    public TeamStatistics() {
     }
 
     public int getId() {

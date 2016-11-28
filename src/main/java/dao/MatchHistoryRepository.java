@@ -3,12 +3,13 @@ package dao;
 import dao.mappers.IMapResultSetIntoEntity;
 import dao.repositories.IMatchHistoryRepository;
 import dao.uow.IUnitOfWork;
-import domain.model.Maps;
 import domain.model.MatchHistory;
 import domain.model.MatchScoreBoard;
 
-import java.sql.*;
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -22,14 +23,14 @@ public class MatchHistoryRepository extends RepositoryBase<MatchHistory> impleme
     public MatchHistoryRepository(Connection connection, IMapResultSetIntoEntity<MatchHistory> mapper, IUnitOfWork uow) {
         super(connection, mapper, uow);
 
-        try{
+        try {
             getScores = connection.prepareStatement(getScoresSql());
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    protected String getScoresSql(){
+    protected String getScoresSql() {
         return "SELECT * FROM HISTORY_OF_MATCH where SCOREBOARD_ID=?";
     }
 
@@ -38,8 +39,6 @@ public class MatchHistoryRepository extends RepositoryBase<MatchHistory> impleme
     public List<MatchHistory> withScores(MatchScoreBoard matchScoreBoard) {
         return searchByInt(matchScoreBoard.getId(), getScores);
     }
-
-
 
 
     @Override

@@ -1,9 +1,9 @@
 package dao;
 
 import dao.mappers.IMapResultSetIntoEntity;
-import dao.repositories.IGeneralTeamStatsRepository;
+import dao.repositories.ITeamStatisticsRepository;
 import dao.uow.IUnitOfWork;
-import domain.model.GeneralTeamStats;
+import domain.model.TeamStatistics;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,54 +13,54 @@ import java.util.List;
 /**
  * @author L on 13.11.2016.
  */
-public class GeneralTeamStatsRepository extends RepositoryBase<GeneralTeamStats> implements IGeneralTeamStatsRepository {
+public class TeamStatisticsRepository extends RepositoryBase<TeamStatistics> implements ITeamStatisticsRepository {
 
 
     private PreparedStatement getWins;
     private PreparedStatement getLooses;
     private PreparedStatement getDraws;
 
-    public GeneralTeamStatsRepository(Connection connection, IMapResultSetIntoEntity<GeneralTeamStats> mapper, IUnitOfWork uow) {
+    public TeamStatisticsRepository(Connection connection, IMapResultSetIntoEntity<TeamStatistics> mapper, IUnitOfWork uow) {
         super(connection, mapper, uow);
 
-        try{
+        try {
             getWins = connection.prepareStatement(getWinsSql());
             getLooses = connection.prepareStatement(getLoosesSql());
             getDraws = connection.prepareStatement(getDrawsSql());
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    protected String getWinsSql(){
+    protected String getWinsSql() {
         return "SELECT * FROM TEAM_STATS where wins=?";
     }
 
-    protected String getLoosesSql(){
+    protected String getLoosesSql() {
         return "SELECT * FROM TEAM_STATS where looses=?";
     }
 
-    protected String getDrawsSql(){
+    protected String getDrawsSql() {
         return "SELECT * FROM TEAM_STATS where draws=?";
     }
 
     @Override
-    public List<GeneralTeamStats> withWins(int wins) {
+    public List<TeamStatistics> withWins(int wins) {
         return searchByInt(wins, getWins);
     }
 
     @Override
-    public List<GeneralTeamStats> withLooses(int looses) {
+    public List<TeamStatistics> withLooses(int looses) {
         return searchByInt(looses, getLooses);
     }
 
     @Override
-    public List<GeneralTeamStats> withDraws(int draws) {
+    public List<TeamStatistics> withDraws(int draws) {
         return searchByInt(draws, getDraws);
     }
 
     @Override
-    public List<GeneralTeamStats> withPoints(double points) {
+    public List<TeamStatistics> withPoints(double points) {
         return null;
     }
 
@@ -72,18 +72,18 @@ public class GeneralTeamStatsRepository extends RepositoryBase<GeneralTeamStats>
         return "UPDATE TEAM_STATS SET (wins,looses,draws,points) = (?,?,?,?) where id=?";
     }
 
-    protected void setUpdate(GeneralTeamStats generalTeamStats) throws SQLException {
-        update.setInt(1, generalTeamStats.getWins());
-        update.setInt(2, generalTeamStats.getLooses());
-        update.setInt(3, generalTeamStats.getDraws());
-        update.setDouble(4, generalTeamStats.getPoints());
+    protected void setUpdate(TeamStatistics teamStatistics) throws SQLException {
+        update.setInt(1, teamStatistics.getWins());
+        update.setInt(2, teamStatistics.getLooses());
+        update.setInt(3, teamStatistics.getDraws());
+        update.setDouble(4, teamStatistics.getPoints());
     }
 
-    protected void setInsert(GeneralTeamStats generalTeamStats) throws SQLException {
-        insert.setInt(1, generalTeamStats.getWins());
-        insert.setInt(2, generalTeamStats.getLooses());
-        insert.setInt(3, generalTeamStats.getDraws());
-        insert.setDouble(4, generalTeamStats.getPoints());
+    protected void setInsert(TeamStatistics teamStatistics) throws SQLException {
+        insert.setInt(1, teamStatistics.getWins());
+        insert.setInt(2, teamStatistics.getLooses());
+        insert.setInt(3, teamStatistics.getDraws());
+        insert.setDouble(4, teamStatistics.getPoints());
     }
 
     @Override

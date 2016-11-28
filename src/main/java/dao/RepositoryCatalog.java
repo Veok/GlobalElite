@@ -22,8 +22,8 @@ public class RepositoryCatalog implements IRepositoryCatalog {
     }
 
     @Override
-    public IGeneralPlayerStatsRepository playersStats() {
-        return new GeneralPlayerStatsRepository(connection, new GeneralPlayerStatsMapper(), uow);
+    public IPlayerStatisticsRepository playersStats() {
+        return new PlayerStatisticsRepository(connection, new PlayerStatisticsMapper(), uow);
     }
 
     @Override
@@ -53,8 +53,8 @@ public class RepositoryCatalog implements IRepositoryCatalog {
 
 
     @Override
-    public IGeneralTeamStatsRepository teamsStats() {
-        return new GeneralTeamStatsRepository(connection, new GeneralPlayerStatsMapper(), uow);
+    public ITeamStatisticsRepository teamsStats() {
+        return new TeamStatisticsRepository(connection, new PlayerStatisticsMapper(), uow);
     }
 
     @Override

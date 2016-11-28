@@ -17,19 +17,21 @@ public class MatchHistory implements IHaveId {
     private MatchScoreBoard matchScoreBoard;
 
     public MatchHistory() {
+
     }
+
 
     public void score() {
 
         if (scoreOfTeam1 > scoreOfTeam2) {
-            team1.getGeneralTeamStats().setWins(team1.getGeneralTeamStats().getWins() + 1);
-            team2.getGeneralTeamStats().setLooses(team2.getGeneralTeamStats().getLooses() + 1);
+            team1.getTeamStatistics().setWins(team1.getTeamStatistics().getWins() + 1);
+            team2.getTeamStatistics().setLooses(team2.getTeamStatistics().getLooses() + 1);
         } else if (scoreOfTeam1 < scoreOfTeam2) {
-            team2.getGeneralTeamStats().setWins(team2.getGeneralTeamStats().getWins() + 1);
-            team1.getGeneralTeamStats().setLooses(team1.getGeneralTeamStats().getLooses() + 1);
+            team2.getTeamStatistics().setWins(team2.getTeamStatistics().getWins() + 1);
+            team1.getTeamStatistics().setLooses(team1.getTeamStatistics().getLooses() + 1);
         } else {
-            team1.getGeneralTeamStats().setDraws(team1.getGeneralTeamStats().getDraws() + 1);
-            team2.getGeneralTeamStats().setDraws(team2.getGeneralTeamStats().getDraws() + 1);
+            team1.getTeamStatistics().setDraws(team1.getTeamStatistics().getDraws() + 1);
+            team2.getTeamStatistics().setDraws(team2.getTeamStatistics().getDraws() + 1);
         }
     }
 

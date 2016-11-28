@@ -2,7 +2,7 @@ package dao.mappers;
 
 import domain.model.Player;
 import domain.model.Team;
-import domain.model.GeneralTeamStats;
+import domain.model.TeamStatistics;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +18,7 @@ public class TeamMapper implements IMapResultSetIntoEntity {
         team.setName(rs.getString("name"));
         team.setCountry(rs.getString("country"));
         team.setPlayers((Player) rs.getObject("PLAYERS_ID"));
-        team.setGeneralTeamStats((GeneralTeamStats) rs.getObject("TEAM_STATS_ID"));
+        team.setTeamStatistics((TeamStatistics) rs.getObject("TEAM_STATS_ID"));
         return team;
     }
 }

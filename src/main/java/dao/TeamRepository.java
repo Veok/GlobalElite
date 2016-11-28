@@ -8,9 +8,7 @@ import domain.model.Team;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -59,14 +57,14 @@ public class TeamRepository extends RepositoryBase<Team> implements ITeamReposit
     protected void setUpdate(Team team) throws SQLException {
         update.setString(1, team.getName());
         update.setString(2, team.getCountry());
-        update.setInt(3, team.getGeneralTeamStats().getId());
+        update.setInt(3, team.getTeamStatistics().getId());
         update.setInt(4, team.getPlayers().getId());
     }
 
     protected void setInsert(Team team) throws SQLException {
         insert.setString(1, team.getName());
         insert.setString(2, team.getCountry());
-        insert.setInt(3, team.getGeneralTeamStats().getId());
+        insert.setInt(3, team.getTeamStatistics().getId());
         insert.setInt(4, team.getPlayers().getId());
     }
 

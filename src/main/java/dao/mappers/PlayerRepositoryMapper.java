@@ -1,10 +1,9 @@
 package dao.mappers;
 
-        import domain.model.Player;
-        import domain.model.GeneralPlayerStats;
+import domain.model.Player;
 
-        import java.sql.ResultSet;
-        import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * @author L on 17.11.2016.

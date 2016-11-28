@@ -14,7 +14,7 @@ public class Player implements IHaveId {
     private Date dateOfBirth;
     private String country;
     private String steamId;
-    private GeneralPlayerStats generalPlayerStats;
+    private PlayerStatistics playerStatistics;
 
 
     public Player() {
@@ -41,12 +41,12 @@ public class Player implements IHaveId {
     }
 
 
-    public GeneralPlayerStats getGeneralPlayerStats() {
-        return generalPlayerStats;
+    public PlayerStatistics getPlayerStatistics() {
+        return playerStatistics;
     }
 
-    public void setGeneralPlayerStats(GeneralPlayerStats generalPlayerStats) {
-        this.generalPlayerStats = generalPlayerStats;
+    public void setPlayerStatistics(PlayerStatistics playerStatistics) {
+        this.playerStatistics = playerStatistics;
     }
 
     public String getNick() {

@@ -86,7 +86,7 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
         update.setString(2, player.getCountry());
         update.setDate(3, (Date) player.getDateOfBirth());
         update.setString(4, player.getSteamId());
-        update.setInt(5, player.getGeneralPlayerStats().getId());
+        update.setInt(5, player.getPlayerStatistics().getId());
     }
 
     @Override
@@ -95,7 +95,7 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
         insert.setDate(2, (Date) player.getDateOfBirth());
         insert.setString(3, player.getCountry());
         insert.setString(4, player.getSteamId());
-        insert.setInt(5, player.getGeneralPlayerStats().getId());
+        insert.setInt(5, player.getPlayerStatistics().getId());
     }
 
 
