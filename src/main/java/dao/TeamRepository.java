@@ -19,7 +19,6 @@ public class TeamRepository extends RepositoryBase<Team> implements ITeamReposit
 
     private PreparedStatement getName;
     private PreparedStatement getCountry;
-    private PreparedStatement getPlayer;
 
     public TeamRepository(Connection connection, IMapResultSetIntoEntity<Team> mapper, IUnitOfWork uow) {
         super(connection, mapper, uow);
@@ -27,7 +26,6 @@ public class TeamRepository extends RepositoryBase<Team> implements ITeamReposit
         try {
             getName = connection.prepareStatement(getNameSql());
             getCountry = connection.prepareStatement(getCountrySql());
-            getPlayer = connection.prepareStatement(getPlayerSql());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -42,30 +40,25 @@ public class TeamRepository extends RepositoryBase<Team> implements ITeamReposit
         return "SELECT * FROM TEAM where country = ?";
     }
 
-    protected String getPlayerSql() {
-        return "SELECT * FROM TEAM where PLAYERS_ID  = ?";
-    }
 
     protected String insertSql() {
-        return "INSERT INTO TEAM(name, country, TEAM_STATS_ID, PLAYERS_ID) values (?, ?, ?, ?)";
+        return "INSERT INTO TEAM(name, country, TEAM_STATS_ID) values (?, ?, ?)";
     }
 
     protected String updateSql() {
-        return "UPDATE TEAM SET (name, country, TEAM_STATS_ID, PLAYERS_ID) = (?,?,?,?) where id=?";
+        return "UPDATE TEAM SET (name, country, TEAM_STATS_ID) = (?,?,?) where id=?";
     }
 
     protected void setUpdate(Team team) throws SQLException {
         update.setString(1, team.getName());
         update.setString(2, team.getCountry());
         update.setInt(3, team.getTeamStatistics().getId());
-        update.setInt(4, team.getPlayers().getId());
     }
 
     protected void setInsert(Team team) throws SQLException {
         insert.setString(1, team.getName());
         insert.setString(2, team.getCountry());
         insert.setInt(3, team.getTeamStatistics().getId());
-        insert.setInt(4, team.getPlayers().getId());
     }
 
 
@@ -79,11 +72,6 @@ public class TeamRepository extends RepositoryBase<Team> implements ITeamReposit
         return searchByString(country, getCountry);
     }
 
-    @Override
-    public List<Team> withPlayer(Player player) {
-
-        return searchByInt(player.getId(), getPlayer);
-    }
 
     @Override
     protected String createTableSql() {
@@ -92,9 +80,8 @@ public class TeamRepository extends RepositoryBase<Team> implements ITeamReposit
                 + "name varchar(25),"
                 + "country varchar(25),"
                 + "TEAM_STATS_ID int,"
-                + "PLAYERS_ID int,"
-                + "FOREIGN KEY (TEAM_STATS_ID) REFERENCES TEAM_STATS(id),"
-                + "FOREIGN KEY (PLAYERS_ID) REFERENCES PLAYER(id)" + ")";
+                + "FOREIGN KEY (TEAM_STATS_ID) REFERENCES TEAM_STATS(id)"
+             + ")";
     }
 
     @Override

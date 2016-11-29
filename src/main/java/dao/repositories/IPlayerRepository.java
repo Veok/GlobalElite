@@ -1,6 +1,7 @@
 package dao.repositories;
 
 import domain.model.Player;
+import domain.model.Team;
 
 import java.util.Date;
 import java.util.List;
@@ -15,4 +16,6 @@ public interface IPlayerRepository extends IRepository<Player> {
     List<Player> withCountry(String country);
 
     List<Player> withDateOfBirth(Date dob);
+
+    List<Player> withTeam(Team team);
 }

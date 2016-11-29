@@ -14,5 +14,4 @@ public interface ITeamRepository extends IRepository<Team> {
 
     public List<Team> withCountry(String country);
 
-    public List<Team> withPlayer(Player player);
 }

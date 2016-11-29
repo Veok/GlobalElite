@@ -1,6 +1,7 @@
 package dao.mappers;
 
 import domain.model.Player;
+import domain.model.Team;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,6 +18,7 @@ public class PlayerRepositoryMapper implements IMapResultSetIntoEntity {
         player.setDateOfBirth(rs.getDate("DoB"));
         player.setCountry(rs.getString("country"));
         player.setSteamId(rs.getString("steamId"));
+        player.setTeam((Team) rs.getObject("TEAM_ID"));
         return player;
     }
 }

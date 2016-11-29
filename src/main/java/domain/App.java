@@ -27,13 +27,14 @@ public class App {
         player.setNick("Veok");
         player.setCountry(CountryCode.PL.getName());
         player.setPlayerStatistics(playerStatistics);
+        player.setTeam(team);
 
         playerStatistics.setKills(44);
         playerStatistics.setDeaths(20);
         playerStatistics.getRatio();
+
         team.setName("Lelele");
         team.setCountry(CountryCode.PL.getName());
-        team.setPlayers(player);
         team.setTeamStatistics(teamStatistics);
 
         matchScoreBoard.setPlayer(player);
@@ -53,7 +54,6 @@ public class App {
         TeamStatistics teamStatistics2 = new TeamStatistics();
         Team team2 = new Team();
         team2.setTeamStatistics(teamStatistics2);
-        team2.setPlayers(player);
         matchHistory.setTeam2(team2);
         EnumDictionary enumDictionary = new EnumDictionary();
         matchHistory.setMapId(enumDictionary.getId());
@@ -66,11 +66,12 @@ public class App {
             IUnitOfWork uow = new UnitOfWork(connection);
             IRepositoryCatalog catalog2 = new RepositoryCatalog(connection, uow);
             catalog2.playersStats().add(playerStatistics);
-            catalog2.players().add(player);
-            catalog2.dictionaries().add(enumDictionary);
             catalog2.teamsStats().add(teamStatistics);
+            catalog2.teamsStats().add(teamStatistics2);
             catalog2.teams().add(team);
             catalog2.teams().add(team2);
+            catalog2.players().add(player);
+            catalog2.dictionaries().add(enumDictionary);
             catalog2.scoreboards().add(matchScoreBoard);
             catalog2.history().add(matchHistory);
             catalog2.save();

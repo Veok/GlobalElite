@@ -15,7 +15,7 @@ public class Player implements IHaveId {
     private String country;
     private String steamId;
     private PlayerStatistics playerStatistics;
-
+    private Team team;
 
     public Player() {
 
@@ -30,6 +30,14 @@ public class Player implements IHaveId {
         Pattern pattern = Pattern.compile(regx, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(steamId);
         return matcher.find();
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
     public int getId() {

@@ -1,5 +1,7 @@
 package domain.model;
 
+import java.util.List;
+
 /**
  * @author L on 10.11.2016.
  */
@@ -8,7 +10,6 @@ public class Team implements IHaveId {
     private int id;
     private String name;
     private String country;
-    private Player players;
     private TeamStatistics teamStatistics;
 
     public Team() {
@@ -39,13 +40,6 @@ public class Team implements IHaveId {
         this.country = country;
     }
 
-    public Player getPlayers() {
-        return players;
-    }
-
-    public void setPlayers(Player players) {
-        this.players = players;
-    }
 
     public TeamStatistics getTeamStatistics() {
         return teamStatistics;

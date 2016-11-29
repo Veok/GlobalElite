@@ -4,6 +4,7 @@ import dao.mappers.IMapResultSetIntoEntity;
 import dao.repositories.IPlayerRepository;
 import dao.uow.IUnitOfWork;
 import domain.model.Player;
+import domain.model.Team;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
     private PreparedStatement getNick;
     private PreparedStatement getCountry;
     private PreparedStatement getDob;
-
+    private PreparedStatement getTeam;
 
     public PlayerRepository(Connection connection, IMapResultSetIntoEntity<Player> mapper, IUnitOfWork uow) {
         super(connection, mapper, uow);
@@ -26,11 +27,15 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
             getNick = connection.prepareStatement(getNickSql());
             getCountry = connection.prepareStatement(getCountrySql());
             getDob = connection.prepareStatement(getDobSql());
+            getTeam = connection.prepareStatement(getTeamSql());
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    protected String getTeamSql() {
+        return "SELECT * FROM PLAYER where TEAM_ID = ?";
+    }
 
     protected String getNickSql() {
         return "SELECT * FROM PLAYER where nick = ?";
@@ -71,13 +76,18 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
     }
 
     @Override
+    public List<Player> withTeam(Team team) {
+        return searchByInt(team.getId(), getTeam);
+    }
+
+    @Override
     protected String insertSql() {
-        return "INSERT INTO PLAYER(nick, DoB, country, steamId, PLAYER_STATS_ID) values (?, ?, ?, ?, ?)";
+        return "INSERT INTO PLAYER(nick, DoB, country, steamId, PLAYER_STATS_ID, TEAM_ID) values (?, ?, ?, ?, ?, ?)";
     }
 
     @Override
     protected String updateSql() {
-        return "UPDATE PLAYER SET (nick,DoB, country, steamId, PLAYER_STATS_ID) = (?,?,?,?,?) where id=?";
+        return "UPDATE PLAYER SET (nick,DoB, country, steamId, PLAYER_STATS_ID, TEAM_ID) = (?,?,?,?,?,?) where id=?";
     }
 
     @Override
@@ -87,6 +97,7 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
         update.setDate(3, (Date) player.getDateOfBirth());
         update.setString(4, player.getSteamId());
         update.setInt(5, player.getPlayerStatistics().getId());
+        update.setInt(6, player.getTeam().getId());
     }
 
     @Override
@@ -96,6 +107,7 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
         insert.setString(3, player.getCountry());
         insert.setString(4, player.getSteamId());
         insert.setInt(5, player.getPlayerStatistics().getId());
+        insert.setInt(6, player.getTeam().getId());
     }
 
 
@@ -107,8 +119,10 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
                 + "DoB date,"
                 + "country varchar(25),"
                 + "steamId varchar(25),"
+                + "TEAM_ID int,"
                 + "PLAYER_STATS_ID int,"
-                + "FOREIGN KEY (PLAYER_STATS_ID) REFERENCES PLAYER_STATS(id)"
+                + "FOREIGN KEY (PLAYER_STATS_ID) REFERENCES PLAYER_STATS(id),"
+                + "FOREIGN KEY (TEAM_ID) REFERENCES TEAM(id)"
                 + ")";
     }
 
