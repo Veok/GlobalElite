@@ -32,9 +32,12 @@ public class Player implements IHaveId {
         return matcher.find();
     }
 
+
+
     public Team getTeam() {
-        return team;
+        return  team;
     }
+
 
     public void setTeam(Team team) {
         this.team = team;

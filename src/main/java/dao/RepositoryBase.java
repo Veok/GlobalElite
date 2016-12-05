@@ -38,11 +38,13 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements IReposi
         try {
             this.mapper = mapper;
             createTableIfnotExists();
-            insert = connection.prepareStatement(insertSql());
-            selectById = connection.prepareStatement(selectByIdSql());
+            insert = connection.prepareStatement(insertSql(), Statement.RETURN_GENERATED_KEYS);
+            selectById = connection.prepareStatement(selectByIdSql(), Statement.RETURN_GENERATED_KEYS);
             update = connection.prepareStatement(updateSql());
             delete = connection.prepareStatement(deleteSql());
-            selectAll = connection.prepareStatement(selectAllSql());
+            selectAll = connection.prepareStatement(selectAllSql(), Statement.RETURN_GENERATED_KEYS);
+
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -80,7 +82,6 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements IReposi
         Entity ent = new Entity(this);
         ent.setEntity(entity);
         uow.markAsNew(ent);
-
     }
 
     public void delete(TEntity entity) {
@@ -107,9 +108,18 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements IReposi
     }
 
     public void persistAdd(Entity entity) {
+        int sectionId;
         try {
             setInsert((TEntity) entity.getEntity());
             insert.executeUpdate();
+            ResultSet generatedKeys = insert.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                generatedKeys.getInt(1);
+
+                System.out.println(generatedKeys.getInt(1));
+            }
+
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

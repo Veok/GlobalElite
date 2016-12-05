@@ -14,13 +14,13 @@ public class RepositoryCatalog implements IRepositoryCatalog {
 
     private Connection connection;
     private IUnitOfWork uow;
-    private PlayerRepositoryMapper playerRepositoryMapper;
-    private PlayerStatisticsMapper playerStatisticsMapper;
-    private TeamMapper teamMapper;
-    private EnumDictionaryMapper enumDictionaryMapper;
-    private MatchScoreBoardMapper matchScoreBoardMapper;
-    private MatchHistoryMapper matchHistoryMapper;
-    private TeamStatisticsMapper teamStatisticsMapper;
+    private PlayerRepositoryMapper playerRepositoryMapper = new PlayerRepositoryMapper();
+    private PlayerStatisticsMapper playerStatisticsMapper = new PlayerStatisticsMapper();
+    private TeamMapper teamMapper = new TeamMapper();
+    private EnumDictionaryMapper enumDictionaryMapper = new EnumDictionaryMapper();
+    private MatchScoreBoardMapper matchScoreBoardMapper = new MatchScoreBoardMapper();
+    private MatchHistoryMapper matchHistoryMapper = new MatchHistoryMapper();
+    private TeamStatisticsMapper teamStatisticsMapper = new TeamStatisticsMapper();
 
 
     public RepositoryCatalog(Connection connection, IUnitOfWork uow) {
@@ -31,7 +31,7 @@ public class RepositoryCatalog implements IRepositoryCatalog {
 
     @Override
     public IPlayerStatisticsRepository playersStats() {
-        return new PlayerStatisticsRepository(connection, playerRepositoryMapper, uow);
+        return new PlayerStatisticsRepository(connection, playerStatisticsMapper, uow);
     }
 
     @Override
@@ -68,6 +68,5 @@ public class RepositoryCatalog implements IRepositoryCatalog {
     @Override
     public void save() throws SQLException {
         uow.saveChanges();
-        connection.close();
     }
 }

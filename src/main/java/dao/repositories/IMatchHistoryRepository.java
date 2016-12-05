@@ -12,4 +12,5 @@ public interface IMatchHistoryRepository extends IRepository<MatchHistory> {
 
     public List<MatchHistory> withScores(MatchScoreBoard matchScoreBoard);
 
+
 }

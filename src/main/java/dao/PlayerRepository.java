@@ -20,6 +20,7 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
     private PreparedStatement getDob;
     private PreparedStatement getTeam;
 
+
     public PlayerRepository(Connection connection, IMapResultSetIntoEntity<Player> mapper, IUnitOfWork uow) {
         super(connection, mapper, uow);
 
@@ -28,10 +29,13 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
             getCountry = connection.prepareStatement(getCountrySql());
             getDob = connection.prepareStatement(getDobSql());
             getTeam = connection.prepareStatement(getTeamSql());
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 
     protected String getTeamSql() {
         return "SELECT * FROM PLAYER where TEAM_ID = ?";
@@ -48,6 +52,7 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
     protected String getDobSql() {
         return "SELECT * FROM PLAYER where DoB = ?";
     }
+
 
     @Override
     public List<Player> withNick(String nick) {
@@ -102,6 +107,7 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
 
     @Override
     protected void setInsert(Player player) throws SQLException {
+
         insert.setString(1, player.getNick());
         insert.setDate(2, (Date) player.getDateOfBirth());
         insert.setString(3, player.getCountry());

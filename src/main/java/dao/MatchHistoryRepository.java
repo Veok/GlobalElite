@@ -20,6 +20,7 @@ public class MatchHistoryRepository extends RepositoryBase<MatchHistory> impleme
 
     private PreparedStatement getScores;
 
+
     public MatchHistoryRepository(Connection connection, IMapResultSetIntoEntity<MatchHistory> mapper, IUnitOfWork uow) {
         super(connection, mapper, uow);
 
@@ -29,6 +30,7 @@ public class MatchHistoryRepository extends RepositoryBase<MatchHistory> impleme
             e.printStackTrace();
         }
     }
+
 
     protected String getScoresSql() {
         return "SELECT * FROM HISTORY_OF_MATCH where SCOREBOARD_ID=?";
@@ -60,7 +62,7 @@ public class MatchHistoryRepository extends RepositoryBase<MatchHistory> impleme
         update.setDate(3, (Date) matchHistory.getTimeOfMatch());
         update.setInt(4, matchHistory.getTeam1().getId());
         update.setInt(5, matchHistory.getTeam1().getId());
-        update.setInt(6, matchHistory.getMapId());
+        update.setInt(6, matchHistory.getGameMap().getId());
         update.setInt(7, matchHistory.getMatchScoreBoard().getId());
     }
 
@@ -71,7 +73,7 @@ public class MatchHistoryRepository extends RepositoryBase<MatchHistory> impleme
         insert.setDate(3, (Date) matchHistory.getTimeOfMatch());
         insert.setInt(4, matchHistory.getTeam1().getId());
         insert.setInt(5, matchHistory.getTeam2().getId());
-        insert.setInt(6, matchHistory.getMapId());
+        insert.setInt(6, matchHistory.getGameMap().getId());
         insert.setInt(7, matchHistory.getMatchScoreBoard().getId());
     }
 
@@ -88,7 +90,7 @@ public class MatchHistoryRepository extends RepositoryBase<MatchHistory> impleme
                 + "SCOREBOARD_ID int,"
                 + "FOREIGN KEY (TEAM_1_ID) REFERENCES TEAM(id),"
                 + "FOREIGN KEY (TEAM_2_ID) REFERENCES TEAM(id),"
-                + "FOREIGN KEY (MAP_ID) REFERENCES ENUM_DICTIONARY(id),"
+                + "FOREIGN KEY (MAP_ID) REFERENCES MAP(id),"
                 + "FOREIGN KEY (SCOREBOARD_ID) REFERENCES SCOREBOARD(id)"
                 + ")";
     }

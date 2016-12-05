@@ -1,7 +1,6 @@
 package dao.mappers;
 
 import domain.model.MatchScoreBoard;
-import domain.model.Player;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,7 +15,6 @@ public class MatchScoreBoardMapper implements IMapResultSetIntoEntity {
         matchScoreBoard.setId(rs.getInt("id"));
         matchScoreBoard.setKillsInMatch(rs.getInt("killsInMatch"));
         matchScoreBoard.setDeathsInMatch(rs.getInt("deathsInMatch"));
-        matchScoreBoard.setPlayer((Player) rs.getObject("PLAYER_ID"));
         return matchScoreBoard;
     }
 }

@@ -11,7 +11,7 @@ public class MatchHistory implements IHaveId {
     private Team team1;
     private Team team2;
     private Date timeOfMatch;
-    private int mapId;
+    private GameMap gameMap;
     private int scoreOfTeam1;
     private int scoreOfTeam2;
     private MatchScoreBoard matchScoreBoard;
@@ -76,12 +76,12 @@ public class MatchHistory implements IHaveId {
         this.timeOfMatch = timeOfMatch;
     }
 
-    public int getMapId() {
-        return mapId;
+    public GameMap getGameMap() {
+        return gameMap;
     }
 
-    public void setMapId(int mapId) {
-        this.mapId = mapId;
+    public void setGameMap(GameMap gameMap) {
+        this.gameMap = gameMap;
     }
 
     public int getScoreOfTeam1() {

@@ -12,4 +12,5 @@ public interface IMatchScoreBoardRepository extends IRepository<MatchScoreBoard>
     public List<MatchScoreBoard> withKillsInMatch(int killsInMatch);
 
     public List<MatchScoreBoard> withDeathsInMatch(int deathInMatch);
+
 }

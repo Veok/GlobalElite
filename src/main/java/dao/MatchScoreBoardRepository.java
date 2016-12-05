@@ -30,6 +30,7 @@ public class MatchScoreBoardRepository extends RepositoryBase<MatchScoreBoard> i
         }
     }
 
+
     protected String getKillsInMatchSql() {
         return "SELECT * FROM SCOREBOARD where killsInMatch=?";
     }
