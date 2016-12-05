@@ -26,7 +26,7 @@ public class App {
         TeamStatistics teamStatistics2 = new TeamStatistics();
         Team team2 = new Team();
         EnumDictionary enumDictionary = new EnumDictionary();
-
+        GameMap map = new GameMap();
 
         player.setNick("Veok");
         player.setCountry(CountryCode.PL.getName());
@@ -58,6 +58,9 @@ public class App {
         teamStatistics.setLooses(2);
         player.getTeam().setId(1);
 
+        map.setNameOfMap("DUST");
+        matchHistory.setGameMap(map);
+
         String url = "jdbc:hsqldb:hsql://localhost/workdb";
 
         try {
@@ -70,7 +73,7 @@ public class App {
             catalog2.teams().add(team);
             catalog2.teams().add(team2);
             catalog2.players().add(player);
-
+            catalog2.maps().add(map);
             catalog2.dictionaries().add(enumDictionary);
             catalog2.scoreboards().add(matchScoreBoard);
             catalog2.history().add(matchHistory);

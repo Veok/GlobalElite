@@ -40,7 +40,7 @@ public class GameMapRepository extends RepositoryBase<GameMap> implements IGameM
 
     @Override
     protected String insertSql() {
-        return "INSERT INTO MAP name values = ?";
+        return "INSERT INTO MAP (name) values (?)";
     }
 
     @Override

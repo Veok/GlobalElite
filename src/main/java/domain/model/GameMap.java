@@ -24,7 +24,7 @@ public class GameMap implements IHaveId {
     }
 
     public void setNameOfMap(String nameOfMap) {
-        this.name = name;
+        this.name = nameOfMap;
     }
 
 

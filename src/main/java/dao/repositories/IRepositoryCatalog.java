@@ -21,6 +21,8 @@ public interface IRepositoryCatalog {
 
     ITeamStatisticsRepository teamsStats();
 
+    IGameMapRepository maps();
+
     void save() throws SQLException;
 
 }

@@ -3,6 +3,7 @@ package dao;
 import dao.mappers.*;
 import dao.repositories.*;
 import dao.uow.IUnitOfWork;
+import domain.model.GameMap;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -21,7 +22,7 @@ public class RepositoryCatalog implements IRepositoryCatalog {
     private MatchScoreBoardMapper matchScoreBoardMapper = new MatchScoreBoardMapper();
     private MatchHistoryMapper matchHistoryMapper = new MatchHistoryMapper();
     private TeamStatisticsMapper teamStatisticsMapper = new TeamStatisticsMapper();
-
+    private GameMapMapper gameMapMapper = new GameMapMapper();
 
     public RepositoryCatalog(Connection connection, IUnitOfWork uow) {
         super();
@@ -63,6 +64,11 @@ public class RepositoryCatalog implements IRepositoryCatalog {
     @Override
     public ITeamStatisticsRepository teamsStats() {
         return new TeamStatisticsRepository(connection, teamStatisticsMapper, uow);
+    }
+
+    @Override
+    public IGameMapRepository maps(){
+        return new GameMapRepository(connection,gameMapMapper, uow);
     }
 
     @Override
