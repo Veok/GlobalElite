@@ -69,15 +69,18 @@ public class App {
             IRepositoryCatalog catalog2 = new RepositoryCatalog(connection, uow);
             catalog2.playersStats().add(playerStatistics);
             catalog2.teamsStats().add(teamStatistics);
-            catalog2.teamsStats().add(teamStatistics2);
             catalog2.teams().add(team);
+            catalog2.save();
+            catalog2.teams().getLastId();
+            catalog2.teamsStats().add(teamStatistics2);
             catalog2.teams().add(team2);
+            catalog2.save();
+            catalog2.teams().getLastId();
             catalog2.players().add(player);
             catalog2.maps().add(map);
             catalog2.dictionaries().add(enumDictionary);
             catalog2.scoreboards().add(matchScoreBoard);
             catalog2.history().add(matchHistory);
-
             catalog2.save();
 
             connection.close();

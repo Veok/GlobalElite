@@ -13,9 +13,10 @@ public class UnitOfWork implements IUnitOfWork {
     private Connection connection;
     private List<Entity> entities = new ArrayList<Entity>();
 
-    public UnitOfWork(Connection connection) {
+    public UnitOfWork(Connection connection) throws SQLException {
         super();
         this.connection = connection;
+        this.connection.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
         try {
             connection.setAutoCommit(false);
         } catch (SQLException e) {

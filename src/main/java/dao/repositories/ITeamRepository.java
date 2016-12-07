@@ -14,4 +14,5 @@ public interface ITeamRepository extends IRepository<Team> {
 
     public List<Team> withCountry(String country);
 
+    public void getLastId();
 }

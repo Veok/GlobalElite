@@ -6,10 +6,7 @@ import dao.uow.IUnitOfWork;
 import domain.model.Team;
 import domain.model.TeamStatistics;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 /**
@@ -21,6 +18,7 @@ public class TeamRepository extends RepositoryBase<Team> implements ITeamReposit
     private PreparedStatement getName;
     private PreparedStatement getCountry;
     private TeamStatisticsRepository teamStatisticsRepository;
+    private PreparedStatement getLastId;
 
     public TeamRepository(Connection connection, IMapResultSetIntoEntity<Team> mapper, IUnitOfWork uow) {
         super(connection, mapper, uow);
@@ -28,6 +26,7 @@ public class TeamRepository extends RepositoryBase<Team> implements ITeamReposit
         try {
             getName = connection.prepareStatement(getNameSql());
             getCountry = connection.prepareStatement(getCountrySql());
+            getLastId = connection.prepareStatement(getLastIdSql());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -40,6 +39,20 @@ public class TeamRepository extends RepositoryBase<Team> implements ITeamReposit
         team.setTeamStatistics(teamStatistics);
 
     }
+    public void getLastId(){
+
+        try {
+            getLastId.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    protected String getLastIdSql(){
+        return "UPDATE TEAM SET(TEAM_STATS_ID) = (SELECT max(id) from TEAM_STATS) where id = (SELECT max(id) FROM TEAM)";
+    }
 
     protected String getNameSql() {
         return "SELECT * FROM TEAM where name = ?";
@@ -51,7 +64,7 @@ public class TeamRepository extends RepositoryBase<Team> implements ITeamReposit
 
 
     protected String insertSql() {
-        return "INSERT INTO TEAM(name, country, TEAM_STATS_ID) values (?, ?, ?)";
+        return "INSERT INTO TEAM(name, country) values (?, ?)";
     }
 
     protected String updateSql() {
@@ -67,7 +80,7 @@ public class TeamRepository extends RepositoryBase<Team> implements ITeamReposit
     protected void setInsert(Team team) throws SQLException {
         insert.setString(1, team.getName());
         insert.setString(2, team.getCountry());
-        insert.setInt(3, team.getTeamStatistics().getId());
+       //insert.setInt(3, team.getTeamStatistics().getId());
 
         ResultSet gen = insert.getGeneratedKeys();
         if (gen.next()) {
