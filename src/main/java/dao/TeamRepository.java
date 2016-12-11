@@ -4,9 +4,11 @@ import dao.mappers.IMapResultSetIntoEntity;
 import dao.repositories.ITeamRepository;
 import dao.uow.IUnitOfWork;
 import domain.model.Team;
-import domain.model.TeamStatistics;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -17,7 +19,6 @@ public class TeamRepository extends RepositoryBase<Team> implements ITeamReposit
 
     private PreparedStatement getName;
     private PreparedStatement getCountry;
-    private TeamStatisticsRepository teamStatisticsRepository;
     private PreparedStatement getLastId;
 
     public TeamRepository(Connection connection, IMapResultSetIntoEntity<Team> mapper, IUnitOfWork uow) {
@@ -32,14 +33,7 @@ public class TeamRepository extends RepositoryBase<Team> implements ITeamReposit
         }
     }
 
-
-    public void fillTeamWithTeamStatistics(Team team) {
-
-        TeamStatistics teamStatistics = teamStatisticsRepository.get(team.getId());
-        team.setTeamStatistics(teamStatistics);
-
-    }
-    public void getLastId(){
+    public void getLastId() {
 
         try {
             getLastId.executeUpdate();
@@ -50,7 +44,7 @@ public class TeamRepository extends RepositoryBase<Team> implements ITeamReposit
 
     }
 
-    protected String getLastIdSql(){
+    protected String getLastIdSql() {
         return "UPDATE TEAM SET(TEAM_STATS_ID) = (SELECT max(id) from TEAM_STATS) where id = (SELECT max(id) FROM TEAM)";
     }
 
@@ -80,7 +74,6 @@ public class TeamRepository extends RepositoryBase<Team> implements ITeamReposit
     protected void setInsert(Team team) throws SQLException {
         insert.setString(1, team.getName());
         insert.setString(2, team.getCountry());
-       //insert.setInt(3, team.getTeamStatistics().getId());
 
         ResultSet gen = insert.getGeneratedKeys();
         if (gen.next()) {
