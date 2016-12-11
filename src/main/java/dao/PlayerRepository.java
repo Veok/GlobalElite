@@ -19,6 +19,8 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
     private PreparedStatement getCountry;
     private PreparedStatement getDob;
     private PreparedStatement getTeam;
+    private PreparedStatement getLastIdOfStats;
+    private PreparedStatement getLastIdOfTeam;
 
 
     public PlayerRepository(Connection connection, IMapResultSetIntoEntity<Player> mapper, IUnitOfWork uow) {
@@ -29,6 +31,8 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
             getCountry = connection.prepareStatement(getCountrySql());
             getDob = connection.prepareStatement(getDobSql());
             getTeam = connection.prepareStatement(getTeamSql());
+            getLastIdOfStats = connection.prepareStatement(getLastIdOfStatsSql());
+            getLastIdOfTeam = connection.prepareStatement(getLastIdOfTeamSql());
 
 
         } catch (SQLException e) {
@@ -37,6 +41,24 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
     }
 
 
+    public void getLastId(){
+
+        try {
+            getLastIdOfStats.executeUpdate();
+            getLastIdOfTeam.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    protected String getLastIdOfStatsSql(){
+        return "UPDATE PLAYER SET(PLAYER_STATS_ID) = (SELECT max(id) from PLAYER_STATISTICS) where id = (SELECT max(id) FROM PLAYER)";
+
+    }
+
+    protected String getLastIdOfTeamSql(){
+        return "UPDATE PLAYER SET(TEAM_ID_ = (SELECT max(id) from TEAM) where id = (SELECT max(id) FROM PLAYER)";
+    }
     protected String getTeamSql() {
         return "SELECT * FROM PLAYER where TEAM_ID = ?";
     }
@@ -112,8 +134,11 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
         insert.setDate(2, (Date) player.getDateOfBirth());
         insert.setString(3, player.getCountry());
         insert.setString(4, player.getSteamId());
-        insert.setInt(5, player.getPlayerStatistics().getId());
-        insert.setInt(6, player.getTeam().getId());
+
+        ResultSet resultSet = insert.getGeneratedKeys();
+                if(resultSet.next()){
+                player.setId(resultSet.getInt(1));
+                }
     }
 
 

@@ -19,6 +19,10 @@ public class MatchHistoryRepository extends RepositoryBase<MatchHistory> impleme
 
 
     private PreparedStatement getScores;
+    private PreparedStatement getLastIdOfTeam1;
+    private PreparedStatement getLastIfOfTeam2;
+    private PreparedStatement getLastIdOfMap;
+    private PreparedStatement getLastIfOfScoreBoard;
 
 
     public MatchHistoryRepository(Connection connection, IMapResultSetIntoEntity<MatchHistory> mapper, IUnitOfWork uow) {
@@ -31,6 +35,18 @@ public class MatchHistoryRepository extends RepositoryBase<MatchHistory> impleme
         }
     }
 
+
+    protected String getLastIdOfTeam1Sql(){
+        return "UPDATE HISTORY_OF_MATCH SET(TEAM_1_ID) = (SELECT max(id) from TEAM) where id = (SELECT max(id) FROM HISTORY_OF_MATCH)";
+    }
+
+    protected String getLastIfOfTeam2Sql(){
+        return "UPDATE HISTORY_OF_MATCH SET(TEAM_2_ID) = (SELECT max(id) from TEAM) where id = (SELECT max(id) FROM HISTORY_OF_MATCH)";
+    }
+
+    protected String getLastIfOfMapSql(){
+
+    }
 
     protected String getScoresSql() {
         return "SELECT * FROM HISTORY_OF_MATCH where SCOREBOARD_ID=?";

@@ -7,6 +7,7 @@ import domain.model.MatchScoreBoard;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class MatchScoreBoardRepository extends RepositoryBase<MatchScoreBoard> i
 
     private PreparedStatement getKillsInMatch;
     private PreparedStatement getDeathsInMatch;
+    private PreparedStatement getLastIdOfPlayer;
 
     public MatchScoreBoardRepository(Connection connection, IMapResultSetIntoEntity<MatchScoreBoard> mapper, IUnitOfWork uow) {
         super(connection, mapper, uow);
@@ -25,11 +27,23 @@ public class MatchScoreBoardRepository extends RepositoryBase<MatchScoreBoard> i
         try {
             getKillsInMatch = connection.prepareStatement(getKillsInMatchSql());
             getDeathsInMatch = connection.prepareStatement(getDeathsInMatchSql());
+            getLastIdOfPlayer = connection.prepareStatement(getLastIdOfPlayerSql());
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    public void getLastId(){
+        try{
+            getLastIdOfPlayer.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    protected String getLastIdOfPlayerSql(){
+        return "UPDATE SCOREBOARD SET(PLAYER_ID) = (SELECT max(id) from PLAYER) where id = (SELECT max(id) FROM SCOREBOARD)";
+    }
 
     protected String getKillsInMatchSql() {
         return "SELECT * FROM SCOREBOARD where killsInMatch=?";
@@ -70,7 +84,11 @@ public class MatchScoreBoardRepository extends RepositoryBase<MatchScoreBoard> i
     protected void setInsert(MatchScoreBoard matchScoreBoard) throws SQLException {
         insert.setInt(1, matchScoreBoard.getKillsInMatch());
         insert.setInt(2, matchScoreBoard.getDeathsInMatch());
-        insert.setInt(3, matchScoreBoard.getPlayer().getId());
+
+        ResultSet resultSet = insert.getGeneratedKeys();
+        if(resultSet.next()){
+            matchScoreBoard.setId(resultSet.getInt(1));
+        }
     }
 
     @Override
