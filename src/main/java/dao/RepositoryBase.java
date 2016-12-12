@@ -108,16 +108,9 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements IReposi
     }
 
     public void persistAdd(Entity entity) {
-        int sectionId;
         try {
             setInsert((TEntity) entity.getEntity());
             insert.executeUpdate();
-            ResultSet generatedKeys = insert.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                generatedKeys.getInt(1);
-
-                System.out.println(generatedKeys.getInt(1));
-            }
 
 
         } catch (SQLException ex) {
@@ -191,6 +184,7 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements IReposi
         if (!tableExists)
             createTable.executeUpdate(createTableSql());
     }
+
 
     protected abstract String insertSql();
 

@@ -13,7 +13,7 @@ public class PlayerRepositoryMapper implements IMapResultSetIntoEntity {
     public Player map(ResultSet rs) throws SQLException {
 
         Player player = new Player();
-        player.setId(rs.getInt("ID"));
+        player.setId(rs.getInt("id"));
         player.setNick(rs.getString("nick"));
         player.setDateOfBirth(rs.getDate("DoB"));
         player.setCountry(rs.getString("country"));

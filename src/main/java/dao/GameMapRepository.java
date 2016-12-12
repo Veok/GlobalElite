@@ -28,6 +28,7 @@ public class GameMapRepository extends RepositoryBase<GameMap> implements IGameM
 
     }
 
+
     protected String getNameSql() {
         return "SELECT * FROM MAP where name = ?";
     }

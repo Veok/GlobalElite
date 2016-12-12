@@ -33,15 +33,15 @@ public class MatchScoreBoardRepository extends RepositoryBase<MatchScoreBoard> i
         }
     }
 
-    public void getLastId(){
-        try{
+    public void getLastId() {
+        try {
             getLastIdOfPlayer.executeUpdate();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    protected String getLastIdOfPlayerSql(){
+    protected String getLastIdOfPlayerSql() {
         return "UPDATE SCOREBOARD SET(PLAYER_ID) = (SELECT max(id) from PLAYER) where id = (SELECT max(id) FROM SCOREBOARD)";
     }
 
@@ -65,7 +65,7 @@ public class MatchScoreBoardRepository extends RepositoryBase<MatchScoreBoard> i
 
     @Override
     protected String insertSql() {
-        return "INSERT INTO SCOREBOARD(killsInMatch, deathsInMatch, PLAYER_ID) values (?, ?, ?)";
+        return "INSERT INTO SCOREBOARD(killsInMatch, deathsInMatch) values (?, ?)";
     }
 
     @Override
@@ -86,7 +86,7 @@ public class MatchScoreBoardRepository extends RepositoryBase<MatchScoreBoard> i
         insert.setInt(2, matchScoreBoard.getDeathsInMatch());
 
         ResultSet resultSet = insert.getGeneratedKeys();
-        if(resultSet.next()){
+        if (resultSet.next()) {
             matchScoreBoard.setId(resultSet.getInt(1));
         }
     }

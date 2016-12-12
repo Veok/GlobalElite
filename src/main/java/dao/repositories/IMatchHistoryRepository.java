@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface IMatchHistoryRepository extends IRepository<MatchHistory> {
 
-    public List<MatchHistory> withScores(MatchScoreBoard matchScoreBoard);
+    List<MatchHistory> withScores(MatchScoreBoard matchScoreBoard);
 
-
+    void getLastId();
 }

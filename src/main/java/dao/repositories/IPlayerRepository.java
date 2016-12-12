@@ -19,5 +19,5 @@ public interface IPlayerRepository extends IRepository<Player> {
 
     List<Player> withTeam(Team team);
 
-
+    void getLastId();
 }

@@ -2,7 +2,6 @@ package domain;
 
 import com.neovisionaries.i18n.CountryCode;
 import dao.RepositoryCatalog;
-import dao.mappers.PlayerRepositoryMapper;
 import dao.repositories.IRepositoryCatalog;
 import dao.uow.IUnitOfWork;
 import dao.uow.UnitOfWork;
@@ -67,20 +66,39 @@ public class App {
             Connection connection = DriverManager.getConnection(url);
             IUnitOfWork uow = new UnitOfWork(connection);
             IRepositoryCatalog catalog2 = new RepositoryCatalog(connection, uow);
+
             catalog2.playersStats().add(playerStatistics);
+
             catalog2.teamsStats().add(teamStatistics);
+
             catalog2.teams().add(team);
             catalog2.save();
             catalog2.teams().getLastId();
+            catalog2.save();
+
             catalog2.teamsStats().add(teamStatistics2);
             catalog2.teams().add(team2);
             catalog2.save();
             catalog2.teams().getLastId();
+            catalog2.save();
+
             catalog2.players().add(player);
+            catalog2.save();
+            catalog2.players().getLastId();
+            catalog2.save();
+
             catalog2.maps().add(map);
+
             catalog2.dictionaries().add(enumDictionary);
+
             catalog2.scoreboards().add(matchScoreBoard);
+            catalog2.save();
+            catalog2.scoreboards().getLastId();
+            catalog2.save();
+
             catalog2.history().add(matchHistory);
+            catalog2.save();
+            catalog2.history().getLastId();
             catalog2.save();
 
             connection.close();

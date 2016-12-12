@@ -30,40 +30,40 @@ public class MatchHistoryRepository extends RepositoryBase<MatchHistory> impleme
             getLastIdOfTeam1 = connection.prepareStatement(getLastIdOfTeam1Sql());
             getLastIdOfTeam2 = connection.prepareStatement(getLastIdOfTeam2Sql());
             getLastIdOfMap = connection.prepareStatement(getLastIdOfMapSql());
-            getLastIdOfMap = connection.prepareStatement(getLastIdOfScoreBoardSql());
+            getLastIdOfScoreBoard = connection.prepareStatement(getLastIdOfScoreBoardSql());
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    public void getLastId() {
 
-    protected String getLastIdOfTeam1Sql(){
-        return "UPDATE HISTORY_OF_MATCH SET(TEAM_1_ID) = (SELECT max(id) from TEAM) where id = (SELECT max(id) FROM HISTORY_OF_MATCH)";
-    }
-
-    protected String getLastIdOfTeam2Sql(){
-        return "UPDATE HISTORY_OF_MATCH SET(TEAM_2_ID) = (SELECT max(id) from TEAM) where id = (SELECT max(id) FROM HISTORY_OF_MATCH)";
-    }
-
-    protected String getLastIdOfMapSql(){
-        return "UPDATE HISTORY_OF_MATCH SET(MAP_ID) = (SELECT max(id) from MAP) where id = (SELECT max(id) FROM HISTORY_OF_MATCH)";
-    }
-
-    protected String getLastIdOfScoreBoardSql(){
-        return "UPDATE HISTORY_OF_MATCH SET(SCOREBOARD_ID) = (SELECT max(id) from SCOREBOARD) where id = (SELECT max(id) FROM HISTORY_OF_MATCH)";
-    }
-
-    public void getLastId(){
-
-        try{
+        try {
             getLastIdOfTeam1.executeUpdate();
             getLastIdOfTeam2.executeUpdate();
             getLastIdOfMap.executeUpdate();
             getLastIdOfScoreBoard.executeUpdate();
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+    protected String getLastIdOfTeam1Sql() {
+        return "UPDATE HISTORY_OF_MATCH SET(TEAM_1_ID) = (SELECT max(id) from TEAM) where id = (SELECT max(id) FROM HISTORY_OF_MATCH)";
+    }
+
+    protected String getLastIdOfTeam2Sql() {
+        return "UPDATE HISTORY_OF_MATCH SET(TEAM_2_ID) = (SELECT max(id) from TEAM) where id = (SELECT max(id) FROM HISTORY_OF_MATCH)";
+    }
+
+    protected String getLastIdOfMapSql() {
+        return "UPDATE HISTORY_OF_MATCH SET(MAP_ID) = (SELECT max(id) from MAP) where id = (SELECT max(id) FROM HISTORY_OF_MATCH)";
+    }
+
+    protected String getLastIdOfScoreBoardSql() {
+        return "UPDATE HISTORY_OF_MATCH SET(SCOREBOARD_ID) = (SELECT max(id) from SCOREBOARD) where id = (SELECT max(id) FROM HISTORY_OF_MATCH)";
+    }
+
 
     protected String getScoresSql() {
         return "SELECT * FROM HISTORY_OF_MATCH where SCOREBOARD_ID=?";
@@ -78,8 +78,7 @@ public class MatchHistoryRepository extends RepositoryBase<MatchHistory> impleme
 
     @Override
     protected String insertSql() {
-        return "INSERT INTO HISTORY_OF_MATCH(scoreOfTeam1, scoreOfTeam2, timeOfMatch, TEAM_1_ID," +
-                " TEAM_2_ID, MAP_ID, SCOREBOARD_ID) values (?, ?, ?, ?, ?, ?, ?)";
+        return "INSERT INTO HISTORY_OF_MATCH(scoreOfTeam1, scoreOfTeam2, timeOfMatch) values (?, ?, ?)";
     }
 
     @Override
@@ -106,7 +105,7 @@ public class MatchHistoryRepository extends RepositoryBase<MatchHistory> impleme
         insert.setDate(3, (Date) matchHistory.getTimeOfMatch());
 
         ResultSet resultSet = insert.getGeneratedKeys();
-        if(resultSet.next()){
+        if (resultSet.next()) {
             matchHistory.setId((resultSet.getInt(1)));
         }
     }

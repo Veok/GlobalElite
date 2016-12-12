@@ -41,24 +41,26 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
     }
 
 
-    public void getLastId(){
+    public void getLastId() {
 
         try {
             getLastIdOfStats.executeUpdate();
             getLastIdOfTeam.executeUpdate();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    protected String getLastIdOfStatsSql(){
-        return "UPDATE PLAYER SET(PLAYER_STATS_ID) = (SELECT max(id) from PLAYER_STATISTICS) where id = (SELECT max(id) FROM PLAYER)";
+
+    protected String getLastIdOfStatsSql() {
+        return "UPDATE PLAYER SET(PLAYER_STATS_ID) = (SELECT max(id) from PLAYER_STATS) where id = (SELECT max(id) FROM PLAYER)";
 
     }
 
-    protected String getLastIdOfTeamSql(){
-        return "UPDATE PLAYER SET(TEAM_ID_ = (SELECT max(id) from TEAM) where id = (SELECT max(id) FROM PLAYER)";
+    protected String getLastIdOfTeamSql() {
+        return "UPDATE PLAYER SET(TEAM_ID) = (SELECT max(id) from TEAM) where id = (SELECT max(id) FROM PLAYER)";
     }
+
     protected String getTeamSql() {
         return "SELECT * FROM PLAYER where TEAM_ID = ?";
     }
@@ -109,7 +111,7 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
 
     @Override
     protected String insertSql() {
-        return "INSERT INTO PLAYER(nick, DoB, country, steamId, PLAYER_STATS_ID, TEAM_ID) values (?, ?, ?, ?, ?, ?)";
+        return "INSERT INTO PLAYER(nick, DoB, country, steamId) values (?, ?, ?, ?)";
     }
 
     @Override
@@ -135,10 +137,11 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
         insert.setString(3, player.getCountry());
         insert.setString(4, player.getSteamId());
 
+
         ResultSet resultSet = insert.getGeneratedKeys();
-                if(resultSet.next()){
-                player.setId(resultSet.getInt(1));
-                }
+        if (resultSet.next()) {
+            player.setId(resultSet.getInt(1));
+        }
     }
 
 
