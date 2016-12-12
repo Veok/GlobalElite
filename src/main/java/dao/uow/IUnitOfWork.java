@@ -5,13 +5,13 @@ package dao.uow;
  */
 public interface IUnitOfWork {
 
-    public void saveChanges();
+    void saveChanges();
 
-    public void rollback();
+    void rollback();
 
-    public void markAsNew(Entity entity);
+    void markAsNew(Entity entity);
 
-    public void markAsDeleted(Entity entity);
+    void markAsDeleted(Entity entity);
 
-    public void markAsChanged(Entity entity);
+    void markAsChanged(Entity entity);
 }

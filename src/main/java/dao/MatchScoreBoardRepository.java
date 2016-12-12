@@ -33,13 +33,6 @@ public class MatchScoreBoardRepository extends RepositoryBase<MatchScoreBoard> i
         }
     }
 
-    public void getLastId() {
-        try {
-            getLastIdOfPlayer.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     protected String getLastIdOfPlayerSql() {
         return "UPDATE SCOREBOARD SET(PLAYER_ID) = (SELECT max(id) from PLAYER) where id = (SELECT max(id) FROM SCOREBOARD)";
@@ -53,6 +46,14 @@ public class MatchScoreBoardRepository extends RepositoryBase<MatchScoreBoard> i
         return "SELECT * FROM SCOREBOARD where deathsInMatch=?";
     }
 
+    @Override
+    public void getLastIdForForeignKey() {
+        try {
+            getLastIdOfPlayer.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     public List<MatchScoreBoard> withKillsInMatch(int killsInMatch) {
         return searchByInt(killsInMatch, getKillsInMatch);

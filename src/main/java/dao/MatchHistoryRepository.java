@@ -36,17 +36,6 @@ public class MatchHistoryRepository extends RepositoryBase<MatchHistory> impleme
         }
     }
 
-    public void getLastId() {
-
-        try {
-            getLastIdOfTeam1.executeUpdate();
-            getLastIdOfTeam2.executeUpdate();
-            getLastIdOfMap.executeUpdate();
-            getLastIdOfScoreBoard.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     protected String getLastIdOfTeam1Sql() {
         return "UPDATE HISTORY_OF_MATCH SET(TEAM_1_ID) = (SELECT max(id) from TEAM) where id = (SELECT max(id) FROM HISTORY_OF_MATCH)";
@@ -70,6 +59,18 @@ public class MatchHistoryRepository extends RepositoryBase<MatchHistory> impleme
     }
 
 
+    @Override
+    public void getLastIdForForeignKey() {
+
+        try {
+            getLastIdOfTeam1.executeUpdate();
+            getLastIdOfTeam2.executeUpdate();
+            getLastIdOfMap.executeUpdate();
+            getLastIdOfScoreBoard.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     public List<MatchHistory> withScores(MatchScoreBoard matchScoreBoard) {
         return searchByInt(matchScoreBoard.getId(), getScores);

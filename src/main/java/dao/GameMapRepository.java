@@ -71,4 +71,9 @@ public class GameMapRepository extends RepositoryBase<GameMap> implements IGameM
     protected String tableName() {
         return "MAP";
     }
+
+    @Override
+    public void getLastIdForForeignKey() {
+
+    }
 }

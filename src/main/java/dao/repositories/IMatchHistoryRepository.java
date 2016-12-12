@@ -12,5 +12,5 @@ public interface IMatchHistoryRepository extends IRepository<MatchHistory> {
 
     List<MatchHistory> withScores(MatchScoreBoard matchScoreBoard);
 
-    void getLastId();
+
 }

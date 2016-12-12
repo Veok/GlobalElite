@@ -9,9 +9,9 @@ import java.util.List;
  */
 public interface IEnumDictionariesRepository extends IRepository<EnumDictionary> {
 
-    public List<EnumDictionary> withDictionaryName(String enumName);
+    List<EnumDictionary> withDictionaryName(String enumName);
 
-    public List<EnumDictionary> getEnumValues(String enumName, String stringKey);
+    List<EnumDictionary> getEnumValues(String enumName, String stringKey);
 
-    public List<EnumDictionary> getEnumValues(String enumName, int stringKey);
+    List<EnumDictionary> getEnumValues(String enumName, int stringKey);
 }

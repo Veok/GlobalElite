@@ -73,18 +73,18 @@ public class App {
 
             catalog2.teams().add(team);
             catalog2.save();
-            catalog2.teams().getLastId();
+            catalog2.teams().getLastIdForForeignKey();
             catalog2.save();
 
             catalog2.teamsStats().add(teamStatistics2);
             catalog2.teams().add(team2);
             catalog2.save();
-            catalog2.teams().getLastId();
+            catalog2.teams().getLastIdForForeignKey();
             catalog2.save();
 
             catalog2.players().add(player);
             catalog2.save();
-            catalog2.players().getLastId();
+            catalog2.players().getLastIdForForeignKey();
             catalog2.save();
 
             catalog2.maps().add(map);
@@ -93,12 +93,12 @@ public class App {
 
             catalog2.scoreboards().add(matchScoreBoard);
             catalog2.save();
-            catalog2.scoreboards().getLastId();
+            catalog2.scoreboards().getLastIdForForeignKey();
             catalog2.save();
 
             catalog2.history().add(matchHistory);
             catalog2.save();
-            catalog2.history().getLastId();
+            catalog2.history().getLastIdForForeignKey();
             catalog2.save();
 
             connection.close();

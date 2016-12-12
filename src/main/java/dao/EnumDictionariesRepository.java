@@ -120,4 +120,7 @@ public class EnumDictionariesRepository extends RepositoryBase<EnumDictionary> i
         insert.setString(4, entity.getEnumerationName());
     }
 
+    @Override
+    public void getLastIdForForeignKey() {
+    }
 }

@@ -9,11 +9,11 @@ import java.util.List;
  */
 public interface ITeamStatisticsRepository extends IRepository<TeamStatistics> {
 
-    public List<TeamStatistics> withWins(int wins);
+    List<TeamStatistics> withWins(int wins);
 
-    public List<TeamStatistics> withLooses(int looses);
+    List<TeamStatistics> withLooses(int looses);
 
-    public List<TeamStatistics> withDraws(int draws);
+    List<TeamStatistics> withDraws(int draws);
 
-    public List<TeamStatistics> withPoints(double points);
+    List<TeamStatistics> withPoints(double points);
 }

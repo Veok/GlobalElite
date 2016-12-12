@@ -9,9 +9,9 @@ import java.util.List;
  */
 public interface IPlayerStatisticsRepository extends IRepository<PlayerStatistics> {
 
-    public List<PlayerStatistics> kills(int kills);
+    List<PlayerStatistics> kills(int kills);
 
-    public List<PlayerStatistics> deaths(int deaths);
+    List<PlayerStatistics> deaths(int deaths);
 
-    public List<PlayerStatistics> ratio(double ratio);
+    List<PlayerStatistics> ratio(double ratio);
 }

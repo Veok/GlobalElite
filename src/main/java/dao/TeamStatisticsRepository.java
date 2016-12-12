@@ -100,4 +100,9 @@ public class TeamStatisticsRepository extends RepositoryBase<TeamStatistics> imp
     protected String tableName() {
         return "TEAM_STATS";
     }
+
+    @Override
+    public void getLastIdForForeignKey() {
+
+    }
 }

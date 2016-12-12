@@ -41,17 +41,6 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
     }
 
 
-    public void getLastId() {
-
-        try {
-            getLastIdOfStats.executeUpdate();
-            getLastIdOfTeam.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-
     protected String getLastIdOfStatsSql() {
         return "UPDATE PLAYER SET(PLAYER_STATS_ID) = (SELECT max(id) from PLAYER_STATS) where id = (SELECT max(id) FROM PLAYER)";
 
@@ -75,6 +64,17 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
 
     protected String getDobSql() {
         return "SELECT * FROM PLAYER where DoB = ?";
+    }
+
+    @Override
+    public void getLastIdForForeignKey() {
+
+        try {
+            getLastIdOfStats.executeUpdate();
+            getLastIdOfTeam.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 

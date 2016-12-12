@@ -114,4 +114,9 @@ public class PlayerStatisticsRepository extends RepositoryBase<PlayerStatistics>
     protected String tableName() {
         return "PLAYER_STATS";
     }
+
+    @Override
+    public void getLastIdForForeignKey() {
+
+    }
 }

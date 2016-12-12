@@ -1,6 +1,5 @@
 package dao.repositories;
 
-import domain.model.Player;
 import domain.model.Team;
 
 import java.util.List;
@@ -10,9 +9,9 @@ import java.util.List;
  */
 public interface ITeamRepository extends IRepository<Team> {
 
-    public List<Team> withName(String name);
+    List<Team> withName(String name);
 
-    public List<Team> withCountry(String country);
+    List<Team> withCountry(String country);
 
-    public void getLastId();
+
 }

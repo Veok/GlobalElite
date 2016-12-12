@@ -9,14 +9,16 @@ import java.util.List;
  */
 public interface IRepository<TEntity extends IHaveId> {
 
-    public List<TEntity> getAll();
+    List<TEntity> getAll();
 
-    public TEntity get(int playerId);
+    TEntity get(int playerId);
 
-    public void update(TEntity entity);
+    void update(TEntity entity);
 
-    public void add(TEntity entity);
+    void add(TEntity entity);
 
-    public void delete(TEntity entity);
+    void delete(TEntity entity);
+
+    void getLastIdForForeignKey();
 
 }

@@ -9,9 +9,8 @@ import java.util.List;
  */
 public interface IMatchScoreBoardRepository extends IRepository<MatchScoreBoard> {
 
-    public List<MatchScoreBoard> withKillsInMatch(int killsInMatch);
+    List<MatchScoreBoard> withKillsInMatch(int killsInMatch);
 
-    public List<MatchScoreBoard> withDeathsInMatch(int deathInMatch);
+    List<MatchScoreBoard> withDeathsInMatch(int deathInMatch);
 
-    public void getLastId();
 }

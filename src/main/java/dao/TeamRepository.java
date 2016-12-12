@@ -33,16 +33,7 @@ public class TeamRepository extends RepositoryBase<Team> implements ITeamReposit
         }
     }
 
-    public void getLastId() {
 
-        try {
-            getLastId.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     protected String getLastIdSql() {
         return "UPDATE TEAM SET(TEAM_STATS_ID) = (SELECT max(id) from TEAM_STATS) where id = (SELECT max(id) FROM TEAM)";
@@ -81,6 +72,17 @@ public class TeamRepository extends RepositoryBase<Team> implements ITeamReposit
         }
     }
 
+    @Override
+    public void getLastIdForForeignKey() {
+
+        try {
+            getLastId.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     @Override
     public List<Team> withName(String name) {

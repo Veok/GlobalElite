@@ -10,6 +10,7 @@ import java.sql.SQLException;
  */
 public class MatchHistoryMapper implements IMapResultSetIntoEntity {
     public MatchHistory map(ResultSet rs) throws SQLException {
+
         MatchHistory matchHistory = new MatchHistory();
         matchHistory.setId(rs.getInt("id"));
         matchHistory.setScoreOfTeam1(rs.getInt("scoreOfTeam1"));
