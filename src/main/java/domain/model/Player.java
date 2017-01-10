@@ -11,9 +11,9 @@ public class Player implements IHaveId {
 
     private int id;
     private String nick;
-    private Date dateOfBirth;
     private String country;
     private String steamId;
+    private String dateOfBirth;
     private PlayerStatistics playerStatistics;
     private Team team;
 
@@ -38,6 +38,13 @@ public class Player implements IHaveId {
         return  team;
     }
 
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
 
     public void setTeam(Team team) {
         this.team = team;
@@ -66,14 +73,6 @@ public class Player implements IHaveId {
 
     public void setNick(String nick) {
         this.nick = nick;
-    }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
     }
 
     public String getCountry() {

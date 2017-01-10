@@ -1,6 +1,5 @@
 package web;
 
-import dao.TemporaryCurrencyEnumHelper;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,7 +16,6 @@ public class InitServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        TemporaryCurrencyEnumHelper temporaryCurrencyEnumHelper = new TemporaryCurrencyEnumHelper();
-      //  temporaryCurrencyEnumHelper.insertCurrencyEnums();
+
     }
 }

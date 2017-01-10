@@ -15,7 +15,7 @@ public interface IPlayerRepository extends IRepository<Player> {
 
     List<Player> withCountry(String country);
 
-    List<Player> withDateOfBirth(Date dob);
+    List<Player> withDateOfBirth(String dob);
 
     List<Player> withTeam(Team team);
 

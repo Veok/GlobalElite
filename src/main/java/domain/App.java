@@ -65,41 +65,41 @@ public class App {
         try {
             Connection connection = DriverManager.getConnection(url);
             IUnitOfWork uow = new UnitOfWork(connection);
-            IRepositoryCatalog catalog2 = new RepositoryCatalog(connection, uow);
+            IRepositoryCatalog catalog2 = new RepositoryCatalog(url);
 
             catalog2.playersStats().add(playerStatistics);
 
             catalog2.teamsStats().add(teamStatistics);
 
             catalog2.teams().add(team);
-            catalog2.save();
+            catalog2.saveAndClose();
             catalog2.teams().getLastIdForForeignKey();
-            catalog2.save();
+            catalog2.saveAndClose();
 
             catalog2.teamsStats().add(teamStatistics2);
             catalog2.teams().add(team2);
-            catalog2.save();
+            catalog2.saveAndClose();
             catalog2.teams().getLastIdForForeignKey();
-            catalog2.save();
+            catalog2.saveAndClose();
 
             catalog2.players().add(player);
-            catalog2.save();
+            catalog2.saveAndClose();
             catalog2.players().getLastIdForForeignKey();
-            catalog2.save();
+            catalog2.saveAndClose();
 
             catalog2.maps().add(map);
 
             catalog2.dictionaries().add(enumDictionary);
 
             catalog2.scoreboards().add(matchScoreBoard);
-            catalog2.save();
+            catalog2.saveAndClose();
             catalog2.scoreboards().getLastIdForForeignKey();
-            catalog2.save();
+            catalog2.saveAndClose();
 
             catalog2.history().add(matchHistory);
-            catalog2.save();
+            catalog2.saveAndClose();
             catalog2.history().getLastIdForForeignKey();
-            catalog2.save();
+            catalog2.saveAndClose();
 
             connection.close();
         } catch (SQLException e) {

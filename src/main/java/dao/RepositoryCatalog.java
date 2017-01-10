@@ -3,9 +3,10 @@ package dao;
 import dao.mappers.*;
 import dao.repositories.*;
 import dao.uow.IUnitOfWork;
-import domain.model.GameMap;
+import dao.uow.UnitOfWork;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
@@ -24,10 +25,10 @@ public class RepositoryCatalog implements IRepositoryCatalog {
     private TeamStatisticsMapper teamStatisticsMapper = new TeamStatisticsMapper();
     private GameMapMapper gameMapMapper = new GameMapMapper();
 
-    public RepositoryCatalog(Connection connection, IUnitOfWork uow) {
+    public RepositoryCatalog(String connection) throws SQLException {
         super();
-        this.connection = connection;
-        this.uow = uow;
+        setConnection(getNewConnection(connection));
+        setUow(getNewUow());
     }
 
     @Override
@@ -67,12 +68,35 @@ public class RepositoryCatalog implements IRepositoryCatalog {
     }
 
     @Override
-    public IGameMapRepository maps(){
-        return new GameMapRepository(connection,gameMapMapper, uow);
+    public IGameMapRepository maps() {
+        return new GameMapRepository(connection, gameMapMapper, uow);
     }
 
     @Override
-    public void save() throws SQLException {
+    public void saveAndClose() throws SQLException {
         uow.saveChanges();
+        try{
+            connection.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    private Connection getNewConnection(String connectionString) throws SQLException {
+
+        return DriverManager.getConnection(connectionString);
+    }
+
+    private IUnitOfWork getNewUow() throws SQLException {
+        return new UnitOfWork(connection);
+    }
+
+    private void setUow(IUnitOfWork uow) {
+        this.uow = uow;
+
+    }
+
+    private void setConnection(Connection connection) {
+        this.connection = connection;
     }
 }

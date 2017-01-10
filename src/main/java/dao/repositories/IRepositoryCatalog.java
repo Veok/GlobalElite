@@ -23,6 +23,6 @@ public interface IRepositoryCatalog {
 
     IGameMapRepository maps();
 
-    void save() throws SQLException;
+    void saveAndClose() throws SQLException;
 
 }

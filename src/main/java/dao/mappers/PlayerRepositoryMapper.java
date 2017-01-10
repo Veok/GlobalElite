@@ -15,7 +15,7 @@ public class PlayerRepositoryMapper implements IMapResultSetIntoEntity {
         Player player = new Player();
         player.setId(rs.getInt("id"));
         player.setNick(rs.getString("nick"));
-        player.setDateOfBirth(rs.getDate("DoB"));
+        player.setDateOfBirth(rs.getString("DoB"));
         player.setCountry(rs.getString("country"));
         player.setSteamId(rs.getString("steamId"));
         return player;

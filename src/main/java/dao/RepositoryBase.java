@@ -24,6 +24,7 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements IReposi
     protected PreparedStatement update;
     protected PreparedStatement delete;
     protected PreparedStatement selectAll;
+    protected PreparedStatement selectLastId;
     protected IUnitOfWork uow;
     protected IMapResultSetIntoEntity<TEntity> mapper;
 
@@ -37,12 +38,13 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements IReposi
         this.uow = uow;
         try {
             this.mapper = mapper;
-            createTableIfnotExists();
-            insert = connection.prepareStatement(insertSql(), Statement.RETURN_GENERATED_KEYS);
+            createTableIfNotExists();
+            insert = connection.prepareStatement(insertSql());
             selectById = connection.prepareStatement(selectByIdSql(), Statement.RETURN_GENERATED_KEYS);
             update = connection.prepareStatement(updateSql());
             delete = connection.prepareStatement(deleteSql());
             selectAll = connection.prepareStatement(selectAllSql(), Statement.RETURN_GENERATED_KEYS);
+            selectLastId = connection.prepareStatement(selectLastIdSql());
 
 
         } catch (SQLException ex) {
@@ -126,6 +128,17 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements IReposi
             e.printStackTrace();
         }
     }
+    public int getLastId() {
+        try {
+            ResultSet rs = selectLastId.executeQuery();
+            while (rs.next()) {
+                return rs.getInt("id");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 0;
+    }
 
     public List<TEntity> searchByInt(int value, PreparedStatement statement) {
         List<TEntity> tEntities = new ArrayList<>();
@@ -167,7 +180,7 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements IReposi
         return "SELECT * FROM " + tableName();
     }
 
-    private void createTableIfnotExists() throws SQLException {
+    private void createTableIfNotExists() throws SQLException {
         Statement createTable = this.connection.createStatement();
 
         boolean tableExists = false;
@@ -185,7 +198,9 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements IReposi
             createTable.executeUpdate(createTableSql());
     }
 
-
+    protected String selectLastIdSql() {
+        return "SELECT max(id) AS id FROM " + tableName();
+    }
     protected abstract String insertSql();
 
     protected abstract String updateSql();

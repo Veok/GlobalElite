@@ -24,10 +24,10 @@ public class FinalOutputServlet extends HttpServlet {
         HttpSession session = req.getSession();
 
         Player player = (Player) session.getAttribute(SessionKey.player);
-        Team team = (Team) session.getAttribute(SessionKey.team);
+     //   Team team = (Team) session.getAttribute(SessionKey.team);
 
 
         resp.setContentType("text/html");
-
+        resp.getWriter().println("Gitara siema");
 
 }}
