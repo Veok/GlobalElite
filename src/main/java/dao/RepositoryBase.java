@@ -128,6 +128,7 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements IReposi
             e.printStackTrace();
         }
     }
+
     public int getLastId() {
         try {
             ResultSet rs = selectLastId.executeQuery();
@@ -201,6 +202,7 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements IReposi
     protected String selectLastIdSql() {
         return "SELECT max(id) AS id FROM " + tableName();
     }
+
     protected abstract String insertSql();
 
     protected abstract String updateSql();

@@ -115,8 +115,4 @@ public class PlayerStatisticsRepository extends RepositoryBase<PlayerStatistics>
         return "PLAYER_STATS";
     }
 
-    @Override
-    public void getLastIdForForeignKey() {
-
-    }
 }

@@ -19,8 +19,7 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
     private PreparedStatement getCountry;
     private PreparedStatement getDob;
     private PreparedStatement getTeam;
-    private PreparedStatement getLastIdOfStats;
-    private PreparedStatement getLastIdOfTeam;
+
 
 
     public PlayerRepository(Connection connection, IMapResultSetIntoEntity<Player> mapper, IUnitOfWork uow) {
@@ -31,8 +30,7 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
             getCountry = connection.prepareStatement(getCountrySql());
             getDob = connection.prepareStatement(getDobSql());
             getTeam = connection.prepareStatement(getTeamSql());
-         //   getLastIdOfStats = connection.prepareStatement(getLastIdOfStatsSql());
-           // getLastIdOfTeam = connection.prepareStatement(getLastIdOfTeamSql());
+
 
 
         } catch (SQLException e) {
@@ -66,16 +64,6 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
         return "SELECT * FROM PLAYER where DoB = ?";
     }
 
-    @Override
-    public void getLastIdForForeignKey() {
-
-        try {
-            getLastIdOfStats.executeUpdate();
-            getLastIdOfTeam.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
 
     @Override

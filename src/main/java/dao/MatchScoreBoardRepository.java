@@ -19,7 +19,6 @@ public class MatchScoreBoardRepository extends RepositoryBase<MatchScoreBoard> i
 
     private PreparedStatement getKillsInMatch;
     private PreparedStatement getDeathsInMatch;
-    private PreparedStatement getLastIdOfPlayer;
 
     public MatchScoreBoardRepository(Connection connection, IMapResultSetIntoEntity<MatchScoreBoard> mapper, IUnitOfWork uow) {
         super(connection, mapper, uow);
@@ -27,7 +26,6 @@ public class MatchScoreBoardRepository extends RepositoryBase<MatchScoreBoard> i
         try {
             getKillsInMatch = connection.prepareStatement(getKillsInMatchSql());
             getDeathsInMatch = connection.prepareStatement(getDeathsInMatchSql());
-            getLastIdOfPlayer = connection.prepareStatement(getLastIdOfPlayerSql());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -46,14 +44,8 @@ public class MatchScoreBoardRepository extends RepositoryBase<MatchScoreBoard> i
         return "SELECT * FROM SCOREBOARD where deathsInMatch=?";
     }
 
-    @Override
-    public void getLastIdForForeignKey() {
-        try {
-            getLastIdOfPlayer.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+
+
     @Override
     public List<MatchScoreBoard> withKillsInMatch(int killsInMatch) {
         return searchByInt(killsInMatch, getKillsInMatch);

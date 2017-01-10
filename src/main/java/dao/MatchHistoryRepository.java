@@ -18,8 +18,7 @@ public class MatchHistoryRepository extends RepositoryBase<MatchHistory> impleme
     private PreparedStatement getScores;
     private PreparedStatement getLastIdOfTeam1;
     private PreparedStatement getLastIdOfTeam2;
-    private PreparedStatement getLastIdOfMap;
-    private PreparedStatement getLastIdOfScoreBoard;
+
 
 
     public MatchHistoryRepository(Connection connection, IMapResultSetIntoEntity<MatchHistory> mapper, IUnitOfWork uow) {
@@ -29,8 +28,6 @@ public class MatchHistoryRepository extends RepositoryBase<MatchHistory> impleme
             getScores = connection.prepareStatement(getScoresSql());
             getLastIdOfTeam1 = connection.prepareStatement(getLastIdOfTeam1Sql());
             getLastIdOfTeam2 = connection.prepareStatement(getLastIdOfTeam2Sql());
-            getLastIdOfMap = connection.prepareStatement(getLastIdOfMapSql());
-            getLastIdOfScoreBoard = connection.prepareStatement(getLastIdOfScoreBoardSql());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -59,18 +56,6 @@ public class MatchHistoryRepository extends RepositoryBase<MatchHistory> impleme
     }
 
 
-    @Override
-    public void getLastIdForForeignKey() {
-
-        try {
-            getLastIdOfTeam1.executeUpdate();
-            getLastIdOfTeam2.executeUpdate();
-            getLastIdOfMap.executeUpdate();
-            getLastIdOfScoreBoard.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
     @Override
     public List<MatchHistory> withScores(MatchScoreBoard matchScoreBoard) {
         return searchByInt(matchScoreBoard.getId(), getScores);

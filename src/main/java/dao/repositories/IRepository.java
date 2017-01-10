@@ -19,6 +19,4 @@ public interface IRepository<TEntity extends IHaveId> {
 
     void delete(TEntity entity);
 
-    void getLastIdForForeignKey();
-
 }

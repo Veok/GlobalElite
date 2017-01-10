@@ -19,7 +19,6 @@ public class TeamRepository extends RepositoryBase<Team> implements ITeamReposit
 
     private PreparedStatement getName;
     private PreparedStatement getCountry;
-    private PreparedStatement getLastId;
 
     public TeamRepository(Connection connection, IMapResultSetIntoEntity<Team> mapper, IUnitOfWork uow) {
         super(connection, mapper, uow);
@@ -27,17 +26,11 @@ public class TeamRepository extends RepositoryBase<Team> implements ITeamReposit
         try {
             getName = connection.prepareStatement(getNameSql());
             getCountry = connection.prepareStatement(getCountrySql());
-            getLastId = connection.prepareStatement(getLastIdSql());
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-
-
-    protected String getLastIdSql() {
-        return "UPDATE TEAM SET(TEAM_STATS_ID) = (SELECT max(id) from TEAM_STATS) where id = (SELECT max(id) FROM TEAM)";
-    }
 
     protected String getNameSql() {
         return "SELECT * FROM TEAM where name = ?";
@@ -66,23 +59,9 @@ public class TeamRepository extends RepositoryBase<Team> implements ITeamReposit
         insert.setString(1, team.getName());
         insert.setString(2, team.getCountry());
 
-        ResultSet gen = insert.getGeneratedKeys();
-        if (gen.next()) {
-            team.setId(gen.getInt(1));
-        }
-    }
-
-    @Override
-    public void getLastIdForForeignKey() {
-
-        try {
-            getLastId.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
     }
+
 
     @Override
     public List<Team> withName(String name) {
