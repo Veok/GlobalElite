@@ -28,7 +28,8 @@ public class PlayerServlet extends HttpServlet{
             IRepositoryCatalog catalog = new RepositoryCatalog(url);
 
             if(!catalog.players().withNick(req.getParameter("nick")).isEmpty()) {
-                resp.sendRedirect("profile.html");
+                req.setAttribute(SessionKey.player, catalog.players().withNick(req.getParameter("nick")));
+                resp.sendRedirect("profile.jsp");
             } else{
                 resp.getWriter().println("Brak danego gracza");
             }
