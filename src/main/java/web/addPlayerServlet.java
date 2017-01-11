@@ -33,6 +33,7 @@ public class addPlayerServlet extends HttpServlet {
 
         HttpSession session = req.getSession();
         session.setAttribute(SessionKey.player, player);
+
         resp.sendRedirect("/signUp.jsp");
 
     }

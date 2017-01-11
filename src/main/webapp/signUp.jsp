@@ -21,7 +21,7 @@ Czy poniższe dane się zgadzają?
 <h1>Kraj : <%=player.getCountry()%></h1>
 <h1>Steam id : <%=player.getSteamId()%></h1>
 
-    <input type="submit" value="Potwierdź">
+    <input type="submit"  value="Potwierdź">
 </form>
 <form action="signUp.html">
     <input type="submit" value="Wróc">

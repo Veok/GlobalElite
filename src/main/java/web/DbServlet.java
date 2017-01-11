@@ -49,6 +49,7 @@ public class DbServlet extends HttpServlet {
             catalog.playersStats().add(playerStatistics);
             catalog.players().add(player);
             catalog.saveAndClose();
+            resp.sendRedirect("signIn.html");
         }catch (SQLException e){
             e.printStackTrace();
         }
