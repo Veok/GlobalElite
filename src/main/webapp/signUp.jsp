@@ -13,17 +13,18 @@
 <body>
 Czy poniższe dane się zgadzają?
 <br>
+<form action="DbServlet" method="get">
 <% Player player = (Player) session.getAttribute("player");
 %>
 <h1>Nick : <%=player.getNick()%></h1>
 <h1>Data urodzenia : <%=player.getDateOfBirth()%></h1>
 <h1>Kraj : <%=player.getCountry()%></h1>
 <h1>Steam id : <%=player.getSteamId()%></h1>
-<form action="DbServlet" method="get">
+
     <input type="submit" value="Potwierdź">
 </form>
 <form action="signUp.html">
-    <input type="submit" value="Wróć">
+    <input type="submit" value="Wróc">
 </form>
 </body>
 </html>

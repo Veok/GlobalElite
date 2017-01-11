@@ -40,12 +40,12 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements IReposi
             this.mapper = mapper;
             createTableIfNotExists();
             insert = connection.prepareStatement(insertSql());
-            selectById = connection.prepareStatement(selectByIdSql());
+            selectById = connection.prepareStatement(selectByIdSql(),Statement.RETURN_GENERATED_KEYS);
             update = connection.prepareStatement(updateSql());
             delete = connection.prepareStatement(deleteSql());
-            selectAll = connection.prepareStatement(selectAllSql());
+            selectAll = connection.prepareStatement(selectAllSql(),Statement.RETURN_GENERATED_KEYS);
             selectLastId = connection.prepareStatement(selectLastIdSql());
-
+            connection.commit();
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -128,7 +128,6 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements IReposi
             e.printStackTrace();
         }
     }
-
     public int getLastId() {
         try {
             ResultSet rs = selectLastId.executeQuery();
@@ -202,7 +201,6 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements IReposi
     protected String selectLastIdSql() {
         return "SELECT max(id) AS id FROM " + tableName();
     }
-
     protected abstract String insertSql();
 
     protected abstract String updateSql();

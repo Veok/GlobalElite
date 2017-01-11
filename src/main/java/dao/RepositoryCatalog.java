@@ -27,8 +27,14 @@ public class RepositoryCatalog implements IRepositoryCatalog {
 
     public RepositoryCatalog(String connection) throws SQLException {
         super();
-        setConnection(getNewConnection(connection));
-        setUow(getNewUow());
+       this.connection = DriverManager.getConnection(connection);
+       this.uow = new UnitOfWork(this.connection);
+    }
+
+    public RepositoryCatalog(IUnitOfWork uow, Connection connection) {
+        super();
+        this.uow = uow;
+        this.connection = connection;
     }
 
     @Override
@@ -73,9 +79,10 @@ public class RepositoryCatalog implements IRepositoryCatalog {
     }
 
     @Override
-    public void saveAndClose() throws SQLException {
-        uow.saveChanges();
+    public void saveAndClose() {
+
         try{
+            uow.saveChanges();
             connection.close();
         }catch (SQLException e){
             e.printStackTrace();

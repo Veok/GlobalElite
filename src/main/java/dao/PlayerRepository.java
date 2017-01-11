@@ -39,14 +39,7 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
     }
 
 
-    protected String getLastIdOfStatsSql() {
-        return "UPDATE PLAYER SET(PLAYER_STATS_ID) = (SELECT max(id) from PLAYER_STATS) where id = (SELECT max(id) FROM PLAYER)";
 
-    }
-
-    protected String getLastIdOfTeamSql() {
-        return "UPDATE PLAYER SET(TEAM_ID) = (SELECT max(id) from TEAM) where id = (SELECT max(id) FROM PLAYER)";
-    }
 
     protected String getTeamSql() {
         return "SELECT * FROM PLAYER where TEAM_ID = ?";
@@ -119,7 +112,6 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
 
     @Override
     protected void setInsert(Player player) throws SQLException {
-
         insert.setString(1, player.getNick());
         insert.setString(2, player.getDateOfBirth());
         insert.setString(3, player.getCountry());
@@ -128,6 +120,10 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
 
     }
 
+    @Override
+       public int getLastId() {
+        return super.getLastId();
+    }
 
     @Override
     protected String createTableSql() {

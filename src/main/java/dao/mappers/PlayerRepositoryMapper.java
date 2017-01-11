@@ -12,6 +12,8 @@ public class PlayerRepositoryMapper implements IMapResultSetIntoEntity {
 
     public Player map(ResultSet rs) throws SQLException {
 
+
+
         Player player = new Player();
         player.setId(rs.getInt("id"));
         player.setNick(rs.getString("nick"));

@@ -1,6 +1,8 @@
 package web;
 
 import domain.model.Player;
+import domain.model.PlayerStatistics;
+import domain.model.Team;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,6 +28,8 @@ public class addPlayerServlet extends HttpServlet {
         player.setSteamId(req.getParameter("steam_id"));
         player.setCountry(req.getParameter("country"));
         player.setDateOfBirth(req.getParameter("dob"));
+        player.setTeam(new Team());
+        player.setPlayerStatistics(new PlayerStatistics());
 
         HttpSession session = req.getSession();
         session.setAttribute(SessionKey.player, player);
