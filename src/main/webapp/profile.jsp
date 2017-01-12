@@ -17,5 +17,6 @@
 <h1>Data urodzenia : <%=player.getDateOfBirth()%></h1>
 <h1>Kraj : <%=player.getCountry()%></h1>
 <h1>Steam id : <%=player.getSteamId()%></h1>
+<h1> Team: <%=player.getTeam()%></h1>
 </body>
 </html>

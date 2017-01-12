@@ -2,14 +2,17 @@ package web;
 
 import dao.RepositoryCatalog;
 import dao.repositories.IRepositoryCatalog;
+import domain.model.Player;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * @author L on 11.01.2017.
@@ -29,7 +32,13 @@ public class PlayerServlet extends HttpServlet{
 
             if(!catalog.players().withNick(req.getParameter("nick")).isEmpty()) {
                 req.setAttribute(SessionKey.player, catalog.players().withNick(req.getParameter("nick")));
-                resp.sendRedirect("profile.jsp");
+                if(catalog.players().getName(req.getParameter("nick")).getTeam()!=null){
+                resp.sendRedirect("profile.jsp");}
+                else{
+                    resp.sendRedirect("newProfile.jsp");
+                }
+
+            //  resp.getWriter().println(player.getNick());
             } else{
                 resp.getWriter().println("Brak danego gracza");
             }

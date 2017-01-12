@@ -31,12 +31,6 @@ public class RepositoryCatalog implements IRepositoryCatalog {
        this.uow = new UnitOfWork(this.connection);
     }
 
-    public RepositoryCatalog(IUnitOfWork uow, Connection connection) {
-        super();
-        this.uow = uow;
-        this.connection = connection;
-    }
-
     @Override
     public IPlayerStatisticsRepository playersStats() {
         return new PlayerStatisticsRepository(connection, playerStatisticsMapper, uow);
@@ -87,23 +81,5 @@ public class RepositoryCatalog implements IRepositoryCatalog {
         }catch (SQLException e){
             e.printStackTrace();
         }
-    }
-
-    private Connection getNewConnection(String connectionString) throws SQLException {
-
-        return DriverManager.getConnection(connectionString);
-    }
-
-    private IUnitOfWork getNewUow() throws SQLException {
-        return new UnitOfWork(connection);
-    }
-
-    private void setUow(IUnitOfWork uow) {
-        this.uow = uow;
-
-    }
-
-    private void setConnection(Connection connection) {
-        this.connection = connection;
     }
 }

@@ -25,6 +25,7 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements IReposi
     protected PreparedStatement delete;
     protected PreparedStatement selectAll;
     protected PreparedStatement selectLastId;
+    protected PreparedStatement selectName;
     protected IUnitOfWork uow;
     protected IMapResultSetIntoEntity<TEntity> mapper;
 
@@ -43,6 +44,7 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements IReposi
             selectById = connection.prepareStatement(selectByIdSql(),Statement.RETURN_GENERATED_KEYS);
             update = connection.prepareStatement(updateSql());
             delete = connection.prepareStatement(deleteSql());
+            selectName = connection.prepareStatement(selectByNickSql());
             selectAll = connection.prepareStatement(selectAllSql(),Statement.RETURN_GENERATED_KEYS);
             selectLastId = connection.prepareStatement(selectLastIdSql());
             connection.commit();
@@ -79,6 +81,23 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements IReposi
         return null;
 
     }
+
+    public TEntity getName(String name){
+
+        try{
+            selectName.setString(1, name);
+            ResultSet rs = selectName.executeQuery();
+            while (rs.next()){
+               return mapper.map(rs);
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
 
     public void add(TEntity entity) {
         Entity ent = new Entity(this);
@@ -140,6 +159,8 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements IReposi
         return 0;
     }
 
+
+
     public List<TEntity> searchByInt(int value, PreparedStatement statement) {
         List<TEntity> tEntities = new ArrayList<>();
         try {
@@ -168,9 +189,14 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements IReposi
         return tEntities;
     }
 
+
+
     protected String selectByIdSql() {
         return "SELECT * FROM " + tableName() + " WHERE id=?";
     }
+
+    protected String selectByNickSql(){return "SELECT * FROM "+ tableName() +" WHERE nick=?";}
+
 
     protected String deleteSql() {
         return "DELETE FROM " + tableName() + " WHERE id=?";

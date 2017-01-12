@@ -86,6 +86,11 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
     }
 
     @Override
+    public Player getName(String name) {
+        return super.getName(name);
+    }
+
+    @Override
     public List<Player> withTeam(Team team) {
         return searchByInt(team.getId(), getTeam);
     }
@@ -119,6 +124,7 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
 
 
     }
+
 
     @Override
        public int getLastId() {
