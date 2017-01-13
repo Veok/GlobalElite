@@ -3,7 +3,9 @@ package domain.model;
 /**
  * @author L on 13.11.2016.
  */
+
 public class PlayerStatistics implements IHaveId {
+
 
     private int id;
     private int kills;
@@ -12,6 +14,7 @@ public class PlayerStatistics implements IHaveId {
 
     public PlayerStatistics() {
     }
+
 
     public int getId() {
         return id;
@@ -38,8 +41,11 @@ public class PlayerStatistics implements IHaveId {
     }
 
     public double getRatio() {
-        ratio = (double) kills / (double) deaths;
-        return ratio;
+
+        if (kills != 0 & deaths != 0)
+            return ratio = (double) kills / (double) deaths;
+        else
+            return 0;
     }
 
 }

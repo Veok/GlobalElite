@@ -1,11 +1,18 @@
 package domain.model;
 
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * @author L on 13.11.2016.
  */
+
 public class MatchScoreBoard implements IHaveId {
 
+
     private int id;
+
+
     private Player player;
     private int killsInMatch;
     private int deathsInMatch;

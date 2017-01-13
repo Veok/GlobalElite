@@ -29,9 +29,13 @@ public class addPlayerServlet extends HttpServlet {
         player.setCountry(req.getParameter("country"));
         player.setDateOfBirth(req.getParameter("dob"));
         player.setTeam(new Team());
-        player.setPlayerStatistics(new PlayerStatistics());
+        PlayerStatistics playerStatistics = new PlayerStatistics();
+        playerStatistics.setKills(0);
+        playerStatistics.setDeaths(0);
+        player.setPlayerStatistics(playerStatistics);
 
         HttpSession session = req.getSession();
+        session.setAttribute(SessionKey.playerStats, playerStatistics);
         session.setAttribute(SessionKey.player, player);
 
         resp.sendRedirect("/signUp.jsp");

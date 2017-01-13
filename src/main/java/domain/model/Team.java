@@ -1,18 +1,33 @@
 package domain.model;
 
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 /**
  * @author L on 10.11.2016.
  */
+
 public class Team implements IHaveId {
+
 
     private int id;
     private String name;
     private String country;
+
     private TeamStatistics teamStatistics;
 
+    private List<Player> players;
     public Team() {
+    }
+
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
     }
 
     public String getName() {

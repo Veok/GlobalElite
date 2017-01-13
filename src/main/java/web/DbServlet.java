@@ -23,6 +23,7 @@ import java.sql.SQLException;
  * @author L on 31.12.2016.
  */
 @WebServlet("/DbServlet")
+
 public class DbServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -42,7 +43,7 @@ public class DbServlet extends HttpServlet {
             HttpSession session = req.getSession();
             Player player = (Player) session.getAttribute("player");
             Team team = new Team();
-            PlayerStatistics playerStatistics = new PlayerStatistics();
+            PlayerStatistics playerStatistics = (PlayerStatistics) session.getAttribute("playerStats");
             TeamStatistics teamStatistics = new TeamStatistics();
             catalog.teamsStats().add(teamStatistics);
             catalog.teams().add(team);

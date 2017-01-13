@@ -18,5 +18,16 @@
 <h1>Kraj : <%=player.getCountry()%></h1>
 <h1>Steam id : <%=player.getSteamId()%></h1>
 <h1> Team: <%=player.getTeam()%></h1>
+<br>
+<table >
+    <tbody>
+    <tr>
+        <td>Zabici: <%=player.getPlayerStatistics().getKills()%> </td>
+        <td>Zgony: <%=player.getPlayerStatistics().getDeaths()%> </td>
+        <td>K/D L <%=player.getPlayerStatistics().getRatio()%> </td>
+    </tr>
+    </tbody>
+</table>
+<a href="team.jsp">Twoja drużyna</a>
 </body>
 </html>

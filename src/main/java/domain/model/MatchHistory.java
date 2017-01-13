@@ -1,19 +1,25 @@
 package domain.model;
 
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * @author L on 10.11.2016.
  */
+
 public class MatchHistory implements IHaveId {
 
+
     private int id;
+
     private Team team1;
+
     private Team team2;
     private Date timeOfMatch;
     private GameMap gameMap;
     private int scoreOfTeam1;
     private int scoreOfTeam2;
+
     private MatchScoreBoard matchScoreBoard;
 
     public MatchHistory() {

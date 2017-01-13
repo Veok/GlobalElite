@@ -1,5 +1,7 @@
 package domain.model;
 
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -7,14 +9,18 @@ import java.util.regex.Pattern;
 /**
  * @author L on 10.11.2016.
  */
+
 public class Player implements IHaveId {
+
 
     private int id;
     private String nick;
     private String country;
     private String steamId;
     private String dateOfBirth;
+
     private PlayerStatistics playerStatistics;
+
     private Team team;
 
     public Player() {
