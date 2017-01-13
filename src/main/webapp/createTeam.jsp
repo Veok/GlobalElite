@@ -1,4 +1,4 @@
-<%--
+<%@ page import="domain.model.Team" %><%--
   Created by IntelliJ IDEA.
   User: L
   Date: 13.01.2017
@@ -11,6 +11,17 @@
     <title>Stwórz drużynę</title>
 </head>
 <body>
+<form action="TeamDbServlet" method="get">
 
+<% Team team = (Team) session.getAttribute("team");
+%>
+
+<h1>Nazwa: <%= team.getName()%></h1>
+<br>
+<h1>Kraj: <%= team.getCountry()%></h1>
+    <input type="submit"  value="Potwierdź">
+</form>
+<form action="createTeam.html">
+    <input type="submit" value="Wróc">
 </body>
 </html>

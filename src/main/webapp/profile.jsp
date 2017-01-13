@@ -1,4 +1,5 @@
-<%@ page import="domain.model.Player" %><%--
+<%@ page import="domain.model.Player" %>
+<%@ page import="domain.model.Team" %><%--
   Created by IntelliJ IDEA.
   User: L
   Date: 11.01.2017
@@ -17,7 +18,7 @@
 <h1>Data urodzenia : <%=player.getDateOfBirth()%></h1>
 <h1>Kraj : <%=player.getCountry()%></h1>
 <h1>Steam id : <%=player.getSteamId()%></h1>
-<h1> Team: <%=player.getTeam()%></h1>
+<h1> Team: <%=player.getTeam().getName()%></h1>
 <br>
 <table >
     <tbody>

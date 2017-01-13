@@ -13,7 +13,7 @@
 <body>
 Czy poniższe dane się zgadzają?
 <br>
-<form action="DbServlet" method="get">
+<form action="PlayerDbServlet" method="get">
 <% Player player = (Player) session.getAttribute("player");
 %>
 <h1>Nick : <%=player.getNick()%></h1>
