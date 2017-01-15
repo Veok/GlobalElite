@@ -4,10 +4,8 @@ import dao.mappers.IMapResultSetIntoEntity;
 import dao.repositories.IMatchHistoryRepository;
 import dao.uow.IUnitOfWork;
 import domain.model.MatchHistory;
-import domain.model.MatchScoreBoard;
 
 import java.sql.*;
-import java.util.List;
 
 /**
  * @author L on 13.11.2016.
@@ -18,7 +16,6 @@ public class MatchHistoryRepository extends RepositoryBase<MatchHistory> impleme
     private PreparedStatement getScores;
     private PreparedStatement getLastIdOfTeam1;
     private PreparedStatement getLastIdOfTeam2;
-
 
 
     public MatchHistoryRepository(Connection connection, IMapResultSetIntoEntity<MatchHistory> mapper, IUnitOfWork uow) {
@@ -46,19 +43,9 @@ public class MatchHistoryRepository extends RepositoryBase<MatchHistory> impleme
         return "UPDATE HISTORY_OF_MATCH SET(MAP_ID) = (SELECT max(id) from MAP) where id = (SELECT max(id) FROM HISTORY_OF_MATCH)";
     }
 
-    protected String getLastIdOfScoreBoardSql() {
-        return "UPDATE HISTORY_OF_MATCH SET(SCOREBOARD_ID) = (SELECT max(id) from SCOREBOARD) where id = (SELECT max(id) FROM HISTORY_OF_MATCH)";
-    }
-
 
     protected String getScoresSql() {
         return "SELECT * FROM HISTORY_OF_MATCH where SCOREBOARD_ID=?";
-    }
-
-
-    @Override
-    public List<MatchHistory> withScores(MatchScoreBoard matchScoreBoard) {
-        return searchByInt(matchScoreBoard.getId(), getScores);
     }
 
 
@@ -70,7 +57,7 @@ public class MatchHistoryRepository extends RepositoryBase<MatchHistory> impleme
     @Override
     protected String updateSql() {
         return "UPDATE HISTORY_OF_MATCH SET (scoreOfTeam1, scoreOfTeam2, timeOfMatch, TEAM_1_ID, TEAM_2_ID" +
-                ", MAP_ID, SCOREBOARD_ID)=(?,?,?,?,?,?,?) where id=?";
+                ", MAP_ID)=(?,?,?,?,?,?) where id=?";
     }
 
     @Override
@@ -81,7 +68,6 @@ public class MatchHistoryRepository extends RepositoryBase<MatchHistory> impleme
         update.setInt(4, matchHistory.getTeam1().getId());
         update.setInt(5, matchHistory.getTeam1().getId());
         update.setInt(6, matchHistory.getGameMap().getId());
-        update.setInt(7, matchHistory.getMatchScoreBoard().getId());
     }
 
     @Override
@@ -106,11 +92,9 @@ public class MatchHistoryRepository extends RepositoryBase<MatchHistory> impleme
                 + "TEAM_1_ID int,"
                 + "TEAM_2_ID int,"
                 + "MAP_ID int,"
-                + "SCOREBOARD_ID int,"
                 + "FOREIGN KEY (TEAM_1_ID) REFERENCES TEAM(id),"
                 + "FOREIGN KEY (TEAM_2_ID) REFERENCES TEAM(id),"
-                + "FOREIGN KEY (MAP_ID) REFERENCES MAP(id),"
-                + "FOREIGN KEY (SCOREBOARD_ID) REFERENCES SCOREBOARD(id)"
+                + "FOREIGN KEY (MAP_ID) REFERENCES MAP(id)"
                 + ")";
     }
 

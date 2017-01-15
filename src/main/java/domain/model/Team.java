@@ -8,27 +8,31 @@ import java.util.List;
  * @author L on 10.11.2016.
  */
 
+@XmlRootElement
+@Entity
 public class Team implements IHaveId {
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String country;
 
     private TeamStatistics teamStatistics;
 
-    private List<Player> players;
+//    @OneToMany
+   // private List<Player> players;
     public Team() {
     }
 
 
-    public List<Player> getPlayers() {
-        return players;
-    }
+    //public List<Player> getPlayers()// {
+      //  return players;
+  //  }
 
-    public void setPlayers(List<Player> players) {
-        this.players = players;
-    }
+  //  public void setPlayers(List<Player> players) {
+      //  this.players = players;
+  //  }
 
     public String getName() {
         return name;

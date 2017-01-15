@@ -16,10 +16,8 @@ public class App {
     public static void main(String[] args) {
 
 
-        PlayerStatistics playerStatistics = new PlayerStatistics();
         Player player = new Player();
         Team team = new Team();
-        MatchScoreBoard matchScoreBoard = new MatchScoreBoard();
         MatchHistory matchHistory = new MatchHistory();
         TeamStatistics teamStatistics = new TeamStatistics();
         TeamStatistics teamStatistics2 = new TeamStatistics();
@@ -29,23 +27,17 @@ public class App {
 
         player.setNick("Veok");
         player.setCountry(CountryCode.PL.getName());
-        player.setPlayerStatistics(playerStatistics);
         player.setTeam(team2);
 
-        playerStatistics.setKills(44);
-        playerStatistics.setDeaths(20);
-        playerStatistics.getRatio();
+
 
         team.setName("Lelele");
         team.setCountry(CountryCode.PL.getName());
         team.setTeamStatistics(teamStatistics);
         team2.setTeamStatistics(teamStatistics2);
 
-        matchScoreBoard.setPlayer(player);
-        matchScoreBoard.setKillsInMatch(4);
-        matchScoreBoard.setDeathsInMatch(2);
 
-        matchHistory.setMatchScoreBoard(matchScoreBoard);
+
         matchHistory.setScoreOfTeam1(43);
         matchHistory.setScoreOfTeam2(44);
         matchHistory.setTeam1(team);
@@ -67,7 +59,6 @@ public class App {
             IUnitOfWork uow = new UnitOfWork(connection);
             IRepositoryCatalog catalog2 = new RepositoryCatalog(url);
 
-            catalog2.playersStats().add(playerStatistics);
 
             catalog2.teamsStats().add(teamStatistics);
 
@@ -85,7 +76,6 @@ public class App {
 
             catalog2.dictionaries().add(enumDictionary);
 
-            catalog2.scoreboards().add(matchScoreBoard);
 
 
             catalog2.history().add(matchHistory);

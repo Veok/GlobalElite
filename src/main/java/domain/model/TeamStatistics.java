@@ -1,10 +1,18 @@
 package domain.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /**
  * @author by L on 10.11.2016.
  */
+@Entity
 public class TeamStatistics implements IHaveId {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int wins;
     private int looses;

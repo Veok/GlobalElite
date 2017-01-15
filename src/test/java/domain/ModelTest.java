@@ -14,23 +14,15 @@ import static org.junit.Assert.assertEquals;
 public class ModelTest {
 
     private Player player = new Player();
-    private PlayerStatistics playerStatistics = new PlayerStatistics();
     private Team team1 = new Team();
     private Team team2 = new Team();
     private TeamStatistics teamStatistics = new TeamStatistics();
     private MatchHistory matchHistory = new MatchHistory();
-    private MatchScoreBoard scoreBoard = new MatchScoreBoard();
 
-    @Before
-    public void playerStatisticsSetUp() throws Exception {
-        playerStatistics.setKills(10);
-        playerStatistics.setDeaths(20);
-    }
 
 
     @Before
     public void playerSetUp() throws Exception {
-        player.setPlayerStatistics(playerStatistics);
         player.setSteamId("STEAM_0:1:38401525");
         player.setCountry(CountryCode.PL.getName());
 
@@ -49,18 +41,9 @@ public class ModelTest {
 
     }
 
-    @Before
-    public void matchScoreBoardSetUp() throws Exception {
-        scoreBoard.setPlayer(player);
-        scoreBoard.setKillsInMatch(10);
-        scoreBoard.setDeathsInMatch(20);
-        playerSetUp();
-        scoreBoard.setPlayerStats();
-    }
 
     @Before
     public void matchHistorySetUp() throws Exception {
-        matchHistory.setMatchScoreBoard(scoreBoard);
         teamStatisticsSetUp();
         matchHistory.setTeam1(team1);
         matchHistory.setTeam2(team2);
@@ -69,11 +52,6 @@ public class ModelTest {
 
     }
 
-    @Test
-    public void testPlayerRatio() {
-
-        assertEquals(0.5, player.getPlayerStatistics().getRatio(), 0.001);
-    }
 
     @Test
     public void testTeamPoints() {
@@ -97,38 +75,7 @@ public class ModelTest {
         assertEquals(CountryCode.US.getName(), team1.getCountry());
     }
 
-    @Test
-    public void testScoreBoardKillsInMatch() {
 
-        assertEquals(10, matchHistory.getMatchScoreBoard().getKillsInMatch());
 
-    }
-
-    @Test
-    public void testPlayerKillsInScoreBoard() {
-
-        assertEquals(10, matchHistory.getMatchScoreBoard().getPlayer().getPlayerStatistics().getKills());
-
-    }
-
-    @Test
-    public void testScoreBoardDeathsInMatch() {
-
-        assertEquals(20, matchHistory.getMatchScoreBoard().getDeathsInMatch());
-
-    }
-
-    @Test
-    public void testPlayerDeathsInScoreBoard() {
-
-        assertEquals(20, matchHistory.getMatchScoreBoard().getPlayer().getPlayerStatistics().getDeaths());
-
-    }
-
-    @Test
-    public void testPlayerRatioAfterMatch() {
-
-        assertEquals(0.5, player.getPlayerStatistics().getRatio(), 0.001);
-    }
 
 }

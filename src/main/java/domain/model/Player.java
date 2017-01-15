@@ -10,17 +10,18 @@ import java.util.regex.Pattern;
  * @author L on 10.11.2016.
  */
 
+@Entity
 public class Player implements IHaveId {
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nick;
     private String country;
     private String steamId;
     private String dateOfBirth;
 
-    private PlayerStatistics playerStatistics;
-
+  //  @OneToOne
     private Team team;
 
     public Player() {
@@ -62,15 +63,6 @@ public class Player implements IHaveId {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-
-    public PlayerStatistics getPlayerStatistics() {
-        return playerStatistics;
-    }
-
-    public void setPlayerStatistics(PlayerStatistics playerStatistics) {
-        this.playerStatistics = playerStatistics;
     }
 
     public String getNick() {

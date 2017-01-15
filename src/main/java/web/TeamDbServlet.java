@@ -2,8 +2,6 @@ package web;
 
 import dao.RepositoryCatalog;
 import dao.repositories.IRepositoryCatalog;
-import domain.model.Player;
-import domain.model.PlayerStatistics;
 import domain.model.Team;
 import domain.model.TeamStatistics;
 
@@ -20,6 +18,7 @@ import java.sql.SQLException;
  * @author L on 13.01.2017.
  */
 @WebServlet("/TeamDbServlet")
+
 public class TeamDbServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -30,22 +29,18 @@ public class TeamDbServlet extends HttpServlet {
         String url = "jdbc:hsqldb:hsql://localhost/workdb";
 
 
-        try{
-
+        try {
             IRepositoryCatalog catalog = new RepositoryCatalog(url);
             HttpSession session = req.getSession();
             Team team = (Team) session.getAttribute("team");
-            TeamStatistics teamStatistics = new TeamStatistics();
-            Player player = (Player) session.getAttribute("player");
+            TeamStatistics teamStatistics = (TeamStatistics) session.getAttribute("teamStats");
             catalog.teamsStats().add(teamStatistics);
-           // catalog.teams().get(catalog.players().getName(player.getNick()).getId()).setName(team.getName());
-            //catalog.teams().get(catalog.players().getName(player.getNick()).getId()).setName(team.getCountry());
             catalog.teams().add(team);
-            player.setTeam(team);
             catalog.saveAndClose();
-            resp.sendRedirect("profile.jsp");
-        }catch (SQLException e){
+            resp.sendRedirect("signIn.jsp");
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 }

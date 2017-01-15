@@ -31,10 +31,7 @@ public class RepositoryCatalog implements IRepositoryCatalog {
        this.uow = new UnitOfWork(this.connection);
     }
 
-    @Override
-    public IPlayerStatisticsRepository playersStats() {
-        return new PlayerStatisticsRepository(connection, playerStatisticsMapper, uow);
-    }
+
 
     @Override
     public IPlayerRepository players() {
@@ -51,10 +48,6 @@ public class RepositoryCatalog implements IRepositoryCatalog {
         return new EnumDictionariesRepository(connection, enumDictionaryMapper, uow);
     }
 
-    @Override
-    public IMatchScoreBoardRepository scoreboards() {
-        return new MatchScoreBoardRepository(connection, matchScoreBoardMapper, uow);
-    }
 
     @Override
     public IMatchHistoryRepository history() {

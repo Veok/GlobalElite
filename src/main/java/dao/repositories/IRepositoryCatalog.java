@@ -13,11 +13,7 @@ public interface IRepositoryCatalog {
 
     IEnumDictionariesRepository dictionaries();
 
-    IMatchScoreBoardRepository scoreboards();
-
     IMatchHistoryRepository history();
-
-    IPlayerStatisticsRepository playersStats();
 
     ITeamStatisticsRepository teamsStats();
 
