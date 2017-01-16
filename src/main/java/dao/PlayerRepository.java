@@ -19,6 +19,8 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
     private PreparedStatement getCountry;
     private PreparedStatement getDob;
     private PreparedStatement getTeam;
+    private PreparedStatement getLastIdOfTeam;
+
 
 
 
@@ -30,6 +32,7 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
             getCountry = connection.prepareStatement(getCountrySql());
             getDob = connection.prepareStatement(getDobSql());
             getTeam = connection.prepareStatement(getTeamSql());
+            getLastIdOfTeam = connection.prepareStatement(getLastIdOfTeamSql());
 
 
 
@@ -38,7 +41,9 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
         }
     }
 
-
+    protected String getLastIdOfTeamSql() {
+        return "UPDATE PLAYER SET(TEAM_ID) = (SELECT max(id) from TEAM) where id = (SELECT max(id) FROM PLAYER)";
+    }
 
 
     protected String getTeamSql() {
@@ -58,6 +63,15 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
     }
 
 
+    @Override
+    public void getLastIdForForeignKey() {
+
+        try {
+            getLastIdOfTeam.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public List<Player> withNick(String nick) {

@@ -40,7 +40,7 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements IReposi
         try {
             this.mapper = mapper;
             createTableIfNotExists();
-            insert = connection.prepareStatement(insertSql());
+            insert = connection.prepareStatement(insertSql(), Statement.RETURN_GENERATED_KEYS);
             selectById = connection.prepareStatement(selectByIdSql(),Statement.RETURN_GENERATED_KEYS);
             update = connection.prepareStatement(updateSql());
             delete = connection.prepareStatement(deleteSql());

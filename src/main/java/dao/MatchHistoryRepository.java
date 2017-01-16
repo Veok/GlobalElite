@@ -13,18 +13,19 @@ import java.sql.*;
 public class MatchHistoryRepository extends RepositoryBase<MatchHistory> implements IMatchHistoryRepository {
 
 
-    private PreparedStatement getScores;
     private PreparedStatement getLastIdOfTeam1;
     private PreparedStatement getLastIdOfTeam2;
+    private PreparedStatement getLastIdOfMap;
 
 
     public MatchHistoryRepository(Connection connection, IMapResultSetIntoEntity<MatchHistory> mapper, IUnitOfWork uow) {
         super(connection, mapper, uow);
 
         try {
-            getScores = connection.prepareStatement(getScoresSql());
             getLastIdOfTeam1 = connection.prepareStatement(getLastIdOfTeam1Sql());
             getLastIdOfTeam2 = connection.prepareStatement(getLastIdOfTeam2Sql());
+            getLastIdOfMap = connection.prepareStatement(getLastIdOfMapSql());
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -44,11 +45,18 @@ public class MatchHistoryRepository extends RepositoryBase<MatchHistory> impleme
     }
 
 
-    protected String getScoresSql() {
-        return "SELECT * FROM HISTORY_OF_MATCH where SCOREBOARD_ID=?";
+
+    @Override
+    public void getLastIdForForeignKey() {
+
+        try {
+            getLastIdOfTeam1.executeUpdate();
+            getLastIdOfTeam2.executeUpdate();
+            getLastIdOfMap.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-
-
     @Override
     protected String insertSql() {
         return "INSERT INTO HISTORY_OF_MATCH(scoreOfTeam1, scoreOfTeam2, timeOfMatch) values (?, ?, ?)";

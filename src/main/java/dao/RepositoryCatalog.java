@@ -17,10 +17,8 @@ public class RepositoryCatalog implements IRepositoryCatalog {
     private Connection connection;
     private IUnitOfWork uow;
     private PlayerRepositoryMapper playerRepositoryMapper = new PlayerRepositoryMapper();
-    private PlayerStatisticsMapper playerStatisticsMapper = new PlayerStatisticsMapper();
     private TeamMapper teamMapper = new TeamMapper();
     private EnumDictionaryMapper enumDictionaryMapper = new EnumDictionaryMapper();
-    private MatchScoreBoardMapper matchScoreBoardMapper = new MatchScoreBoardMapper();
     private MatchHistoryMapper matchHistoryMapper = new MatchHistoryMapper();
     private TeamStatisticsMapper teamStatisticsMapper = new TeamStatisticsMapper();
     private GameMapMapper gameMapMapper = new GameMapMapper();
