@@ -14,10 +14,14 @@ public interface IRepository<TEntity extends IHaveId> {
     TEntity get(int playerId);
 
     TEntity getName(String name);
+
     void update(TEntity entity);
 
     void add(TEntity entity);
 
     void delete(TEntity entity);
+
+    void getLastIdForForeignKey();
+
 
 }

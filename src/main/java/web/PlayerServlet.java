@@ -31,14 +31,11 @@ public class PlayerServlet extends HttpServlet {
             if (!catalog.players().withNick(req.getParameter("nick")).isEmpty()) {
                 HttpSession session = req.getSession();
                 session.setAttribute(SessionKey.player, catalog.players().getName(req.getParameter("nick")));
-                session.setAttribute(SessionKey.playerStats, catalog.playersStats()
-                        .get(catalog.players()
-                        .getName(req.getParameter("nick")).getId()));
-                if (catalog.players().getName(req.getParameter("nick")).getTeam() != null) {
+                                 if (catalog.players().getName(req.getParameter("nick")).getTeam() != null) {
                     resp.sendRedirect("profile.jsp");
                 } else {
 
-                  resp.sendRedirect("newProfile.jsp");
+                    resp.sendRedirect("newProfile.jsp");
                 }
             } else {
                 resp.getWriter().println("Brak danego gracza");

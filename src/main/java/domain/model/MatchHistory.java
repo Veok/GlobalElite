@@ -7,20 +7,23 @@ import java.util.Date;
  * @author L on 10.11.2016.
  */
 
+@Entity
 public class MatchHistory implements IHaveId {
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @OneToOne
     private Team team1;
-
+    @OneToOne
     private Team team2;
-    private Date timeOfMatch;
+    private String timeOfMatch;
+    @OneToOne
     private GameMap gameMap;
     private int scoreOfTeam1;
     private int scoreOfTeam2;
 
-    private MatchScoreBoard matchScoreBoard;
 
     public MatchHistory() {
 
@@ -41,14 +44,6 @@ public class MatchHistory implements IHaveId {
         }
     }
 
-
-    public MatchScoreBoard getMatchScoreBoard() {
-        return matchScoreBoard;
-    }
-
-    public void setMatchScoreBoard(MatchScoreBoard matchScoreBoard) {
-        this.matchScoreBoard = matchScoreBoard;
-    }
 
     public int getId() {
         return id;
@@ -74,11 +69,11 @@ public class MatchHistory implements IHaveId {
         this.team2 = team2;
     }
 
-    public Date getTimeOfMatch() {
+    public String getTimeOfMatch() {
         return timeOfMatch;
     }
 
-    public void setTimeOfMatch(Date timeOfMatch) {
+    public void setTimeOfMatch(String timeOfMatch) {
         this.timeOfMatch = timeOfMatch;
     }
 

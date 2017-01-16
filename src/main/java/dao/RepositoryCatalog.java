@@ -17,10 +17,8 @@ public class RepositoryCatalog implements IRepositoryCatalog {
     private Connection connection;
     private IUnitOfWork uow;
     private PlayerRepositoryMapper playerRepositoryMapper = new PlayerRepositoryMapper();
-    private PlayerStatisticsMapper playerStatisticsMapper = new PlayerStatisticsMapper();
     private TeamMapper teamMapper = new TeamMapper();
     private EnumDictionaryMapper enumDictionaryMapper = new EnumDictionaryMapper();
-    private MatchScoreBoardMapper matchScoreBoardMapper = new MatchScoreBoardMapper();
     private MatchHistoryMapper matchHistoryMapper = new MatchHistoryMapper();
     private TeamStatisticsMapper teamStatisticsMapper = new TeamStatisticsMapper();
     private GameMapMapper gameMapMapper = new GameMapMapper();
@@ -31,10 +29,7 @@ public class RepositoryCatalog implements IRepositoryCatalog {
        this.uow = new UnitOfWork(this.connection);
     }
 
-    @Override
-    public IPlayerStatisticsRepository playersStats() {
-        return new PlayerStatisticsRepository(connection, playerStatisticsMapper, uow);
-    }
+
 
     @Override
     public IPlayerRepository players() {
@@ -51,10 +46,6 @@ public class RepositoryCatalog implements IRepositoryCatalog {
         return new EnumDictionariesRepository(connection, enumDictionaryMapper, uow);
     }
 
-    @Override
-    public IMatchScoreBoardRepository scoreboards() {
-        return new MatchScoreBoardRepository(connection, matchScoreBoardMapper, uow);
-    }
 
     @Override
     public IMatchHistoryRepository history() {
@@ -73,13 +64,20 @@ public class RepositoryCatalog implements IRepositoryCatalog {
     }
 
     @Override
-    public void saveAndClose() {
+    public void save() {
 
-        try{
+
             uow.saveChanges();
+
+    }
+
+    @Override
+    public void close() {
+        try {
             connection.close();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 }

@@ -15,7 +15,7 @@ public class MatchHistoryMapper implements IMapResultSetIntoEntity {
         matchHistory.setId(rs.getInt("id"));
         matchHistory.setScoreOfTeam1(rs.getInt("scoreOfTeam1"));
         matchHistory.setScoreOfTeam2(rs.getInt("scoreOfTeam2"));
-        matchHistory.setTimeOfMatch(rs.getDate("timeOfMatch"));
+        matchHistory.setTimeOfMatch(rs.getString("timeOfMatch"));
 
         return matchHistory;
     }

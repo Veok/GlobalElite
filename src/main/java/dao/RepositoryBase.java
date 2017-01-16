@@ -40,11 +40,11 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements IReposi
         try {
             this.mapper = mapper;
             createTableIfNotExists();
-            insert = connection.prepareStatement(insertSql());
+            insert = connection.prepareStatement(insertSql(), Statement.RETURN_GENERATED_KEYS);
             selectById = connection.prepareStatement(selectByIdSql(),Statement.RETURN_GENERATED_KEYS);
             update = connection.prepareStatement(updateSql());
             delete = connection.prepareStatement(deleteSql());
-            selectName = connection.prepareStatement(selectByNickSql());
+            selectName = connection.prepareStatement(selectByNickSql(), Statement.RETURN_GENERATED_KEYS);
             selectAll = connection.prepareStatement(selectAllSql(),Statement.RETURN_GENERATED_KEYS);
             selectLastId = connection.prepareStatement(selectLastIdSql());
             connection.commit();
@@ -195,7 +195,7 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements IReposi
         return "SELECT * FROM " + tableName() + " WHERE id=?";
     }
 
-    protected String selectByNickSql(){return "SELECT * FROM "+ tableName() +" WHERE nick=?";}
+    protected String selectByNickSql(){return "SELECT * FROM "+ tableName() +" WHERE name=?";}
 
 
     protected String deleteSql() {

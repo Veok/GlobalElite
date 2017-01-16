@@ -19,6 +19,8 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
     private PreparedStatement getCountry;
     private PreparedStatement getDob;
     private PreparedStatement getTeam;
+    private PreparedStatement getLastIdOfTeam;
+
 
 
 
@@ -30,6 +32,7 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
             getCountry = connection.prepareStatement(getCountrySql());
             getDob = connection.prepareStatement(getDobSql());
             getTeam = connection.prepareStatement(getTeamSql());
+            getLastIdOfTeam = connection.prepareStatement(getLastIdOfTeamSql());
 
 
 
@@ -38,7 +41,9 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
         }
     }
 
-
+    protected String getLastIdOfTeamSql() {
+        return "UPDATE PLAYER SET(TEAM_ID) = (SELECT max(id) from TEAM) where id = (SELECT max(id) FROM PLAYER)";
+    }
 
 
     protected String getTeamSql() {
@@ -58,6 +63,15 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
     }
 
 
+    @Override
+    public void getLastIdForForeignKey() {
+
+        try {
+            getLastIdOfTeam.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public List<Player> withNick(String nick) {
@@ -102,7 +116,7 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
 
     @Override
     protected String updateSql() {
-        return "UPDATE PLAYER SET (nick,DoB, country, steamId, PLAYER_STATS_ID, TEAM_ID) = (?,?,?,?,?,?) where id=?";
+        return "UPDATE PLAYER SET (nick,DoB, country, steamId, TEAM_ID) = (?,?,?,?,?) where id=?";
     }
 
     @Override
@@ -111,8 +125,7 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
         update.setString(2, player.getCountry());
         update.setString(3,  player.getDateOfBirth());
         update.setString(4, player.getSteamId());
-        update.setInt(5, player.getPlayerStatistics().getId());
-        update.setInt(6, player.getTeam().getId());
+        update.setInt(5, player.getTeam().getId());
     }
 
     @Override
@@ -140,8 +153,6 @@ public class PlayerRepository extends RepositoryBase<Player> implements IPlayerR
                 + "country varchar(25),"
                 + "steamId varchar(25),"
                 + "TEAM_ID int,"
-                + "PLAYER_STATS_ID int,"
-                + "FOREIGN KEY (PLAYER_STATS_ID) REFERENCES PLAYER_STATS(id),"
                 + "FOREIGN KEY (TEAM_ID) REFERENCES TEAM(id)"
                 + ")";
     }

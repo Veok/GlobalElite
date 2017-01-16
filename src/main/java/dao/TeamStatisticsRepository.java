@@ -101,4 +101,8 @@ public class TeamStatisticsRepository extends RepositoryBase<TeamStatistics> imp
         return "TEAM_STATS";
     }
 
+    @Override
+    public void getLastIdForForeignKey() {
+
+    }
 }

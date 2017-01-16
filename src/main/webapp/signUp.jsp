@@ -1,4 +1,5 @@
-<%@ page import="domain.model.Player" %><%--
+<%@ page import="domain.model.Team" %>
+<%--
   Created by IntelliJ IDEA.
   User: L
   Date: 10.01.2017
@@ -13,15 +14,15 @@
 <body>
 Czy poniższe dane się zgadzają?
 <br>
-<form action="PlayerDbServlet" method="get">
-<% Player player = (Player) session.getAttribute("player");
-%>
-<h1>Nick : <%=player.getNick()%></h1>
-<h1>Data urodzenia : <%=player.getDateOfBirth()%></h1>
-<h1>Kraj : <%=player.getCountry()%></h1>
-<h1>Steam id : <%=player.getSteamId()%></h1>
+<form action="TeamDbServlet" method="get">
+    <% Team team = (Team) session.getAttribute("team");
+    %>
+    <h1>Nazwa drużyny : <%=team.getName()%>
+    </h1>
+    <h1>Reprezentowany kraj: <%=team.getCountry()%>
+    </h1>
 
-    <input type="submit"  value="Potwierdź">
+    <input type="submit" value="Potwierdź">
 </form>
 <form action="signUp.html">
     <input type="submit" value="Wróc">

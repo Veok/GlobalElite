@@ -8,10 +8,11 @@ import javax.persistence.Id;
 /**
  * @author L on 30.11.2016.
  */
-
+@Entity
 public class GameMap implements IHaveId {
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
 
