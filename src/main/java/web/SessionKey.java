@@ -7,7 +7,6 @@ public class SessionKey {
 
     public static final String player = "player";
     public static final String team = "team";
-    public static final String db = "db";
-    public static final String playerStats = "playerStats";
     public static final String teamStats = "teamStats";
+    public static final String matchHistory = "matchHistory";
 }

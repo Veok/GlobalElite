@@ -18,7 +18,7 @@ public class MatchHistory implements IHaveId {
     private Team team1;
     @OneToOne
     private Team team2;
-    private Date timeOfMatch;
+    private String timeOfMatch;
     @OneToOne
     private GameMap gameMap;
     private int scoreOfTeam1;
@@ -69,11 +69,11 @@ public class MatchHistory implements IHaveId {
         this.team2 = team2;
     }
 
-    public Date getTimeOfMatch() {
+    public String getTimeOfMatch() {
         return timeOfMatch;
     }
 
-    public void setTimeOfMatch(Date timeOfMatch) {
+    public void setTimeOfMatch(String timeOfMatch) {
         this.timeOfMatch = timeOfMatch;
     }
 
