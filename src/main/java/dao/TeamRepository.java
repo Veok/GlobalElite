@@ -78,6 +78,11 @@ public class TeamRepository extends RepositoryBase<Team> implements ITeamReposit
     }
 
     @Override
+    public Team getName(String name) {
+        return super.getName(name);
+    }
+
+    @Override
     public List<Team> withName(String name) {
         return searchByString(name, getName);
     }

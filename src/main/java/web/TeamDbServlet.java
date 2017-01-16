@@ -40,7 +40,7 @@ public class TeamDbServlet extends HttpServlet {
             catalog.teams().getLastIdForForeignKey();
             catalog.save();
             catalog.close();
-            resp.sendRedirect("signIn.jsp");
+            resp.sendRedirect("signIn.html");
         } catch (SQLException e) {
             e.printStackTrace();
         }
