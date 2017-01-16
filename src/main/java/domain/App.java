@@ -80,7 +80,7 @@ public class App {
 
             catalog2.history().add(matchHistory);
 
-            catalog2.saveAndClose();
+            catalog2.save();
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();

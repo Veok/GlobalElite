@@ -36,7 +36,10 @@ public class TeamDbServlet extends HttpServlet {
             TeamStatistics teamStatistics = (TeamStatistics) session.getAttribute("teamStats");
             catalog.teamsStats().add(teamStatistics);
             catalog.teams().add(team);
-            catalog.saveAndClose();
+            catalog.save();
+            catalog.teams().getLastIdForForeignKey();
+            catalog.save();
+            catalog.close();
             resp.sendRedirect("signIn.jsp");
         } catch (SQLException e) {
             e.printStackTrace();

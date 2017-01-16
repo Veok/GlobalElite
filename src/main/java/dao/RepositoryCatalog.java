@@ -64,13 +64,20 @@ public class RepositoryCatalog implements IRepositoryCatalog {
     }
 
     @Override
-    public void saveAndClose() {
+    public void save() {
 
-        try{
+
             uow.saveChanges();
+
+    }
+
+    @Override
+    public void close() {
+        try {
             connection.close();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 }

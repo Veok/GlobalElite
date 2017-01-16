@@ -19,6 +19,8 @@ public interface IRepositoryCatalog {
 
     IGameMapRepository maps();
 
-    void saveAndClose();
+    void save();
+
+    void close();
 
 }

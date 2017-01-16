@@ -43,7 +43,7 @@ public class PlayerDbServlet extends HttpServlet {
             catalog.teamsStats().add(teamStatistics);
             catalog.teams().add(team);
             catalog.players().add(player);
-            catalog.saveAndClose();
+            catalog.save();
             resp.sendRedirect("signIn.html");
         } catch (SQLException e) {
             e.printStackTrace();
