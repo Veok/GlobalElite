@@ -17,7 +17,7 @@ public class Team implements IHaveId {
     private int id;
     private String name;
     private String country;
-
+    @OneToOne
     private TeamStatistics teamStatistics;
 
 //    @OneToMany

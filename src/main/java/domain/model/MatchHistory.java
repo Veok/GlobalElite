@@ -14,12 +14,12 @@ public class MatchHistory implements IHaveId {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     private Team team1;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     private Team team2;
     private String timeOfMatch;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     private GameMap gameMap;
     private int scoreOfTeam1;
     private int scoreOfTeam2;
