@@ -11,6 +11,8 @@
     <title>Dodaj mecz</title>
 </head>
 <body>
+<form action="MatchHistoryDbServlet" method="get">
+
 <%
     MatchHistory matchHistory = (MatchHistory) session.getAttribute("matchHistory"); %>
 
@@ -25,5 +27,10 @@ Wynik2: <%=matchHistory.getScoreOfTeam2()%>
 Mapa: <%=matchHistory.getGameMap()%>
 <br>
 Czas: <%=matchHistory.getTimeOfMatch()%>
+    <input type="submit" value="Potwierdź">
+</form>
+<form action="signUp.html">
+    <input type="submit" value="Wróc">
+</form>
 </body>
 </html>

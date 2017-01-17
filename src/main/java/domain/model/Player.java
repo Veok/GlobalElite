@@ -21,7 +21,7 @@ public class Player implements IHaveId {
     private String steamId;
     private String dateOfBirth;
 
-  //  @OneToOne
+    @OneToOne
     private Team team;
 
     public Player() {
