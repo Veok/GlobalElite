@@ -13,13 +13,15 @@
 <body>
 <form action="TeamDbServlet" method="get">
 
-<% Team team = (Team) session.getAttribute("team");
-%>
+    <% Team team = (Team) session.getAttribute("team");
+    %>
 
-<h1>Nazwa: <%= team.getName()%></h1>
-<br>
-<h1>Kraj: <%= team.getCountry()%></h1>
-    <input type="submit"  value="Potwierdź">
+    <h1>Nazwa: <%= team.getName()%>
+    </h1>
+    <br>
+    <h1>Kraj: <%= team.getCountry()%>
+    </h1>
+    <input type="submit" value="Potwierdź">
 </form>
 <form action="createTeam.html">
     <input type="submit" value="Wróc">

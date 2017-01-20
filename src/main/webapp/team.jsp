@@ -1,5 +1,4 @@
 <%@ page import="domain.model.Team" %>
-<%@ page import="domain.model.TeamStatistics" %>
 <%--
   Created by IntelliJ IDEA.
   User: L
@@ -13,20 +12,27 @@
     <title>Twoja drużyna</title>
 </head>
 <body>
-<%Team team = (Team) session.getAttribute("team");
+<%
+    Team team = (Team) session.getAttribute("team");
 %>
-<h1>Nazwa drużyny: <%=team.getName()%></h1>
+<h1>Nazwa drużyny: <%=team.getName()%>
+</h1>
 <br>
-<h1>Reprezentowany kraj: <%=team.getCountry()%></h1>
+<h1>Reprezentowany kraj: <%=team.getCountry()%>
+</h1>
 <br>
 <h1>Statystyki</h1>
-<table >
+<table>
     <tbody>
     <tr>
-        <td>Wygrane: <%=team.getTeamStatistics().getWins()%> </td>
-        <td>Przegrane: <%=team.getTeamStatistics().getLooses()%> </td>
-        <td>Remisy:  <%=team.getTeamStatistics().getDraws()%></td>
-        <td>Punkty: <%=team.getTeamStatistics().getPoints()%></td>
+        <td>Wygrane: <%=team.getTeamStatistics().getWins()%>
+        </td>
+        <td>Przegrane: <%=team.getTeamStatistics().getLooses()%>
+        </td>
+        <td>Remisy:  <%=team.getTeamStatistics().getDraws()%>
+        </td>
+        <td>Punkty: <%=team.getTeamStatistics().getPoints()%>
+        </td>
     </tr>
     </tbody>
 </table>

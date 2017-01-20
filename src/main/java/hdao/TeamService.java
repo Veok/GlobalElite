@@ -22,7 +22,7 @@ public class TeamService {
             SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
             Session session1 = sessionFactory.openSession();
             session1.getTransaction();
-            org.hibernate.query.Query query = session1.createQuery("from Team where name='" + name +"'");
+            org.hibernate.query.Query query = session1.createQuery("from Team where name='" + name + "'");
             team = (Team) query.uniqueResult();
             session1.getTransaction().commit();
         } catch (Exception e) {
