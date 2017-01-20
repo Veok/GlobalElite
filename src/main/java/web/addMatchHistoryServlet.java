@@ -5,6 +5,7 @@ import dao.repositories.IRepositoryCatalog;
 import domain.model.GameMap;
 import domain.model.MatchHistory;
 import domain.model.Team;
+import hdao.TeamService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -35,9 +36,10 @@ public class addMatchHistoryServlet extends HttpServlet{
             MatchHistory matchHistory = new MatchHistory();
             SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
             Session session1 = sessionFactory.openSession();
-
-            matchHistory.setTeam1(session1.get(Team.class,req.getParameter("name1")));
-            matchHistory.setTeam2(catalog.teams().getName(req.getParameter("name2")));
+            Team team1 = TeamService.getTeamByName(req.getParameter("name1"));
+            Team team2 = TeamService.getTeamByName(req.getParameter("name2"));
+            matchHistory.setTeam1(team1);
+            matchHistory.setTeam2(team2);
             matchHistory.setScoreOfTeam1(Integer.parseInt(req.getParameter("score1")));
             matchHistory.setScoreOfTeam2(Integer.parseInt(req.getParameter("score2")));
             matchHistory.setTimeOfMatch(req.getParameter("map"));
@@ -45,8 +47,8 @@ public class addMatchHistoryServlet extends HttpServlet{
 
             HttpSession session = req.getSession();
             session.setAttribute(SessionKey.matchHistory, matchHistory);
-            session.setAttribute(SessionKey.t1, catalog.teams().getName(req.getParameter("name1")));
-            session.setAttribute(SessionKey.t2, catalog.teams().getName(req.getParameter("name2")));
+           // session.setAttribute(SessionKey.t1, team1);
+            //session.setAttribute(SessionKey.t2, team2);
             resp.sendRedirect("/addMatch.jsp");
 
         } catch (SQLException e) {
