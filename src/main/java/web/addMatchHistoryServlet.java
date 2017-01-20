@@ -4,6 +4,10 @@ import dao.RepositoryCatalog;
 import dao.repositories.IRepositoryCatalog;
 import domain.model.GameMap;
 import domain.model.MatchHistory;
+import domain.model.Team;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,7 +33,10 @@ public class addMatchHistoryServlet extends HttpServlet{
         try {
             IRepositoryCatalog catalog = new RepositoryCatalog(url);
             MatchHistory matchHistory = new MatchHistory();
-            matchHistory.setTeam1(catalog.teams().getName(req.getParameter("name1")));
+            SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+            Session session1 = sessionFactory.openSession();
+
+            matchHistory.setTeam1(session1.get(Team.class,req.getParameter("name1")));
             matchHistory.setTeam2(catalog.teams().getName(req.getParameter("name2")));
             matchHistory.setScoreOfTeam1(Integer.parseInt(req.getParameter("score1")));
             matchHistory.setScoreOfTeam2(Integer.parseInt(req.getParameter("score2")));

@@ -47,7 +47,7 @@ public class TeamRepository extends RepositoryBase<Team> implements ITeamReposit
     }
 
     protected String insertSql() {
-        return "INSERT INTO TEAM(name, country) values (?, ?)";
+        return "INSERT INTO TEAM(name, country, TEAM_STATS_ID) values (?, ?, ?)";
     }
 
     protected String updateSql() {
@@ -63,7 +63,7 @@ public class TeamRepository extends RepositoryBase<Team> implements ITeamReposit
     protected void setInsert(Team team) throws SQLException {
         insert.setString(1, team.getName());
         insert.setString(2, team.getCountry());
-
+        insert.setInt(3, team.getTeamStatistics().getId());
     }
     @Override
     public void getLastIdForForeignKey() {

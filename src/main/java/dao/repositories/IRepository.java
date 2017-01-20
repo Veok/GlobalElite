@@ -23,5 +23,5 @@ public interface IRepository<TEntity extends IHaveId> {
 
     void getLastIdForForeignKey();
 
-
+    int getLastId();
 }
