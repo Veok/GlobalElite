@@ -14,8 +14,7 @@
 </head>
 <body>
 <%Team team = (Team) session.getAttribute("team");
-    TeamStatistics teamStatistics = (TeamStatistics) session.getAttribute("teamStats");
-team.setTeamStatistics(teamStatistics);%>
+%>
 <h1>Nazwa drużyny: <%=team.getName()%></h1>
 <br>
 <h1>Reprezentowany kraj: <%=team.getCountry()%></h1>
