@@ -48,6 +48,7 @@ public class addMatchHistoryServlet extends HttpServlet{
             session.setAttribute(SessionKey.t1, catalog.teams().getName(req.getParameter("name1")));
             session.setAttribute(SessionKey.t2, catalog.teams().getName(req.getParameter("name2")));
             resp.sendRedirect("/addMatch.jsp");
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
