@@ -13,20 +13,20 @@
 <body>
 <form action="MatchHistoryDbServlet" method="get">
 
-<%
-    MatchHistory matchHistory = (MatchHistory) session.getAttribute("matchHistory"); %>
+    <%
+        MatchHistory matchHistory = (MatchHistory) session.getAttribute("matchHistory"); %>
 
-Drużyna1: <%=matchHistory.getTeam1().getName()%>
-<br>
-Dryżyna2: <%=matchHistory.getTeam2().getName()%>
-<br>
-Wynik1: <%=matchHistory.getScoreOfTeam1()%>
-<br>
-Wynik2: <%=matchHistory.getScoreOfTeam2()%>
-<br>
-Mapa: <%=matchHistory.getGameMap()%>
-<br>
-Czas: <%=matchHistory.getTimeOfMatch()%>
+    Drużyna1: <%=matchHistory.getTeam1().getName()%>
+    <br>
+    Dryżyna2: <%=matchHistory.getTeam2().getName()%>
+    <br>
+    Wynik1: <%=matchHistory.getScoreOfTeam1()%>
+    <br>
+    Wynik2: <%=matchHistory.getScoreOfTeam2()%>
+    <br>
+    Mapa: <%=matchHistory.getGameMap()%>
+    <br>
+    Czas: <%=matchHistory.getTimeOfMatch()%>
     <input type="submit" value="Potwierdź">
 </form>
 <form action="signUp.html">
