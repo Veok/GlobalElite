@@ -36,22 +36,26 @@ public class TeamService {
         return team;
     }
 
-    public List<Team> getListOfTeam() {
-        List<Team> list = new ArrayList<Team>();
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        org.hibernate.Transaction tx = null;
+    public static List<Team> getListOfTeam() {
+        List<Team> list = new ArrayList<>();
+
+        SessionFactory session = HibernateUtil.getSessionFactory();
+        Session s = session.openSession();
+
         try {
-            tx.begin();
-            list = session.createQuery("from Team").list();
-            tx.commit();
+            s.getTransaction();
+            s.getTransaction().begin();
+            list = s.createQuery("from Team ").list();
+            s.getTransaction().commit();
         } catch (Exception e) {
-            if (tx != null) {
-                tx.rollback();
+            if (s.getTransaction() != null) {
+                s.getTransaction().rollback();
             }
-            e.printStackTrace();
         } finally {
-            session.close();
+            s.close();
         }
         return list;
     }
+
+
 }

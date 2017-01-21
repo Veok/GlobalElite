@@ -34,7 +34,7 @@ public class addMatchHistoryServlet extends HttpServlet {
         matchHistory.setScoreOfTeam2(Integer.parseInt(req.getParameter("score2")));
         matchHistory.setTimeOfMatch(req.getParameter("map"));
         matchHistory.setGameMap(new GameMap());
-
+        matchHistory.score();
         HttpSession session = req.getSession();
         session.setAttribute(SessionKey.matchHistory, matchHistory);
         resp.sendRedirect("/addMatch.jsp");
