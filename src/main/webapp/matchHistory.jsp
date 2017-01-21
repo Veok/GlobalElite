@@ -13,10 +13,28 @@ Created by IntelliJ IDEA.
 <html>
 <head>
     <title>Historia meczy</title>
+    <meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; width=device-width;">
+    <link rel="stylesheet" type="text/css" href="table.css">
 </head>
 <body>
-<form action="MatchHistoryDbServlet" method="get">
-    <%
+<div class="table-title">
+    <h3>Tabela wyników:</h3>
+</div>
+<table class="table-fill">
+
+    <thead>
+    <tr>
+        <th class="text-left">Team1</th>
+        <th class="text-left">Wynik1</th>
+        <th class="text-left">Wynik2</th>
+        <th class="text-left">Team2</th>
+        <th class="text-left">Mapa</th>
+        <th class="text-left">Czas gry</th>
+    </tr>
+    </thead>
+    <tbody class="table-hover">
+    <form action="MatchHistoryDbServlet" method="get">
+            <%
 
         List<MatchHistory> list = MatchHistoryService.getListOfHistory();
 
@@ -26,7 +44,7 @@ Created by IntelliJ IDEA.
         } else {
             for (MatchHistory matchHistory : list) {
     %>
-    <table>
+
         <tr>
             <td>
                 <%=matchHistory.getTeam1().getName()%>
@@ -37,7 +55,7 @@ Created by IntelliJ IDEA.
                 <%=matchHistory.getScoreOfTeam2()%>
             </td>
             <td>
-                <%=matchHistory.getTeam2()%>
+                <%=matchHistory.getTeam2().getName()%>
             </td>
             <td>
                 <%=matchHistory.getGameMap()%>
@@ -46,15 +64,18 @@ Created by IntelliJ IDEA.
                 <%=matchHistory.getTimeOfMatch()%>
             </td>
         </tr>
-    </table>
 
-    <%
+
+            <%
             }
         }
     %>
-
+    </tbody>
+</table>
 
 </form>
-</body>
+<br>
 <a href="addMatch.html">Dodaj nowy mecz</a>
+</body>
+
 </html>

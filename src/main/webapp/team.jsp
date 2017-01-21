@@ -36,6 +36,6 @@
     </tr>
     </tbody>
 </table>
-
+<a href="matchHistory.jsp">Tablica wyników</a>
 </body>
 </html>
