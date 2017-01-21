@@ -24,7 +24,8 @@ public class addMatchHistoryServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        GameMap gameMap = new GameMap();
+        gameMap.setNameOfMap(req.getParameter("gameMap"));
         MatchHistory matchHistory = new MatchHistory();
         Team team1 = TeamService.getTeamByName(req.getParameter("name1"));
         Team team2 = TeamService.getTeamByName(req.getParameter("name2"));
@@ -32,11 +33,12 @@ public class addMatchHistoryServlet extends HttpServlet {
         matchHistory.setTeam2(team2);
         matchHistory.setScoreOfTeam1(Integer.parseInt(req.getParameter("score1")));
         matchHistory.setScoreOfTeam2(Integer.parseInt(req.getParameter("score2")));
-        matchHistory.setTimeOfMatch(req.getParameter("map"));
-        matchHistory.setGameMap(new GameMap());
+        matchHistory.setTimeOfMatch(req.getParameter("time"));
+        matchHistory.setGameMap(gameMap);
         matchHistory.score();
         HttpSession session = req.getSession();
         session.setAttribute(SessionKey.matchHistory, matchHistory);
+        session.setAttribute(SessionKey.gameMap, gameMap);
         resp.sendRedirect("/addMatch.jsp");
 
 

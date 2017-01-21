@@ -24,7 +24,7 @@
     <br>
     Wynik2: <%=matchHistory.getScoreOfTeam2()%>
     <br>
-    Mapa: <%=matchHistory.getGameMap()%>
+    Mapa: <%=matchHistory.getGameMap().getNameOfMap()%>
     <br>
     Czas: <%=matchHistory.getTimeOfMatch()%>
     <input type="submit" value="Potwierdź">
