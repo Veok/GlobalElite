@@ -58,7 +58,7 @@ Created by IntelliJ IDEA.
                 <%=matchHistory.getTeam2().getName()%>
             </td>
             <td>
-                <%=matchHistory.getGameMap()%>
+                <%=matchHistory.getGameMap().getNameOfMap()%>
             </td>
             <td>
                 <%=matchHistory.getTimeOfMatch()%>

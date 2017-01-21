@@ -20,12 +20,13 @@ import java.io.IOException;
 public class addMatchHistoryServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    String url = "jdbc:hsqldb:hsql://localhost/workdb";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         GameMap gameMap = new GameMap();
         gameMap.setNameOfMap(req.getParameter("gameMap"));
+
         MatchHistory matchHistory = new MatchHistory();
         Team team1 = TeamService.getTeamByName(req.getParameter("name1"));
         Team team2 = TeamService.getTeamByName(req.getParameter("name2"));

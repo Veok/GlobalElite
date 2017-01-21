@@ -22,8 +22,6 @@ public class TeamServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-
-        //TODO refactor to HibernateUtil
         String name = req.getParameter("name");
         Team team = TeamService.getTeamByName(name);
         if (team != null) {
@@ -34,7 +32,6 @@ public class TeamServlet extends HttpServlet {
             resp.getWriter().println("Brak danej drużyny w bazie");
         }
     }
-    //TODO refactor to TeamService
 
 
 }

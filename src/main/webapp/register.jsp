@@ -23,7 +23,7 @@
     </h1>
     <input type="submit" value="Potwierdź">
 </form>
-<form action="createTeam.html">
+<form action="register.html">
     <input type="submit" value="Wróc">
 </body>
 </html>

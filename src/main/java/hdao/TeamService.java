@@ -15,7 +15,7 @@ public class TeamService {
 
     public static Team getTeamByName(String name) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        org.hibernate.Transaction tx = null;
+
         Team team = null;
 
         try {
@@ -26,8 +26,8 @@ public class TeamService {
             team = (Team) query.uniqueResult();
             session1.getTransaction().commit();
         } catch (Exception e) {
-            if (tx != null) {
-                tx.rollback();
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
             }
             e.printStackTrace();
         } finally {

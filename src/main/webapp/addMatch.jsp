@@ -29,7 +29,7 @@
     Czas: <%=matchHistory.getTimeOfMatch()%>
     <input type="submit" value="Potwierdź">
 </form>
-<form action="signUp.html">
+<form action="matchHistory.jsp">
     <input type="submit" value="Wróc">
 </form>
 </body>

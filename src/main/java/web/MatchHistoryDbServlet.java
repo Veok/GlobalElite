@@ -8,7 +8,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,14 +38,13 @@ public class MatchHistoryDbServlet extends HttpServlet {
         if (TeamService.getTeamByName(matchHistory.getTeam1().getName()) == null
                 || TeamService.getTeamByName(matchHistory.getTeam2().getName()) == null) {
             resp.getWriter().write("Brak danych drużyn w bazie. Wprowadź prawidłowe nazwy drużyn.");
-        }
-         else if(matchHistory.getTimeOfMatch()==null || matchHistory.getGameMap().getNameOfMap()==null){
-            resp.getWriter().write("Pole nie może być puste");
-        }
-         else if(matchHistory.getScoreOfTeam1()<0 || matchHistory.getScoreOfTeam2()<0){
+        } else if (!org.apache.commons.lang3.StringUtils.isNumeric(matchHistory.getTimeOfMatch())) {
+            resp.getWriter().write("Podales zly czas trwania meczu");
+        } else if (matchHistory.getScoreOfTeam1() < 0 || matchHistory.getScoreOfTeam2() < 0) {
             resp.getWriter().write("Wyniki drużyn nie mogą być ujemne");
-        }
-        else {
+        } else if (matchHistory.getGameMap().getNameOfMap().isEmpty()) {
+            resp.getWriter().write("Pole nie moze byc puste");
+        } else {
             Session session1 = sessionFactory.openSession();
             session1.beginTransaction();
             session1.save(matchHistory);
