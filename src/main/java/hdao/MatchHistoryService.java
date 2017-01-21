@@ -4,7 +4,6 @@ import domain.model.MatchHistory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,6 @@ public class MatchHistoryService {
     public static List<MatchHistory> getListOfHistory() {
         List<MatchHistory> list = new ArrayList<>();
         Session session = HibernateUtil.getSessionFactory().openSession();
-        org.hibernate.Transaction tx = null;
         try {
             SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
             Session session1 = sessionFactory.openSession();
@@ -27,8 +25,8 @@ public class MatchHistoryService {
             list = session1.createQuery("from MatchHistory").list();
             session1.getTransaction().commit();
         } catch (Exception e) {
-            if (tx != null) {
-                tx.rollback();
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
             }
             e.printStackTrace();
         } finally {

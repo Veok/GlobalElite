@@ -1,5 +1,6 @@
 package web;
 
+import domain.model.GameMap;
 import domain.model.MatchHistory;
 import hdao.TeamService;
 import org.hibernate.Session;
@@ -30,20 +31,29 @@ public class MatchHistoryDbServlet extends HttpServlet {
 
         HttpSession session = req.getSession();
         MatchHistory matchHistory = (MatchHistory) session.getAttribute("matchHistory");
+        GameMap gameMap = (GameMap) session.getAttribute("gameMap");
+        matchHistory.setGameMap(gameMap);
         SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
 
         if (TeamService.getTeamByName(matchHistory.getTeam1().getName()) == null
                 || TeamService.getTeamByName(matchHistory.getTeam2().getName()) == null) {
             resp.getWriter().write("Brak danych drużyn w bazie. Wprowadź prawidłowe nazwy drużyn.");
+        } else if (!org.apache.commons.lang3.StringUtils.isNumeric(matchHistory.getTimeOfMatch())) {
+            resp.getWriter().write("Podales zly czas trwania meczu");
+        } else if (matchHistory.getScoreOfTeam1() < 0 || matchHistory.getScoreOfTeam2() < 0) {
+            resp.getWriter().write("Wyniki drużyn nie mogą być ujemne");
+        } else if (matchHistory.getGameMap().getNameOfMap().isEmpty()) {
+            resp.getWriter().write("Pole nie moze byc puste");
+        } else {
+            Session session1 = sessionFactory.openSession();
+            session1.beginTransaction();
+            session1.save(matchHistory);
+            session1.save(gameMap);
+            session1.update(matchHistory.getTeam1().getTeamStatistics());
+            session1.update(matchHistory.getTeam2().getTeamStatistics());
+            session1.getTransaction().commit();
+            session1.close();
         }
-        Session session1 = sessionFactory.openSession();
-        session1.beginTransaction();
-        session1.save(matchHistory);
-        session1.update(matchHistory.getTeam1().getTeamStatistics());
-        session1.update(matchHistory.getTeam2().getTeamStatistics());
-        session1.getTransaction().commit();
-        session1.close();
-
 
     }
 

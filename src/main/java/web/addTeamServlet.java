@@ -1,17 +1,14 @@
 package web;
 
-import domain.model.Player;
 import domain.model.Team;
 import domain.model.TeamStatistics;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.transaction.Transactional;
 import java.io.IOException;
 
 /**
@@ -41,7 +38,7 @@ public class addTeamServlet extends HttpServlet {
         session.setAttribute(SessionKey.teamStats, teamStatistics);
         session.setAttribute(SessionKey.team, team);
 
-        resp.sendRedirect("/createTeam.jsp");
+        resp.sendRedirect("/register.jsp");
 
     }
 }

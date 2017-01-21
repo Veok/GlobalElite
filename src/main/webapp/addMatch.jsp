@@ -24,12 +24,12 @@
     <br>
     Wynik2: <%=matchHistory.getScoreOfTeam2()%>
     <br>
-    Mapa: <%=matchHistory.getGameMap()%>
+    Mapa: <%=matchHistory.getGameMap().getNameOfMap()%>
     <br>
     Czas: <%=matchHistory.getTimeOfMatch()%>
     <input type="submit" value="Potwierdź">
 </form>
-<form action="signUp.html">
+<form action="matchHistory.jsp">
     <input type="submit" value="Wróc">
 </form>
 </body>
