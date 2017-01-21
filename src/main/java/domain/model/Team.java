@@ -2,7 +2,6 @@ package domain.model;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.List;
 
 /**
  * @author L on 10.11.2016.
@@ -10,6 +9,10 @@ import java.util.List;
 
 @XmlRootElement
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "team.all", query = "SELECT t from Team t"),
+        @NamedQuery(name = "team.id", query = "SELECT t from Team t where t.id=:teamId")
+})
 public class Team implements IHaveId {
 
     @Id
@@ -20,19 +23,10 @@ public class Team implements IHaveId {
     @OneToOne
     private TeamStatistics teamStatistics;
 
-//    @OneToMany
-   // private List<Player> players;
+
     public Team() {
     }
 
-
-    //public List<Player> getPlayers()// {
-      //  return players;
-  //  }
-
-  //  public void setPlayers(List<Player> players) {
-      //  this.players = players;
-  //  }
 
     public String getName() {
         return name;
