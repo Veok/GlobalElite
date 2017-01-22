@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author L on 10.11.2016.
  */
 
-@XmlRootElement
+
 @Entity
 @NamedQueries({
         @NamedQuery(name = "team.all", query = "SELECT t from Team t"),
