@@ -60,6 +60,6 @@ public class TeamDbServlet extends HttpServlet {
         session1.save(team);
         session1.getTransaction().commit();
         session1.close();
-        resp.sendRedirect("index.html");
+        resp.sendRedirect("/index.html");
     }
 }

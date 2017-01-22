@@ -9,4 +9,5 @@ public class SessionKey {
     public static final String teamStats = "teamStats";
     public static final String matchHistory = "matchHistory";
     public static final String gameMap = "gameMap";
+    public static final String login = "login";
 }

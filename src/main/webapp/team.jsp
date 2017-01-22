@@ -13,7 +13,7 @@
 </head>
 <body>
 <%
-    Team team = (Team) session.getAttribute("team");
+    Team team = (Team) session.getAttribute("login");
 %>
 <h1>Nazwa drużyny: <%=team.getName()%>
 </h1>

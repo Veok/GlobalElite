@@ -53,6 +53,7 @@ public class MatchHistoryDbServlet extends HttpServlet {
             session1.update(matchHistory.getTeam2().getTeamStatistics());
             session1.getTransaction().commit();
             session1.close();
+            resp.sendRedirect("/matchHistory.jsp");
         }
 
     }

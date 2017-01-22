@@ -11,20 +11,23 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * @author L on 21.01.2017.
+ * @author L on 22.01.2017.
  */
-@WebFilter(urlPatterns = {"/register.jsp"})
-public class TeamFilter implements Filter {
+@WebFilter(urlPatterns = {"/team.jsp"
+        ,"/addMatch.html", "/addMatch.jsp","/matchHistory.jsp"})
+public class MatchFilter implements Filter {
+
 
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpSession session = httpServletRequest.getSession();
-        Team team = (Team) session.getAttribute(SessionKey.team);
-        if (team == null) {
-            ((HttpServletResponse) servletResponse).sendRedirect("/index.html");
-        } else {
+        Team team = (Team) session.getAttribute(SessionKey.login);
+        if(team ==null){
+            ((HttpServletResponse) servletResponse).sendRedirect("/login.html");
+        }else{
             filterChain.doFilter(servletRequest, servletResponse);
         }
     }
