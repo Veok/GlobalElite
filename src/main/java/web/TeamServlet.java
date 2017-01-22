@@ -26,8 +26,8 @@ public class TeamServlet extends HttpServlet {
         Team team = TeamService.getTeamByName(name);
         if (team != null) {
             HttpSession session = req.getSession();
-            session.setAttribute(SessionKey.team, team);
-            resp.sendRedirect("team.jsp");
+            session.setAttribute(SessionKey.login, team);
+            resp.sendRedirect("/team.jsp");
         } else {
             resp.getWriter().println("Brak danej drużyny w bazie");
         }

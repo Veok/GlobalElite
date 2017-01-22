@@ -50,7 +50,7 @@ public class TeamResources {
     }
 
     @GET
-    @Path("{id}")
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response get(@PathParam("id") int id) {
         Team result = entityManager.createNamedQuery("team.id", Team.class)

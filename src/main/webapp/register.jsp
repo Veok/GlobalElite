@@ -25,5 +25,6 @@
 </form>
 <form action="register.html">
     <input type="submit" value="Wróc">
+</form>
 </body>
 </html>
