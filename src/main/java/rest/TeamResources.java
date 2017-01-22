@@ -8,19 +8,22 @@ import javax.persistence.PersistenceContext;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 /**
  * @author L on 21.01.2017.
  */
+@XmlRootElement
 @Path("/teams")
 @Stateless
 public class TeamResources {
 
     @PersistenceContext
+    private
     EntityManager entityManager;
 
-    @POST
+    @GET
     @Consumes(MediaType.APPLICATION_JSON)
     public List<Team> getAll() {
         return entityManager.createNamedQuery("team.all", Team.class).getResultList();

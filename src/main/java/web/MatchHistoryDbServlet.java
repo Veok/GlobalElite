@@ -6,7 +6,6 @@ import hdao.TeamService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,7 +21,6 @@ import java.io.IOException;
  */
 @WebServlet("/MatchHistoryDbServlet")
 @Transactional
-@Component
 public class MatchHistoryDbServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
