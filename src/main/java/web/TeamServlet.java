@@ -1,7 +1,7 @@
 package web;
 
-import domain.model.Team;
-import hdao.TeamService;
+import hdao.services.RepositoryService;
+import hdao.services.TeamService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,10 +23,10 @@ public class TeamServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String name = req.getParameter("name");
-        TeamService teamService = new TeamService();
-        if (teamService.getTeamByName(name)!= null) {
+        RepositoryService repositoryService = new RepositoryService();
+        if (repositoryService.teams().withName(name)!= null) {
             HttpSession session = req.getSession();
-            session.setAttribute(SessionKey.login, teamService.getTeamByName(name));
+            session.setAttribute(SessionKey.login, repositoryService.teams().withName(name));
             resp.sendRedirect("/team.jsp");
         } else {
             resp.getWriter().println("Brak danej drużyny w bazie");
