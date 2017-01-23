@@ -11,7 +11,7 @@ public interface IRepository<TEntity extends IHaveId> {
 
     List<TEntity> getAll();
 
-    TEntity get(int playerId);
+    TEntity get(int id);
 
     TEntity getName(String name);
 

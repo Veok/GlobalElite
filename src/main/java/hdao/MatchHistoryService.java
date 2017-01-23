@@ -18,7 +18,7 @@ public class MatchHistoryService {
         List<MatchHistory> list = new ArrayList<>();
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
-            SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
             Session session1 = sessionFactory.openSession();
             session1.getTransaction();
             session1.getTransaction().begin();

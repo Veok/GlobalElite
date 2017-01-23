@@ -8,18 +8,22 @@ import java.util.Date;
  */
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "matchHistory.all", query = "FROM MatchHistory m"),
+        @NamedQuery(name= "matchHistory.id", query = "FROM MatchHistory  m where m.id=:matchHistoryId")
+})
 public class MatchHistory implements IHaveId {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     private Team team1;
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     private Team team2;
     private String timeOfMatch;
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     private GameMap gameMap;
     private int scoreOfTeam1;
     private int scoreOfTeam2;

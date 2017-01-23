@@ -2,6 +2,7 @@ package web;
 
 import domain.model.Team;
 import domain.model.TeamStatistics;
+import hdao.HibernateUtil;
 import hdao.TeamService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -33,15 +34,13 @@ public class TeamDbServlet extends HttpServlet {
         HttpSession session = req.getSession();
         Team team = (Team) session.getAttribute("team");
         TeamStatistics teamStatistics = (TeamStatistics) session.getAttribute("teamStats");
-        List<Team> list = TeamService.getListOfTeam();
+        TeamService teamService = new TeamService();
+        List<Team> list = teamService.getListOfTeam();
 
-        if (team.getName() == null || team.getCountry() == null) {
-            resp.getWriter().write("Nie wprowadziłeś wszystkich danych");
-        }
         if (list.isEmpty()) {
             addTeam(team, teamStatistics, resp);
         }
-        if (TeamService.getTeamByName(team.getName()) != null) {
+        if (teamService.getTeamByName(team.getName()) != null) {
             resp.getWriter().write("Podany team o danej nazwie juz istnieje.");
         } else {
             addTeam(team, teamStatistics, resp);
@@ -51,7 +50,7 @@ public class TeamDbServlet extends HttpServlet {
 
 
     private void addTeam(Team team, TeamStatistics teamStatistics, HttpServletResponse resp) throws ServletException, IOException {
-        SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session1 = sessionFactory.openSession();
         session1.beginTransaction();
         session1.save(teamStatistics);
