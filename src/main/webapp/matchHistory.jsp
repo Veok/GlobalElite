@@ -1,6 +1,7 @@
 <%@ page import="domain.model.MatchHistory" %>
-<%@ page import="hdao.MatchHistoryService" %>
+<%@ page import="hdao.services.MatchHistoryService" %>
 <%@ page import="java.util.List" %>
+<%@ page import="hdao.services.RepositoryService" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%---
 Created by IntelliJ IDEA.
@@ -24,10 +25,10 @@ Created by IntelliJ IDEA.
 
     <thead>
     <tr>
-        <th class="text-left">Team1</th>
-        <th class="text-left">Wynik1</th>
-        <th class="text-left">Wynik2</th>
-        <th class="text-left">Team2</th>
+        <th class="text-left">Wygrany</th>
+        <th class="text-left">Wynik zwyciescy</th>
+        <th class="text-left">Wynik przegranego</th>
+        <th class="text-left">Przegrany</th>
         <th class="text-left">Mapa</th>
         <th class="text-left">Czas gry</th>
     </tr>
@@ -36,8 +37,9 @@ Created by IntelliJ IDEA.
     <form action="MatchHistoryDbServlet" method="get">
             <%
 
-        List<MatchHistory> list = MatchHistoryService.getListOfHistory();
 
+        RepositoryService repositoryService = new RepositoryService();
+        List<MatchHistory> list = repositoryService.history().getAll("MatchHistory");
         if (list.isEmpty()) {
 
             response.getWriter().write("Brak historii");

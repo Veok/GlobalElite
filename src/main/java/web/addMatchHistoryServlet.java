@@ -3,7 +3,8 @@ package web;
 import domain.model.GameMap;
 import domain.model.MatchHistory;
 import domain.model.Team;
-import hdao.TeamService;
+import hdao.services.RepositoryService;
+import hdao.services.TeamService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,18 +21,17 @@ import java.io.IOException;
 @WebServlet("/addMatchHistoryServlet")
 public class addMatchHistoryServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
+    private RepositoryService repositoryService = new RepositoryService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         GameMap gameMap = new GameMap();
         gameMap.setNameOfMap(req.getParameter("gameMap"));
-        TeamService teamService = new TeamService();
         MatchHistory matchHistory = new MatchHistory();
 
-        Team team1 = teamService.getTeamByName(req.getParameter("name1"));
-        Team team2 = teamService.getTeamByName(req.getParameter("name2"));
+        Team team1 = repositoryService.teams().withName(req.getParameter("name1"));
+        Team team2 = repositoryService.teams().withName(req.getParameter("name2"));
         matchHistory.setScoreOfTeam1(Integer.parseInt(req.getParameter("score1")));
         matchHistory.setScoreOfTeam2(Integer.parseInt(req.getParameter("score2")));
         matchHistory.setTimeOfMatch(req.getParameter("time"));
@@ -46,7 +46,6 @@ public class addMatchHistoryServlet extends HttpServlet {
 
             matchHistory.setTeam1(team1);
             matchHistory.setTeam2(team2);
-
             matchHistory.setGameMap(gameMap);
             HttpSession session = req.getSession();
             session.setAttribute(SessionKey.matchHistory, matchHistory);

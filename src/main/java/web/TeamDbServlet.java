@@ -3,10 +3,10 @@ package web;
 import domain.model.Team;
 import domain.model.TeamStatistics;
 import hdao.HibernateUtil;
-import hdao.TeamService;
+import hdao.services.RepositoryService;
+import hdao.services.TeamService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,20 +27,19 @@ public class TeamDbServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-
+    private RepositoryService repositoryService = new RepositoryService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         HttpSession session = req.getSession();
         Team team = (Team) session.getAttribute("team");
         TeamStatistics teamStatistics = (TeamStatistics) session.getAttribute("teamStats");
-        TeamService teamService = new TeamService();
-        List<Team> list = teamService.getListOfTeam();
+        List<Team> list = repositoryService.teams().getAll("Team");
 
         if (list.isEmpty()) {
             addTeam(team, teamStatistics, resp);
         }
-        if (teamService.getTeamByName(team.getName()) != null) {
+        if (repositoryService.teams().withName(team.getName()) != null) {
             resp.getWriter().write("Podany team o danej nazwie juz istnieje.");
         } else {
             addTeam(team, teamStatistics, resp);
@@ -50,13 +49,8 @@ public class TeamDbServlet extends HttpServlet {
 
 
     private void addTeam(Team team, TeamStatistics teamStatistics, HttpServletResponse resp) throws ServletException, IOException {
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session1 = sessionFactory.openSession();
-        session1.beginTransaction();
-        session1.save(teamStatistics);
-        session1.save(team);
-        session1.getTransaction().commit();
-        session1.close();
+        repositoryService.teamStats().add(teamStatistics);
+        repositoryService.teams().add(team);
         resp.sendRedirect("/index.html");
     }
 }

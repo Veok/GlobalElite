@@ -16,13 +16,13 @@
     <%
         MatchHistory matchHistory = (MatchHistory) session.getAttribute("matchHistory"); %>
 
-    Drużyna1: <%=matchHistory.getTeam1().getName()%>
+    Wygrany: <%=matchHistory.getTeam1().getName()%>
     <br>
-    Dryżyna2: <%=matchHistory.getTeam2().getName()%>
+    Przegrany: <%=matchHistory.getTeam2().getName()%>
     <br>
-    Wynik1: <%=matchHistory.getScoreOfTeam1()%>
+    Wynik wygranego: <%=matchHistory.getScoreOfTeam1()%>
     <br>
-    Wynik2: <%=matchHistory.getScoreOfTeam2()%>
+    Wynik przegranego: <%=matchHistory.getScoreOfTeam2()%>
     <br>
     Mapa: <%=matchHistory.getGameMap().getNameOfMap()%>
     <br>
