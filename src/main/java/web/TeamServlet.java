@@ -23,10 +23,10 @@ public class TeamServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String name = req.getParameter("name");
-        Team team = TeamService.getTeamByName(name);
-        if (team != null) {
+        TeamService teamService = new TeamService();
+        if (teamService.getTeamByName(name)!= null) {
             HttpSession session = req.getSession();
-            session.setAttribute(SessionKey.login, team);
+            session.setAttribute(SessionKey.login, teamService.getTeamByName(name));
             resp.sendRedirect("/team.jsp");
         } else {
             resp.getWriter().println("Brak danej drużyny w bazie");

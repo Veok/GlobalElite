@@ -13,13 +13,13 @@ import java.util.List;
  */
 public class TeamService {
 
-    public static Team getTeamByName(String name) {
+    public  Team getTeamByName(String name) {
         Session session = HibernateUtil.getSessionFactory().openSession();
 
         Team team = null;
 
         try {
-            SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
             Session session1 = sessionFactory.openSession();
             session1.getTransaction();
             org.hibernate.query.Query query = session1.createQuery("from Team where name='" + name + "'");
@@ -36,7 +36,7 @@ public class TeamService {
         return team;
     }
 
-    public static List<Team> getListOfTeam() {
+    public  List<Team> getListOfTeam() {
         List<Team> list = new ArrayList<>();
 
         SessionFactory session = HibernateUtil.getSessionFactory();

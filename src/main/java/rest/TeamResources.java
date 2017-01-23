@@ -1,6 +1,7 @@
 package rest;
 
 import domain.model.Team;
+import domain.model.TeamStatistics;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -32,6 +33,12 @@ public class TeamResources {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response add(Team team) {
+        TeamStatistics teamStatistics = new TeamStatistics();
+        teamStatistics.setWins(0);
+        teamStatistics.setDraws(0);
+        teamStatistics.setLooses(0);
+        team.setTeamStatistics(teamStatistics);
+        entityManager.persist(teamStatistics);
         entityManager.persist(team);
         return Response.ok(team.getId()).build();
     }

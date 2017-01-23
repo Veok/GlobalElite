@@ -3,16 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>=Stwórz drużynę</title>
+
 </head>
 <body>
-<form action="addTeamServlet" method="get">
+
+<form action="addTeamServlet"  method="get">
     Nazwa:<br/>
-    <input name="name" value=""/><br/>
+    <input name="name" value="" required/><br/>
     Kraj:
-    <input name="country" value=""><br/>
+    <input name="country" value="" required><br/>
     <br/>
     <input type="submit" value="Wyślij"/>
 
 </form>
+
 </body>
 </html>
