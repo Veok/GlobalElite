@@ -1,7 +1,6 @@
 package rest;
 
 import domain.model.MatchHistory;
-import domain.model.TeamStatistics;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -10,6 +9,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,8 +25,13 @@ public class MatchHistoryResources {
 
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
-    public List<MatchHistory> getAll() {
-        return entityManager.createNamedQuery("matchHistory.all", MatchHistory.class).getResultList();
+    public Response getAll() {
+        List<MatchHistory> matchHistories = new ArrayList<>();
+        matchHistories.add((MatchHistory) entityManager
+                .createNamedQuery("matchHistory.all", MatchHistory.class)
+                .getResultList());
+
+        return Response.ok(matchHistories).build();
     }
 
     @POST
@@ -61,7 +66,8 @@ public class MatchHistoryResources {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response get(@PathParam("id") int id) {
-        MatchHistory result = entityManager.createNamedQuery("matchHistory.id", MatchHistory.class)
+        MatchHistory result = entityManager
+                .createNamedQuery("matchHistory.id", MatchHistory.class)
                 .setParameter("matchHistoryId", id)
                 .getSingleResult();
         if (result == null) {
@@ -74,7 +80,8 @@ public class MatchHistoryResources {
     @DELETE
     @Path("/{id}")
     public Response delete(@PathParam("id") int id) {
-        MatchHistory result = entityManager.createNamedQuery("matchHistory.id", MatchHistory.class)
+        MatchHistory result = entityManager
+                .createNamedQuery("matchHistory.id", MatchHistory.class)
                 .setParameter("matchHistoryId", id)
                 .getSingleResult();
         if (result == null)

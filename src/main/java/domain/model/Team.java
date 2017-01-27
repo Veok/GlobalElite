@@ -1,5 +1,6 @@
 package domain.model;
 
+import javax.inject.Named;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -11,7 +12,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "team.all", query = "SELECT t from Team t"),
-        @NamedQuery(name = "team.id", query = "SELECT t from Team t where t.id=:teamId")
+        @NamedQuery(name = "team.id", query = "SELECT t from Team t where t.id=:teamId"),
+        @NamedQuery(name= "team.name", query = "SELECT t from Team t where t.name=:teamName")
 })
 public class Team implements IHaveId {
 

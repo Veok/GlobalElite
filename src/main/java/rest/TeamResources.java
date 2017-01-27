@@ -10,6 +10,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,8 +27,12 @@ public class TeamResources {
 
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
-    public List<Team> getAll() {
-        return entityManager.createNamedQuery("team.all", Team.class).getResultList();
+    public Response getAll() {
+        List<Team> teams = new ArrayList<>();
+        teams.add((Team) entityManager
+                .createNamedQuery("team.all", Team.class)
+                .getResultList());
+        return Response.ok(teams).build();
     }
 
     @POST
@@ -47,7 +52,8 @@ public class TeamResources {
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response update(@PathParam("id") int id, Team team) {
-        Team result = entityManager.createNamedQuery("team.id", Team.class)
+        Team result = entityManager
+                .createNamedQuery("team.id", Team.class)
                 .setParameter("teamId", id)
                 .getSingleResult();
         if (result == null) {
@@ -63,7 +69,8 @@ public class TeamResources {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response get(@PathParam("id") int id) {
-        Team result = entityManager.createNamedQuery("team.id", Team.class)
+        Team result = entityManager
+                .createNamedQuery("team.id", Team.class)
                 .setParameter("teamId", id)
                 .getSingleResult();
         if (result == null) {
@@ -72,11 +79,26 @@ public class TeamResources {
         return Response.ok(result).build();
     }
 
+    @GET
+    @Path("/name/{name}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getByName(@PathParam("name") String name){
+        Team result = entityManager
+                .createNamedQuery("team.name", Team.class)
+                .setParameter("teamName", name)
+                .getSingleResult();
+        if(result==null){
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return Response.ok(result).build();
+    }
+
 
     @DELETE
     @Path("/{id}")
     public Response delete(@PathParam("id") int id) {
-        Team result = entityManager.createNamedQuery("team.id", Team.class)
+        Team result = entityManager
+                .createNamedQuery("team.id", Team.class)
                 .setParameter("teamId", id)
                 .getSingleResult();
         if (result == null)

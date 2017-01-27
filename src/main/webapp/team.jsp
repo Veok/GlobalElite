@@ -8,13 +8,34 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
+<head>    <meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; width=device-width;">
+    <link rel="stylesheet" type="text/css" href="../table.css">
     <title>Twoja drużyna</title>
 </head>
 <body>
 <%
     Team team = (Team) session.getAttribute("login");
 %>
+<div id="content"></div>
+<script type="text/javascript" src="scripts/jquery.js"></script>
+<script type="text/javascript">
+
+    var content = $('#content');
+    var nameOfTeam = <%=team.getName()%>;
+
+        $.ajax({
+            url: "rest/teams/name/"+nameOfTeam,
+            dataType: "json",
+            method: 'GET',
+            success: function showInfo(text) {
+                alert(text);
+            }
+
+        })
+
+
+
+</script>
 <h1>Nazwa drużyny: <%=team.getName()%>
 </h1>
 <br>
@@ -34,6 +55,7 @@
         <td>Punkty: <%=team.getTeamStatistics().getPoints()%>
         </td>
     </tr>
+
     </tbody>
 </table>
 <a href="matchHistory.jsp">Tablica wyników</a>

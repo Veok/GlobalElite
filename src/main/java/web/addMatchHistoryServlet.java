@@ -4,7 +4,6 @@ import domain.model.GameMap;
 import domain.model.MatchHistory;
 import domain.model.Team;
 import hdao.services.RepositoryService;
-import hdao.services.TeamService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,8 +31,13 @@ public class addMatchHistoryServlet extends HttpServlet {
 
         Team team1 = repositoryService.teams().withName(req.getParameter("name1"));
         Team team2 = repositoryService.teams().withName(req.getParameter("name2"));
-        matchHistory.setScoreOfTeam1(Integer.parseInt(req.getParameter("score1")));
-        matchHistory.setScoreOfTeam2(Integer.parseInt(req.getParameter("score2")));
+        if (!org.apache.commons.lang3.StringUtils.isNumeric(req.getParameter("score1"))
+                && !org.apache.commons.lang3.StringUtils.isNumeric(req.getParameter("score2"))) {
+            resp.getWriter().write("Podane wyniki w formularzu muszą byc liczbami");
+        } else {
+            matchHistory.setScoreOfTeam1(Integer.parseInt(req.getParameter("score1")));
+            matchHistory.setScoreOfTeam2(Integer.parseInt(req.getParameter("score2")));
+        }
         matchHistory.setTimeOfMatch(req.getParameter("time"));
 
         if (team1 == null || team2 == null) {
@@ -42,6 +46,7 @@ public class addMatchHistoryServlet extends HttpServlet {
             resp.getWriter().write("Podales zly czas trwania meczu");
         } else if (matchHistory.getScoreOfTeam1() < 0 || matchHistory.getScoreOfTeam2() < 0) {
             resp.getWriter().write("Wyniki drużyn nie mogą być ujemne");
+
         } else {
 
             matchHistory.setTeam1(team1);
