@@ -1,7 +1,6 @@
 <%@ page import="domain.model.MatchHistory" %>
-<%@ page import="hdao.services.MatchHistoryService" %>
-<%@ page import="java.util.List" %>
 <%@ page import="hdao.services.RepositoryService" %>
+<%@ page import="java.util.List" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%---
 Created by IntelliJ IDEA.
@@ -18,6 +17,7 @@ Created by IntelliJ IDEA.
     <link rel="stylesheet" type="text/css" href="../table.css">
 </head>
 <body>
+
 <div class="table-title">
     <h3>Tabela wyników:</h3>
 </div>
@@ -35,6 +35,8 @@ Created by IntelliJ IDEA.
     </thead>
     <tbody class="table-hover">
     <form action="MatchHistoryDbServlet" method="get">
+
+
             <%
 
 
