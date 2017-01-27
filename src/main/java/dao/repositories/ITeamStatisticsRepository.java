@@ -15,5 +15,4 @@ public interface ITeamStatisticsRepository extends IRepository<TeamStatistics> {
 
     List<TeamStatistics> withDraws(int draws);
 
-    List<TeamStatistics> withPoints(double points);
 }

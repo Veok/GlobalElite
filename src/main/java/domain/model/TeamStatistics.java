@@ -19,10 +19,11 @@ public class TeamStatistics implements IHaveId {
     private int wins;
     private int looses;
     private int draws;
-    private double points;
+
 
     public TeamStatistics() {
     }
+
 
     public int getId() {
         return id;
@@ -55,12 +56,8 @@ public class TeamStatistics implements IHaveId {
     public void setDraws(int draws) {
         this.draws = draws;
     }
-
-    public double getPoints() {
-
-        points = (double) wins + (draws * 0.5);
-        return points;
-    }
-
-
 }
+
+
+
+

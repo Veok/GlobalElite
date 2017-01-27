@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.*;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -29,10 +30,12 @@ public class TeamResources {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getAll() {
         List<Team> teams = new ArrayList<>();
-        teams.add((Team) entityManager
+        for (Team t : entityManager
                 .createNamedQuery("team.all", Team.class)
-                .getResultList());
-        return Response.ok(teams).build();
+                .getResultList())
+            teams.add(t);
+        return Response.ok(new GenericEntity<List<Team>>(teams) {
+        }).build();
     }
 
     @POST
@@ -82,12 +85,12 @@ public class TeamResources {
     @GET
     @Path("/name/{name}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getByName(@PathParam("name") String name){
+    public Response getByName(@PathParam("name") String name) {
         Team result = entityManager
                 .createNamedQuery("team.name", Team.class)
                 .setParameter("teamName", name)
                 .getSingleResult();
-        if(result==null){
+        if (result == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         return Response.ok(result).build();

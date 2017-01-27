@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.*;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -23,15 +24,20 @@ public class MatchHistoryResources {
     @PersistenceContext
     private EntityManager entityManager;
 
+
+    //TODO naprawic do gowno
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getAll() {
         List<MatchHistory> matchHistories = new ArrayList<>();
-        matchHistories.add((MatchHistory) entityManager
+        for (MatchHistory m : entityManager
                 .createNamedQuery("matchHistory.all", MatchHistory.class)
-                .getResultList());
+                .getResultList())
+            matchHistories.add(m);
 
-        return Response.ok(matchHistories).build();
+
+        return Response.ok(new GenericEntity<List<MatchHistory>>(matchHistories) {
+        }).build();
     }
 
     @POST

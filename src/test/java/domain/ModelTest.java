@@ -1,7 +1,10 @@
 package domain;
 
 import com.neovisionaries.i18n.CountryCode;
-import domain.model.*;
+import domain.model.MatchHistory;
+import domain.model.Player;
+import domain.model.Team;
+import domain.model.TeamStatistics;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,7 +21,6 @@ public class ModelTest {
     private Team team2 = new Team();
     private TeamStatistics teamStatistics = new TeamStatistics();
     private MatchHistory matchHistory = new MatchHistory();
-
 
 
     @Before
@@ -54,12 +56,6 @@ public class ModelTest {
 
 
     @Test
-    public void testTeamPoints() {
-
-        assertEquals(4, teamStatistics.getPoints(), 0.001);
-    }
-
-    @Test
     public void testSteamId() {
         assertEquals("STEAM_0:1:38401525", player.getSteamId());
     }
@@ -74,8 +70,6 @@ public class ModelTest {
 
         assertEquals(CountryCode.US.getName(), team1.getCountry());
     }
-
-
 
 
 }
