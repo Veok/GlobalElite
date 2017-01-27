@@ -8,7 +8,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>    <meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; width=device-width;">
+<head>
     <link rel="stylesheet" type="text/css" href="../table.css">
     <title>Twoja drużyna</title>
 </head>
@@ -16,48 +16,63 @@
 <%
     Team team = (Team) session.getAttribute("login");
 %>
-<div id="content"></div>
-<script type="text/javascript" src="scripts/jquery.js"></script>
-<script type="text/javascript">
 
-    var content = $('#content');
-    var nameOfTeam = <%=team.getName()%>;
+<b> Nazwa drużyny: </b>
+<div id="name"></div>
+<b> Kraj: </b>
+<div id="country"></div>
 
-        $.ajax({
-            url: "rest/teams/name/"+nameOfTeam,
-            dataType: "json",
-            method: 'GET',
-            success: function showInfo(text) {
-                alert(text);
-            }
-
-        })
-
-
-
-</script>
-<h1>Nazwa drużyny: <%=team.getName()%>
-</h1>
-<br>
-<h1>Reprezentowany kraj: <%=team.getCountry()%>
-</h1>
-<br>
-<h1>Statystyki</h1>
 <table>
     <tbody>
     <tr>
-        <td>Wygrane: <%=team.getTeamStatistics().getWins()%>
+        <td>Wygrane:
+            <div id="wins"></div>
         </td>
-        <td>Przegrane: <%=team.getTeamStatistics().getLooses()%>
+        <td>Przegrane:
+            <div id="looses"></div>
         </td>
-        <td>Remisy:  <%=team.getTeamStatistics().getDraws()%>
+        <td>Remisy:
+            <div id="draws"></div>
         </td>
-        <td>Punkty: <%=team.getTeamStatistics().getPoints()%>
-        </td>
+
     </tr>
 
     </tbody>
 </table>
+<script type="text/javascript" src="scripts/jquery.js"></script>
+<script type="text/javascript">
+
+
+    var nameOfTeam = "<%=team.getName()%>";
+    var currentTeam;
+
+    findTeam();
+    function findTeam() {
+        console.log("findTeam");
+        console.log(nameOfTeam);
+        $.ajax({
+            url: "http://localhost:8080/rest/teams/name/" + nameOfTeam,
+            method: 'GET',
+            success: function (data) {
+                currentTeam = data;
+                renderDetails(currentTeam);
+            }
+
+        });
+    }
+    function renderDetails(team) {
+        $('#name').html(team.name);
+        $('#country').html(team.country);
+        $('#wins').html(team.teamStatistics.wins);
+        $('#looses').html(team.teamStatistics.looses);
+        $('#draws').html(team.teamStatistics.draws);
+
+    }
+
+
+</script>
+
 <a href="matchHistory.jsp">Tablica wyników</a>
+
 </body>
 </html>

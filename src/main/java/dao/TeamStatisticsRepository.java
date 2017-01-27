@@ -59,31 +59,25 @@ public class TeamStatisticsRepository extends RepositoryBase<TeamStatistics> imp
         return searchByInt(draws, getDraws);
     }
 
-    @Override
-    public List<TeamStatistics> withPoints(double points) {
-        return null;
-    }
 
     protected String insertSql() {
-        return "INSERT INTO TEAM_STATS(wins, looses, draws, points) values (?, ?, ?, ?)";
+        return "INSERT INTO TEAM_STATS(wins, looses, draws) values (?, ?, ?)";
     }
 
     protected String updateSql() {
-        return "UPDATE TEAM_STATS SET (wins,looses,draws,points) = (?,?,?,?) where id=?";
+        return "UPDATE TEAM_STATS SET (wins,looses,draws) = (?,?,?) where id=?";
     }
 
     protected void setUpdate(TeamStatistics teamStatistics) throws SQLException {
         update.setInt(1, teamStatistics.getWins());
         update.setInt(2, teamStatistics.getLooses());
         update.setInt(3, teamStatistics.getDraws());
-        update.setDouble(4, teamStatistics.getPoints());
     }
 
     protected void setInsert(TeamStatistics teamStatistics) throws SQLException {
         insert.setInt(1, teamStatistics.getWins());
         insert.setInt(2, teamStatistics.getLooses());
         insert.setInt(3, teamStatistics.getDraws());
-        insert.setDouble(4, teamStatistics.getPoints());
     }
 
     @Override
