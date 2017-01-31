@@ -25,7 +25,6 @@ public class MatchHistoryResources {
     private EntityManager entityManager;
 
 
-    //TODO naprawic do gowno
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getAll() {
